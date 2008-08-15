@@ -1,0 +1,264 @@
+<?xml version="1.0"?>
+<!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN" "http://jetty.mortbay.org/configure.dtd">
+
+<!-- =============================================================== -->
+<!-- Configure the Jetty Server                                      -->
+<!-- =============================================================== -->
+<Configure id="Server" class="org.mortbay.jetty.Server">
+
+    <!-- =========================================================== -->
+    <!-- Define system property for derby                            -->
+    <!-- =========================================================== -->
+    <Call class="java.lang.System" name="setProperty">
+      <Arg>derby.system.home</Arg>
+      <Arg><SystemProperty name="hightide.home" default="." />/database</Arg>
+    </Call>
+
+
+    <!-- =========================================================== -->
+    <!-- Transaction Manager setup                                   -->
+    <!-- =========================================================== -->
+    <Call class="java.lang.System" name="setProperty">
+      <Arg>com.atomikos.icatch.file</Arg>
+      <Arg><SystemProperty name="hightide.home" default="." />/resources/jta.properties</Arg>
+    </Call>
+    <New id="tx" class="org.mortbay.jetty.plus.naming.Transaction">
+     <Arg>
+       <New class="com.atomikos.icatch.jta.UserTransactionImp"/>
+     </Arg>
+    </New>
+
+
+    <!-- =========================================================== -->
+    <!-- Start an in-memory ActiveMQ Broker                          -->
+    <!-- =========================================================== -->
+    <Call class="org.apache.activemq.broker.BrokerFactory" name="createBroker">
+      <Arg>
+        <New class="java.net.URI"><Arg>xbean:activemq.xml</Arg></New>
+      </Arg>
+    </Call>
+
+    <!-- =========================================================== -->
+    <!-- TopicConnectionFactory for the debug log                    -->
+    <!-- =========================================================== -->
+    <New id="log-topicfactory" class="org.mortbay.jetty.plus.naming.Resource">
+      <Arg>jms/loggingTopicConnectionFactory</Arg>
+      <Arg>
+        <New class="org.apache.activemq.ActiveMQConnectionFactory">
+          <Arg>vm://localhost?broker.persistent=false</Arg>
+        </New>
+      </Arg>
+    </New>
+
+
+    <!-- =========================================================== -->
+    <!-- Thread Pool                                                 -->
+    <!-- =========================================================== -->
+    <Set name="ThreadPool">
+      <New class="org.mortbay.thread.QueuedThreadPool">
+        <Set name="minThreads">10</Set>
+        <Set name="maxThreads">100</Set>
+        <Set name="lowThreads">5</Set>
+        <Set name="SpawnOrShrinkAt">2</Set>
+      </New>
+      <!--<New class="org.mortbay.thread.BoundedThreadPool">
+        <Set name="minThreads">10</Set>
+        <Set name="maxThreads">100</Set>
+      </New>-->
+    </Set>
+
+    <!-- =========================================================== -->
+    <!-- Connectors                                                  -->
+    <!-- =========================================================== -->
+    <Set name="connectors">
+      <Array type="org.mortbay.jetty.Connector">
+
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <!-- Configure a non-blocking io SelectChannelConnector          -->
+        <!--                                                             -->
+        <!-- Use this connector for many frequently idle connections     -->
+        <!-- and for threadless continuations.                           -->
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <Item>
+          <New class="org.mortbay.jetty.nio.SelectChannelConnector">
+            <Set name="port">8080</Set>
+            <Set name="maxIdleTime">30000</Set>
+            <Set name="Acceptors">2</Set>
+          </New>
+        </Item>
+
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <!-- Configure a blocking io SocketConnector                     -->
+        <!--                                                             -->
+        <!-- Use this connector if NIO is not available.                 -->
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <!--
+        <Item>
+          <New class="org.mortbay.jetty.bio.SocketConnector">
+            <Set name="port">8081</Set>
+            <Set name="maxIdleTime">50000</Set>
+          </New>
+        </Item>
+        -->
+
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <!-- Configure an nio blocking io BlockingChannelConnector       -->
+        <!--                                                             -->
+        <!-- Use this connector for few very active connections.         -->
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <!--
+        <Item>
+          <New class="org.mortbay.jetty.nio.BlockingChannelConnector">
+            <Set name="port">8082</Set>
+          </New>
+        </Item>
+        -->
+
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <!-- Configure a HTTPS SSL Connector                             -->
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <!--
+        <Item>
+          <New class="org.mortbay.jetty.security.SslSocketConnector">
+            <Set name="Port">0</Set>
+            <Set name="maxIdleTime">30000</Set>
+            <Set name="Keystore"><SystemProperty name="jetty.home" default="." />CHANGEME</Set>
+            <Set name="Password">CHANGEME</Set>
+            <Set name="KeyPassword">CHANGEME</Set>
+          </New>
+        </Item>
+        -->
+	<Item>
+      <New class="org.mortbay.jetty.security.SslSelectChannelConnector">
+        <Set name="Port">8443</Set>
+        <Set name="maxIdleTime">30000</Set>
+        <Set name="keystore"><SystemProperty name="hightide.home" default="." />/etc/keystore</Set>
+        <Set name="password">OBF:1vny1zlo1x8e1vnw1vn61x8g1zlu1vn4</Set>
+        <Set name="keyPassword">OBF:1u2u1wml1z7s1z7a1wnl1u2g</Set>
+      </New>
+	</Item>
+
+	  </Array>
+    </Set>
+
+
+
+    <!-- =========================================================== -->
+    <!-- Web Applications                                            -->
+    <!-- =========================================================== -->
+    <!--                                                             -->
+    <!-- This structure should generally NOT be modified.            -->
+    <!--                                                             -->
+    <!-- HandlerCollection:                                          -->
+    <!--        is a collection whose elements are always executed,  -->
+    <!--        in the order in which they are declared, on every    -->
+    <!--        request.                                             -->
+    <!--                                                             -->
+    <!-- ContextHandlerCollection:                                   -->
+    <!--        is a collection of handlers, one per context, only   -->
+    <!--        one of which is executed per request. The one to     -->
+    <!--        be executed is determined by finding the best match  -->
+    <!--        for the path of the request amongst the paths of the -->
+    <!--        ContextHandlers in the collection.                   -->
+    <!--                                                             -->
+    <!--  DefaultHandler:                                            -->
+    <!--        handles the request if no matching ContextHandler    -->
+    <!--        was found and returns a 404 along with a list of     -->
+    <!--        registered contexts.                                 -->
+    <Set name="handler">
+      <New id="Handlers" class="org.mortbay.jetty.handler.HandlerCollection">
+        <Set name="handlers">
+         <Array type="org.mortbay.jetty.Handler">
+           <Item>
+             <New id="Contexts" class="org.mortbay.jetty.handler.ContextHandlerCollection"/>
+           </Item>
+           <Item>
+             <New id="DefaultHandler" class="org.mortbay.jetty.handler.DefaultHandler"/>
+           </Item>
+           <Item>
+             <New id="RequestLog" class="org.mortbay.jetty.handler.RequestLogHandler"/>
+           </Item>
+         </Array>
+        </Set>
+      </New>
+    </Set>
+
+    <!-- =========================================================== -->
+    <!-- Hot Deployer                                                -->
+    <!-- This deployer will deploy Contexts described by an xml      -->
+    <!-- config file found in the configurationDir (by default this  -->
+    <!-- is /contexts). The xml config file can use property         -->
+    <!-- substitution, in which case you should provide a            -->
+    <!-- ConfigurationManager instance to resolve the properties.    -->
+    <!-- =========================================================== -->
+    <Call name="addLifeCycle">
+      <Arg>
+        <New class="org.mortbay.jetty.deployer.ContextDeployer">
+          <Set name="contexts"><Ref id="Contexts"/></Set>
+          <Set name="configurationDir"><SystemProperty name="hightide.home" default="."/>/contexts</Set>
+          <Set name="scanInterval">10</Set>
+          <!--
+          <Set name="configurationManager">
+            <New class="org.mortbay.jetty.deployer.FileConfigurationManager">
+              <Set name="file"><SystemProperty name="hightide.home" default="."/>/contexts/example-deployment.properties</Set>
+            </New>
+          </Set>
+          -->
+        </New>
+      </Arg>
+    </Call>
+
+    <!-- =========================================================== -->
+    <!-- Startup WebAppDeployer                                      -->
+    <!-- War files or webapp directories found in the configured     -->
+    <!-- directory (/webapps by default) will be automatically       -->
+    <!-- deployed at startup.                                        -->
+    <!-- =========================================================== -->
+    <Call name="addLifeCycle">
+      <Arg>
+        <New class="org.mortbay.jetty.deployer.WebAppDeployer">
+          <Set name="contexts"><Ref id="Contexts"/></Set>
+          <Set name="webAppDir"><SystemProperty name="jetty.home" default="."/>/webapps</Set>
+          <Set name="parentLoaderPriority">false</Set>
+          <Set name="extract">true</Set>
+          <Set name="allowDuplicates">false</Set>
+        </New>
+      </Arg>
+    </Call>
+
+
+
+
+    <!-- =========================================================== -->
+    <!-- Request Log                                                 -->
+    <!-- =========================================================== -->
+    <Ref id="RequestLog">
+      <Set name="requestLog">
+        <New id="RequestLogImpl" class="org.mortbay.jetty.NCSARequestLog">
+          <Arg><SystemProperty name="hightide.home" default="."/>/logs/yyyy_mm_dd.request.log</Arg>
+          <Set name="retainDays">90</Set>
+          <Set name="append">true</Set>
+          <Set name="extended">false</Set>
+          <Set name="LogTimeZone">GMT</Set>
+        </New>
+      </Set>
+    </Ref>
+
+
+
+
+    <!-- =========================================================== -->
+    <!-- Extra Server Options                                        -->
+    <!-- =========================================================== -->
+    <!--                                                             -->
+    <!-- stopAtShutdown:                                             -->
+    <!--         default is true. Adds a shutdown hook to the jvm to -->
+    <!--         cleanly stop servers and connectors.                -->
+    <!--                                                             -->
+    <!-- sendServerVersion:                                          -->
+    <!--         default is true. False suppresses a "Server:" http  -->
+    <!--         header being sent in response that identifies Jetty -->
+    <!--         as the server.                                      -->
+    <Set name="stopAtShutdown">true</Set>
+    <Set name="sendServerVersion">true</Set>
+</Configure>

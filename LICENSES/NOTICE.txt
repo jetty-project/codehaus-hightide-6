@@ -1,0 +1,46 @@
+==============================================================
+ Hightide  
+ Copyright 2006 Webtide LLC 
+==============================================================
+
+This product includes software developed by Webtide LLC 
+(http://www.webtide.com/) and is licensed under the
+Apache License 2.0 ().
+
+This product depends on the following software:
+
++  Jetty (http://jetty.mortbay.org), licensed under the
+   Apache 2.0 license.
+
+
+This product is distributed with the following software
+which can be substituted for other similar software:
+
++ ActiveMQ (http://www.activemq.org), licensed under the
+  Apache 2.0 license.
+
++ Atomikos (http://www.atomikos.com), licensed under the
+  Apache 2.0 license.
+
++ Derby (http://http://db.apache.org/derby), licensed under
+  the Apache 2.0 license.
+
++ DWR (http://http://getahead.ltd.uk/dwr), licensed under
+  the Apache 2.0 license.
+
++ SLF4J (http://www.slf4j.org) under a license identical to
+  the X11 license and compatible with the Apache 2.0 license.
+
+
+This product is distributed with the following software for
+demonstration purposes:
+
++ Dojo (http://dojotoolkit.org/), dual licensed under the 
+  Academic Free License 2.1 (http://opensource.org/licenses/afl-2.1.php) 
+  and the BSD license (http://opensource.org/licenses/bsd-license.php)
+
++ Behaviour (http://bennolan.com/behaviour/) licensed under 
+  the BSD license.
+
++ Scriptaculous (http://script.aculo.us/), licensed under the 
+  MIT license (http://www.opensource.org/licenses/mit-license.php).

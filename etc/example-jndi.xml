@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN" "http://jetty.mortbay.org/configure.dtd">
+<Configure id="Server" class="org.mortbay.jetty.Server">
+
+    <!-- =========================================================== -->
+    <!-- Example JNDI Resources                                      -->
+    <!-- =========================================================== -->
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- Example EnvEntry                                            -->
+    <!-- Equivalent to an <env-entry> in web.xml, but defined for all-->
+    <!-- webapps deployed.                                           -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <New id="example-enventry1"  class="org.mortbay.jetty.plus.naming.EnvEntry">
+    <Arg>example1</Arg>
+    <Arg type="java.lang.Integer">4000</Arg>
+  </New>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- Example EnvEntry                                            -->
+    <!-- Equivalent to an <env-entry> in web.xml, but defined for all-->
+    <!-- deployed webapps AND will override any <env-entry> of the   -->
+    <!-- same name.                                                  -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <New id="example-enventry2"  class="org.mortbay.jetty.plus.naming.EnvEntry">
+    <Arg>example2</Arg>
+    <Arg type="java.lang.Double">100</Arg>
+    <Arg type="boolean">true</Arg>
+  </New>
+
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- NonXA  TopicConnectionFactory                               -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <New id="tcf" class="org.mortbay.jetty.plus.naming.Resource">
+      <Arg>jms/topicConnectionFactory</Arg>
+      <Arg>
+        <New class="org.apache.activemq.ActiveMQConnectionFactory">
+          <Arg>vm://localhost?broker.persistent=false</Arg>
+        </New>
+      </Arg>
+    </New>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- XA DataSource                                               -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <New id="exampe-xads" class="org.mortbay.jetty.plus.naming.Resource">
+      <Arg>jdbc/exampleXADS</Arg>
+      <Arg>
+       <New class="com.atomikos.jdbc.AtomikosDataSourceBean">
+        <Set name="minPoolSize">2</Set>
+        <Set name="maxPoolSize">50</Set>       
+        <Set name="xaDataSourceClassName">org.apache.derby.jdbc.EmbeddedXADataSource</Set>
+        <Get name="xaProperties">
+          <Call name="setProperty">
+            <Arg>databaseName</Arg>
+            <Arg>example</Arg>
+          </Call>
+          <Call name="setProperty">
+            <Arg>createDatabase</Arg>
+            <Arg>create</Arg>
+          </Call>
+        </Get>
+        <!-- Set name="xaDataSourceProperties">databaseName=example;createDatabase=create</Set -->
+        <Set name="UniqueResourceName">exampleXADS</Set>
+       </New>
+      </Arg>
+    </New>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- NonXA DataSource                                            -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <New id="example-nonxads" class="org.mortbay.jetty.plus.naming.Resource">
+      <Arg>jdbc/exampleNonXADS</Arg>
+      <Arg>
+       <New class="com.atomikos.jdbc.nonxa.AtomikosNonXADataSourceBean">
+         <Set name="minPoolSize">2</Set>
+         <Set name="maxPoolSize">50</Set>       
+         <Set name="Url">jdbc:derby::example;create=true</Set>
+         <Set name="driverClassName">org.apache.derby.jdbc.EmbeddedDriver</Set>
+       </New>
+      </Arg>
+    </New>
+
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- Mail Session                                                -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <New id="example-mail" class="org.mortbay.jetty.plus.naming.Resource">
+        <Arg>mail/Session</Arg>
+        <Arg>
+          <New class="org.mortbay.naming.factories.MailSessionReference">
+            <Set name="user">CHANGEME</Set>
+            <Set name="password">CHANGEME</Set>
+            <Set name="properties">
+              <New class="java.util.Properties">
+                <Put name="mail.smtp.host">CHANGEME</Put>
+                <Put name="mail.from">CHANGEME</Put>
+                <Put name="mail.debug">true</Put>
+              </New>
+             </Set>
+          </New>
+        </Arg>
+    </New>
+</Configure>

@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN" "http://jetty.mortbay.org/configure.dtd">
+<Configure id="Server" class="org.mortbay.jetty.Server">
+
+    <!-- =========================================================== -->
+    <!-- Security Realms                                             -->
+    <!-- =========================================================== -->
+    <Set name="UserRealms">
+      <Array type="org.mortbay.jetty.security.UserRealm">
+        <Item>
+          <!-- A realm with security information stored in a property file. -->
+          <New class="org.mortbay.jetty.security.HashUserRealm">
+            <Set name="name">Test Hash Realm</Set>
+            <Set name="config"><SystemProperty name="jetty.home" default="."/>/etc/example-realm.properties</Set>
+          </New>
+        </Item>
+        <Item>
+          <!-- A realm with security information stored in a database, the connection -->
+          <!-- details for which are configured with a property file.                 -->
+          <New class="org.mortbay.jetty.security.JDBCUserRealm">
+            <Set name="name">Test JDBC Realm</Set>
+            <Set name="config"><SystemProperty name="jetty.home" default="."/>/etc/example-jdbcRealm.properties</Set>
+          </New>
+        </Item>
+         <!-- A realm using JAAS for security information. The JAAS module with name   -->
+         <!-- "example_props" reads security information from a property file. See the -->
+         <!--  example-login.conf file.                                                -->
+        <Item>
+          <New class="org.mortbay.jetty.plus.jaas.JAASUserRealm">
+           <Set name="Name">Test JAAS Property Realm</Set>
+           <Set name="LoginModuleName">example_props</Set>
+          </New>
+        </Item>
+        <!-- A realm using JAAS for security information. The JAAS module with name        -->
+        <!-- "example_jdbc" retrieves its security information from a database via JDBC.   -->
+        <!-- See the example-login.conf file.                                              -->
+        <Item>
+          <New class="org.mortbay.jetty.plus.jaas.JAASUserRealm">
+           <Set name="Name">Test JAAS JDBC Realm</Set>
+           <Set name="LoginModuleName">example_jdbc</Set>
+          </New>
+        </Item>
+        <!-- A realm using JAAS for security information. The JAAS module with name      -->
+        <!-- "example_datasource" retrieves its security information from a database     -->
+        <!-- using a DataSource  obtained from JNDI. See the example-login.conf file.    -->
+        <Item>
+          <New class="org.mortbay.jetty.plus.jaas.JAASUserRealm">
+           <Set name="Name">Test JAAS DataSource Realm</Set>
+           <Set name="LoginModuleName">example_datasource</Set>
+          </New>
+        </Item>
+      </Array>
+    </Set>
+
+</Configure>
