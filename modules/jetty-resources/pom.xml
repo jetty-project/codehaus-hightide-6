@@ -175,8 +175,9 @@
             </goals>
             <configuration>
               <arguments>
+                <argument>-e</argument>
                 <argument>-Dmaven.test.skip=true</argument>
-                 <argument>-Djetty.version=${jetty-version}</argument>
+                <argument>-Djetty.version=${jetty-version}</argument>
                 <argument>install</argument>
               </arguments>
             </configuration>
