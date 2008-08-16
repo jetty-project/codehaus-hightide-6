@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><project>
+  <parent>
+    <artifactId>hightide</artifactId>
+    <groupId>org.mortbay.hightide</groupId>
+    <version>6.1H-SNAPSHOT</version>
+    <relativePath>../../pom.xml</relativePath>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.mortbay.hightide</groupId>
+  <artifactId>root</artifactId>
+  <packaging>war</packaging>
+  <name>Hightide Auction Root Webapp</name>
+  <build>
+    <defaultGoal>install</defaultGoal>
+    <plugins>  
+	  <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>clean</id>
+            <phase>clean</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <tasks>
+                <delete includeemptydirs="true">
+                  <fileset dir="../../webapps/" includes="${project.artifactId}/**" />
+                </delete>
+              </tasks>
+            </configuration>
+          </execution>
+          <execution>
+            <id>install</id>
+            <phase>install</phase>  
+            <goals>
+              <goal>run</goal>
+            </goals>	  
+            <configuration>
+              <tasks>
+				<delete quiet="true" dir="../../webapps/${project.artifactId}/"></delete>
+                <unjar src="target/${project.artifactId}-${project.version}.${project.packaging}" dest="../../webapps/${project.artifactId}/"></unjar>
+              </tasks>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>    
+    </plugins>
+  </build>
+  <dependencies>
+  </dependencies>
+  <properties><topDirectoryLocation>../..</topDirectoryLocation></properties>
+</project>
