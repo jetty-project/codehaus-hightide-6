@@ -1,0 +1,13 @@
+Index: modules/jetty/src/main/resources/org/mortbay/jetty/webapp/webdefault.xml
+===================================================================
+--- modules/jetty/src/main/resources/org/mortbay/jetty/webapp/webdefault.xml	(revision 3020)
++++ modules/jetty/src/main/resources/org/mortbay/jetty/webapp/webdefault.xml	(working copy)
+@@ -52,7 +52,7 @@
+ 
+   <context-param>
+     <param-name>org.mortbay.jetty.webapp.NoTLDJarPattern</param-name>
+-    <param-value>start.jar|ant-.*\.jar|dojo-.*\.jar|jetty-.*\.jar|jsp-api-.*\.jar|junit-.*\.jar|servlet-api-.*\.jar|dnsns\.jar|rt\.jar|jsse\.jar|tools\.jar|sunpkcs11\.jar|sunjce_provider\.jar|xerces.*\.jar</param-value>
++    <param-value>start.jar|ant-.*\.jar|dojo-.*\.jar|jetty-.*\.jar|jsp-api-.*\.jar|junit-.*\.jar|servlet-api-.*\.jar|dnsns\.jar|rt\.jar|jsse\.jar|tools\.jar|sunpkcs11\.jar|sunjce_provider\.jar|xerces.*\.jar|active.*\.jar|cometd-.*\.jar|atomikos.*\.jar|transactions.*\.jar|derby.*\.jar|dwr-.*\.jar|spring-.*\.jar|xb.*\.jar|xm.*\.jar|xp.*\.jar|xs.*\.jar|commons-.*\.jar|jdom.*\.jar|rome.*\.jar|stax.*\.jar|jaxb.*\.jar|backport.*\.jar|camel.*\.jar|aop.*\.jar</param-value>
+   </context-param>
+             
+ 

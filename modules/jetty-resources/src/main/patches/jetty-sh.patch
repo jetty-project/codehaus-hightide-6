@@ -1,0 +1,147 @@
+Index: bin/jetty.sh
+===================================================================
+--- bin/jetty.sh	(revision 2218)
++++ bin/jetty.sh	(working copy)
+@@ -64,14 +64,14 @@
+ #    <Set name="Port">8080</Set>
+ #
+ # JETTY_RUN
+-#   Where the jetty.pid file should be stored. It defaults to the
++#   Where the hightide.pid file should be stored. It defaults to the
+ #   first available of /var/run, /usr/var/run, and /tmp if not set.
+ #  
+ # JETTY_PID
+-#   The Jetty PID file, defaults to $JETTY_RUN/jetty.pid
++#   The Jetty PID file, defaults to $JETTY_RUN/hightide.pid
+ #   
+ # JETTY_ARGS
+-#   The default arguments to pass to jetty.
++#   The default arguments to pass to hightide.
+ #
+ # JETTY_USER
+ #   if set, then used as a username to run the server as
+@@ -128,10 +128,8 @@
+ ##################################################
+ # See if there's a default configuration file
+ ##################################################
+-if [ -f /etc/default/jetty6 ] ; then 
+-  . /etc/default/jetty6
+-elif [ -f /etc/default/jetty ] ; then 
+-  . /etc/default/jetty
++if [ -f /etc/default/hightide ] ; then 
++  . /etc/default/hightide
+ fi
+ 
+ 
+@@ -146,7 +144,7 @@
+ ##################################################
+ # Jetty's hallmark
+ ##################################################
+-JETTY_INSTALL_TRACE_FILE="etc/jetty.xml"
++JETTY_INSTALL_TRACE_FILE="etc/hightide.xml"
+ TMPJ=$TMP/j$$
+ 
+ 
+@@ -182,14 +180,8 @@
+         /home                    \
+         "
+   JETTY_DIR_NAMES="              \
+-        jetty-6                  \
+-        jetty6                   \
+-        jetty-6.*                \
+-        jetty                    \
+-        Jetty-6                  \
+-        Jetty6                   \
+-        Jetty-6.*                \
+-        Jetty                    \
++        hightide                 \
++        Hightide                 \
+         "
+         
+   JETTY_HOME=
+@@ -325,7 +317,7 @@
+ #####################################################
+ if [ -z "$CONFIGS" ] 
+ then
+-    CONFIGS="${JETTY_HOME}/etc/jetty-logging.xml ${JETTY_HOME}/etc/jetty.xml"
++    CONFIGS="${JETTY_HOME}/etc/hightide.xml"
+ fi
+ 
+ 
+@@ -342,7 +334,7 @@
+ #####################################################
+ if [  -z "$JETTY_PID" ] 
+ then
+-  JETTY_PID="$JETTY_RUN/jetty.pid"
++  JETTY_PID="$JETTY_RUN/hightide.pid"
+ fi
+ 
+ 
+@@ -440,7 +432,7 @@
+ #####################################################
+ # Add jetty properties to Java VM options.
+ #####################################################
+-JAVA_OPTIONS="$JAVA_OPTIONS -Djetty.home=$JETTY_HOME -Djava.io.tmpdir=$TMP"
++JAVA_OPTIONS="$JAVA_OPTIONS -Dhightide.home=$JETTY_HOME -Djetty.home=$JETTY_HOME -Djava.io.tmpdir=$TMP"
+ 
+ [ -f $JETTY_HOME/etc/start.config ] && JAVA_OPTIONS="-DSTART=$JETTY_HOME/etc/start.config $JAVA_OPTIONS"
+ 
+@@ -473,10 +465,10 @@
+ ##################################################
+ case "$ACTION" in
+   start)
+-        echo -n "Starting Jetty: "
++        echo -n "Starting Hightide: "
+ 
+         if [ "$NO_START" = "1" ]; then 
+-	  echo "Not starting jetty - NO_START=1 in /etc/default/jetty6";
++	  echo "Not starting hightide - NO_START=1 in /etc/default/hightide";
+           exit 0;
+ 	fi
+ 
+@@ -513,13 +505,13 @@
+ 	  PID=$!
+ 	  disown $PID
+           echo $PID > $JETTY_PID
+-          echo "STARTED Jetty `date`" 
++          echo "STARTED Hightide `date`" 
+         fi
+ 
+         ;;
+ 
+   stop)
+-        echo -n "Stopping Jetty: "
++        echo -n "Stopping Hightide: "
+ 	if which start-stop-daemon > /dev/null ; then
+ 	  start-stop-daemon -K -p $JETTY_PID -d $JETTY_HOME -a $JAVA -s HUP 
+ 	  sleep 1
+@@ -563,7 +555,7 @@
+          ;;
+ 
+   run|demo)
+-        echo "Running Jetty: "
++        echo "Running Hightide: "
+ 
+         if [ -f $JETTY_PID ]
+         then
+@@ -575,7 +567,7 @@
+         ;;
+ 
+   check)
+-        echo "Checking arguments to Jetty: "
++        echo "Checking arguments to Hightide: "
+         echo "JETTY_HOME     =  $JETTY_HOME"
+         echo "JETTY_CONF     =  $JETTY_CONF"
+         echo "JETTY_RUN      =  $JETTY_RUN"
+@@ -588,9 +580,9 @@
+         echo "RUN_CMD        =  $RUN_CMD"
+         echo
+         
+-        if [ -f $JETTY_RUN/jetty.pid ]
++        if [ -f $JETTY_RUN/hightide.pid ]
+         then
+-            echo "Jetty running pid="`cat $JETTY_RUN/jetty.pid`
++            echo "Hightide running pid="`cat $JETTY_RUN/hightide.pid`
+             exit 0
+         fi
+         exit 1

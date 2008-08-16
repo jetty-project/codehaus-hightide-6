@@ -1,0 +1,34 @@
+Index: modules/start/src/main/resources/org/mortbay/start/start.config
+===================================================================
+--- modules/start/src/main/resources/org/mortbay/start/start.config	(revision 2036)
++++ modules/start/src/main/resources/org/mortbay/start/start.config	(working copy)
+@@ -42,16 +42,17 @@
+ # Try different settings of jetty.home until the jetty.jar is found.
+ jetty.home=.                                     ! exists $(jetty.home)/start.jar 
+ jetty.home=..                                    ! exists $(jetty.home)/start.jar
+-jetty.home=/home/jetty                           ! exists $(jetty.home)/start.jar
+-jetty.home=/C:/jetty                             ! exists $(jetty.home)/start.jar
++jetty.home=/home/hightide                           ! exists $(jetty.home)/start.jar
++jetty.home=/C:/hightide                             ! exists $(jetty.home)/start.jar
+ jetty.home=.                                     ! exists $(jetty.home)/start.jar 
++hightide.home=$(jetty.home)
+ 
+ # The main class to run
+ org.mortbay.xml.XmlConfiguration.class
+ $(start.class).class
+ 
+ # The default configuration files
+-$(jetty.home)/etc/jetty.xml                      nargs == 0
++$(jetty.home)/etc/hightide.xml                      nargs == 0
+ 
+ # Set the jetty classpath
+ $(jetty.home)/lib/*                              always
+@@ -76,3 +77,8 @@
+ 
+ # Add a resources directory if it is there
+ $(jetty.home)/resources/
++
++#logging properties file
++java.util.logging.config.file=$(jetty.home)/resources/logging.properties
++#logging manager
++java.util.logging.manager=com.webtide.hightide.log.SystemPropertyLogManager

@@ -1,0 +1,16 @@
+Index: modules/jetty/src/main/java/org/mortbay/jetty/webapp/WebAppContext.java
+===================================================================
+--- modules/jetty/src/main/java/org/mortbay/jetty/webapp/WebAppContext.java	(revision 1987)
++++ modules/jetty/src/main/java/org/mortbay/jetty/webapp/WebAppContext.java	(working copy)
+@@ -76,8 +76,9 @@
+     
+     private static String[] __dftConfigurationClasses =  
+     { 
+-        "org.mortbay.jetty.webapp.WebInfConfiguration", 
+-        "org.mortbay.jetty.webapp.WebXmlConfiguration", 
++        "org.mortbay.jetty.webapp.WebInfConfiguration",
++        "org.mortbay.jetty.plus.webapp.EnvConfiguration",
++        "org.mortbay.jetty.annotations.Configuration",
+         "org.mortbay.jetty.webapp.JettyWebXmlConfiguration",
+         "org.mortbay.jetty.webapp.TagLibConfiguration" 
+     } ;

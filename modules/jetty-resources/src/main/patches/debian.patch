@@ -1,0 +1,582 @@
+Index: contrib/debian/src/main/debian/control
+===================================================================
+--- contrib/debian/src/main/debian/control	(revision 580)
++++ contrib/debian/src/main/debian/control	(working copy)
+@@ -1,4 +1,4 @@
+-Source: jetty6
++Source: hightide
+ Section: contrib/web
+ Priority: optional
+ Maintainer: Debian Java Maintainers <pkg-java-maintainers@lists.alioth.debian.org>
+@@ -6,20 +6,20 @@
+ Build-Depends: debhelper (>= 4.9.5), cdbs (>> 0.4.5.3)
+ Standards-Version: 3.7.2
+ 
+-Package: libjetty6-java
++Package: libhightide-java
+ Architecture: all
+ Depends: java-gcj-compat | java2-runtime
+-Suggests: jetty6
++Suggests: hightide
+ Description: Java servlet engine and webserver -- core libraries
+  Jetty is an Open Source HTTP Servlet Server written in 100% Java.
+  It is designed to be light weight, high performance, embeddable,
+  extensible and flexible, thus making it an ideal platform for serving
+  dynamic HTTP requests from any Java application.
+ 
+-Package: libjetty6-extra-java
++Package: libhightide-extra-java
+ Architecture: all
+-Depends: java-gcj-compat | java2-runtime, libjetty6-java, libgnujaf-java, libgnumail-java
+-Suggests: jetty6
++Depends: java-gcj-compat | java2-runtime, libhightide-java, libgnujaf-java, libgnumail-java
++Suggests: hightide
+ Description: Java servlet engine and webserver -- extra libraries
+  Jetty is an Open Source HTTP Servlet Server written in 100% Java.
+  It is designed to be light weight, high performance, embeddable,
+@@ -27,10 +27,10 @@
+  dynamic HTTP requests from any Java application. 
+  The extra libraries include JMX managementm, JNDI naming and jetty plus. 
+ 
+-Package: libjetty6-jsp-java
++Package: libhightide-jsp-java
+ Architecture: all
+-Depends: java-gcj-compat | java2-runtime, libjetty6-java, ant
+-Suggests: jetty6
++Depends: java-gcj-compat | java2-runtime, libhightide-java, ant
++Suggests: hightide
+ Description: Java servlet engine and webserver -- JSP 2.1 libraries
+  Jetty is an Open Source HTTP Servlet Server written in 100% Java.
+  It is designed to be light weight, high performance, embeddable,
+@@ -39,22 +39,22 @@
+  The JSP 2.1 libraries are taken from glassfish and compile for jetty 
+  
+ 
+-Package: jetty6
++Package: hightide
+ Architecture: all
+-Depends: libjetty6-java
+-Suggests: libjetty6-extra-java, libjetty6-jsp-java
++Depends: libhightide-java
++Suggests: libhightide-extra-java, libhightide-jsp-java
+ Description: Java servlet engine and webserver
+  Jetty is an Open Source HTTP Servlet Server written in 100% Java.
+  It is designed to be light weight, high performance, embeddable,
+  extensible and flexible, thus making it an ideal platform for serving
+  dynamic HTTP requests from any Java application.
+ 
+-Package: jetty6-examples
++Package: hightide-examples
+ Architecture: all
+-Depends: jetty6
+-Suggests: libjetty6-extra-java, libjetty6-jsp-java
++Depends: hightide
++Suggests: libhightide-extra-java, libhightide-jsp-java
+ Description: Java servlet engine and webserver -- example webapps
+  Jetty is an Open Source HTTP Servlet Server written in 100% Java.
+  It is designed to be light weight, high performance, embeddable,
+  extensible and flexible, thus making it an ideal platform for serving
+- dynamic HTTP requests from any Java application.
+\ No newline at end of file
++ dynamic HTTP requests from any Java application.
+Index: contrib/debian/src/main/debian/libjetty6-extra-java.install
+===================================================================
+--- contrib/debian/src/main/debian/libjetty6-extra-java.install	(revision 580)
++++ contrib/debian/src/main/debian/libjetty6-extra-java.install	(working copy)
+@@ -1,12 +1,16 @@
+-lib/annotations/jetty-annotations-${PROJECT.VERSION}.jar usr/share/jetty6/lib/annotations
+-lib/annotations/geronimo-annotation_1.0_spec-1.0.jar usr/share/jetty6/lib/annotations
+-lib/ext/jetty-ajp-${PROJECT.VERSION}.jar usr/share/jetty6/lib/ext
+-lib/ext/jetty-client-${PROJECT.VERSION}.jar usr/share/jetty6/lib/ext
+-lib/ext/jetty-html-${PROJECT.VERSION}.jar usr/share/jetty6/lib/ext
+-lib/ext/jetty-java5-threadpool-${PROJECT.VERSION}.jar usr/share/jetty6/lib/ext
+-lib/ext/jetty-servlet-tester-${PROJECT.VERSION}.jar usr/share/jetty6/lib/ext
+-lib/ext/jetty-sslengine-${PROJECT.VERSION}.jar usr/share/jetty6/lib/ext
+-lib/management/jetty-management-${PROJECT.VERSION}.jar usr/share/jetty6/lib/management
+-lib/naming/jetty-naming-${PROJECT.VERSION}.jar usr/share/jetty6/lib/naming
+-lib/plus/jetty-plus-${PROJECT.VERSION}.jar usr/share/jetty6/lib/plus
+-etc/jetty-extra.conf       etc/jetty6
+\ No newline at end of file
++lib/annotations/jetty-annotations-${PROJECT.VERSION}.jar usr/share/hightide/lib/annotations
++lib/annotations/geronimo-annotation_1.0_spec-1.0.jar usr/share/hightide/lib/annotations
++lib/ext/jetty-ajp-${PROJECT.VERSION}.jar usr/share/hightide/lib/ext
++lib/ext/jetty-client-${PROJECT.VERSION}.jar usr/share/hightide/lib/ext
++lib/ext/jetty-html-${PROJECT.VERSION}.jar usr/share/hightide/lib/ext
++lib/ext/jetty-java5-threadpool-${PROJECT.VERSION}.jar usr/share/hightide/lib/ext
++lib/ext/jetty-servlet-tester-${PROJECT.VERSION}.jar usr/share/hightide/lib/ext
++lib/ext/jetty-sslengine-${PROJECT.VERSION}.jar usr/share/hightide/lib/ext
++lib/ext/activemq  usr/share/hightide/lib/ext
++lib/ext/atomikos  usr/share/hightide/lib/ext
++lib/ext/derby  usr/share/hightide/lib/ext
++lib/ext/dwr  usr/share/hightide/lib/ext
++lib/ext/cometd usr/share/hightide/lib/ext
++lib/management/jetty-management-${PROJECT.VERSION}.jar usr/share/hightide/lib/management
++lib/naming/jetty-naming-${PROJECT.VERSION}.jar usr/share/hightide/lib/naming
++lib/plus/jetty-plus-${PROJECT.VERSION}.jar usr/share/hightide/lib/plus
+Index: contrib/debian/src/main/debian/jetty6.dirs
+===================================================================
+--- contrib/debian/src/main/debian/jetty6.dirs	(revision 580)
++++ contrib/debian/src/main/debian/jetty6.dirs	(working copy)
+@@ -1,7 +1,9 @@
+ etc/default
+-etc/jetty6
+-etc/jetty6/contexts
+-usr/share/jetty6
+-var/lib/jetty6/webapps
+-var/log/jetty6
+-var/cache/jetty6
++etc/hightide
++etc/hightide/contexts
++usr/share/hightide
++usr/share/hightide/resources
++usr/share/hightide/database
++var/lib/hightide/webapps
++var/log/hightide
++var/cache/hightide
+Index: contrib/debian/src/main/debian/libjetty6-jsp-java.dirs
+===================================================================
+--- contrib/debian/src/main/debian/libjetty6-jsp-java.dirs	(revision 580)
++++ contrib/debian/src/main/debian/libjetty6-jsp-java.dirs	(working copy)
+@@ -1,3 +1,3 @@
+-usr/share/jetty6
+-usr/share/jetty6/lib
+-usr/share/jetty6/lib/jsp-2.1
+\ No newline at end of file
++usr/share/hightide
++usr/share/hightide/lib
++usr/share/hightide/lib/jsp-2.1
+Index: contrib/debian/src/main/debian/jetty6.install
+===================================================================
+--- contrib/debian/src/main/debian/jetty6.install	(revision 580)
++++ contrib/debian/src/main/debian/jetty6.install	(working copy)
+@@ -1,19 +1,14 @@
+-start.jar		usr/share/jetty6
+-etc/jetty.conf		etc/jetty6
+-etc/jetty.xml		etc/jetty6
+-etc/jetty-ajp.xml	etc/jetty6
+-etc/jetty-bio.xml	etc/jetty6
+-etc/jetty-logging.xml	etc/jetty6
+-etc/jetty-ssl.xml	etc/jetty6
+-etc/jetty-sslengine.xml etc/jetty6
+-etc/jetty-jaas.xml      etc/jetty6
+-etc/jetty-jmx.xml       etc/jetty6
+-etc/jetty-plus.xml      etc/jetty6
+-etc/webdefault.xml 	etc/jetty6
+-etc/keystore            etc/jetty6
+-etc/realm.properties    etc/jetty6
+-etc/start.config	etc/jetty6
+-etc/login.conf          etc/jetty6
+-etc/login.properties    etc/jetty6
+-webapps/README.TXT      var/lib/jetty6/webapps
+-contexts/README.TXT     etc/jetty6/contexts
++start.jar		usr/share/hightide
++etc/jetty.conf		etc/hightide
++etc/hightide.xml	etc/hightide
++etc/keystore            etc/hightide
++etc/start.config	etc/hightide
++resources/activemq.xml                 usr/share/hightide/resources
++resources/jta.properties               usr/share/hightide/resources
++resources/logging.properties           usr/share/hightide/resources
++etc/example-login.conf                  etc/hightide
++etc/example-jdbcRealm.properties        etc/hightide
++etc/example-jndi.xml                    etc/hightide
++etc/example-login.conf                  etc/hightide
++etc/example-realm.properties            etc/hightide
++etc/example-realms.xml                  etc/hightide
+Index: contrib/debian/src/main/debian/libjetty6-jsp-java.install
+===================================================================
+--- contrib/debian/src/main/debian/libjetty6-jsp-java.install	(revision 580)
++++ contrib/debian/src/main/debian/libjetty6-jsp-java.install	(working copy)
+@@ -1,3 +1,3 @@
+-lib/jsp-2.1/core-3.1.1.jar usr/share/jetty6/lib/jsp-2.1
+-lib/jsp-2.1/jsp-api-2.1.jar usr/share/jetty6/lib/jsp-2.1
+-lib/jsp-2.1/jsp-2.1.jar usr/share/jetty6/lib/jsp-2.1
++lib/jsp-2.1/core-3.1.1.jar usr/share/hightide/lib/jsp-2.1
++lib/jsp-2.1/jsp-api-2.1.jar usr/share/hightide/lib/jsp-2.1
++lib/jsp-2.1/jsp-2.1.jar usr/share/hightide/lib/jsp-2.1
+Index: contrib/debian/src/main/debian/libjetty6-java.dirs
+===================================================================
+--- contrib/debian/src/main/debian/libjetty6-java.dirs	(revision 580)
++++ contrib/debian/src/main/debian/libjetty6-java.dirs	(working copy)
+@@ -1,4 +1,4 @@
+-usr/share/jetty6
+-usr/share/jetty6/lib
+-usr/share/doc/jetty6
+-usr/share/doc/jetty6/api
++usr/share/hightide
++usr/share/hightide/lib
++usr/share/doc/hightide
++usr/share/doc/hightide/api
+Index: contrib/debian/src/main/debian/libjetty6-java.install
+===================================================================
+--- contrib/debian/src/main/debian/libjetty6-java.install	(revision 580)
++++ contrib/debian/src/main/debian/libjetty6-java.install	(working copy)
+@@ -1,7 +1,11 @@
+-lib/servlet-api-2.5-${PROJECT.VERSION}.jar	usr/share/jetty6/lib
+-lib/jetty-util-${PROJECT.VERSION}.jar		usr/share/jetty6/lib
+-lib/jetty-${PROJECT.VERSION}.jar		usr/share/jetty6/lib
+-README.txt					usr/share/doc/jetty6
+-VERSION.txt					usr/share/doc/jetty6
+-javadoc/*					usr/share/doc/jetty6/api
+-LICENSES					usr/share/doc/jetty6
++lib/servlet-api-2.5-${PROJECT.VERSION}.jar	usr/share/hightide/lib
++lib/jetty-util-${PROJECT.VERSION}.jar		usr/share/hightide/lib
++lib/jetty-${PROJECT.VERSION}.jar		usr/share/hightide/lib
++lib/hightide-util-${PROJECT.VERSION}.jar	usr/share/hightide/lib
++lib/jcl104-over-slf4j-1.3.1.jar	                usr/share/hightide/lib
++lib/slf4j-api-1.3.1.jar                         usr/share/hightide/lib
++lib/slf4j-jdk14-1.3.1.jar                       usr/share/hightide/lib
++RELEASE-NOTES.txt				usr/share/doc/hightide
++VERSION.txt					usr/share/doc/hightide
++javadoc/*					usr/share/doc/hightide/api
++LICENSES					usr/share/doc/hightide
+Index: contrib/debian/src/main/debian/jetty6-examples.dirs
+===================================================================
+--- contrib/debian/src/main/debian/jetty6-examples.dirs	(revision 580)
++++ contrib/debian/src/main/debian/jetty6-examples.dirs	(working copy)
+@@ -1,2 +1,2 @@
+-etc/jetty6/contexts
+-var/lib/jetty6/webapps
++etc/hightide/contexts
++var/lib/hightide/webapps
+Index: contrib/debian/src/main/debian/jetty6.links
+===================================================================
+--- contrib/debian/src/main/debian/jetty6.links	(revision 580)
++++ contrib/debian/src/main/debian/jetty6.links	(working copy)
+@@ -1,4 +1,4 @@
+-var/lib/jetty6/webapps usr/share/jetty6/webapps
+-var/log/jetty6 usr/share/jetty6/logs
+-etc/jetty6 usr/share/jetty6/etc
+-etc/jetty6/contexts usr/share/jetty6/contexts
++var/lib/hightide/webapps usr/share/hightide/webapps
++var/log/hightide usr/share/hightide/logs
++etc/hightide usr/share/hightide/etc
++etc/hightide/contexts usr/share/hightide/contexts
+Index: contrib/debian/src/main/debian/jetty6-examples.install
+===================================================================
+--- contrib/debian/src/main/debian/jetty6-examples.install	(revision 580)
++++ contrib/debian/src/main/debian/jetty6-examples.install	(working copy)
+@@ -1,7 +1,7 @@
+-webapps/cometd.war        var/lib/jetty6/webapps
+-webapps/test              var/lib/jetty6/webapps
+-webapps/test-jaas         var/lib/jetty6/webapps
+-contexts/test.d           etc/jetty6/contexts
+-contexts/test.xml         etc/jetty6/contexts
+-contexts/test-jndi.d      etc/jetty6/contexts
+-contexts/test-jndi.xml    etc/jetty6/contexts
+\ No newline at end of file
++webapps/cometd-demo       var/lib/hightide/webapps
++webapps/auctiondemo       var/lib/hightide/webapps
++webapps/jetty-examples    var/lib/hightide/webapps
++webapps/root              var/lib/hightide/webapps
++webapps/welcome           var/lib/hightide/webapps
++contexts/example-deployment.properties           etc/hightide/contexts
++contexts/javadoc.xml         etc/hightide/contexts
+Index: contrib/debian/src/main/debian/jetty6.postinst
+===================================================================
+--- contrib/debian/src/main/debian/jetty6.postinst	(revision 580)
++++ contrib/debian/src/main/debian/jetty6.postinst	(working copy)
+@@ -3,12 +3,12 @@
+ case "$1" in
+     configure)
+ 	if ! id jetty > /dev/null 2>&1 ; then
+-	    adduser --system --home /usr/share/jetty6 --no-create-home \
++	    adduser --system --home /usr/share/hightide --no-create-home \
+ 		--ingroup nogroup --disabled-password --shell /bin/false \
+ 		jetty
+ 	fi
+-	chown -R jetty:adm /var/cache/jetty6 /var/log/jetty6 /var/lib/jetty6
+-	chmod 750 /var/log/jetty6
++	chown -R jetty:adm /var/cache/hightide /var/log/hightide /var/lib/hightide
++	chmod 750 /var/log/hightide
+     ;;
+ 
+     abort-upgrade|abort-remove|abort-deconfigure)
+Index: contrib/debian/src/main/debian/jetty6.postrm
+===================================================================
+--- contrib/debian/src/main/debian/jetty6.postrm	(revision 580)
++++ contrib/debian/src/main/debian/jetty6.postrm	(working copy)
+@@ -3,12 +3,12 @@
+ #DEBHELPER#
+ 
+ # Remove cached files
+-rm -rf /var/cache/jetty6/*
++rm -rf /var/cache/hightide/*
+ 
+ case "$1" in
+     purge)
+ 	userdel jetty || true
+-        rm -rf /var/log/jetty6
++        rm -rf /var/log/hightide
+     ;;
+ 
+     remove|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
+Index: contrib/debian/src/main/debian/jetty6.default
+===================================================================
+--- contrib/debian/src/main/debian/jetty6.default	(revision 580)
++++ contrib/debian/src/main/debian/jetty6.default	(working copy)
+@@ -2,6 +2,6 @@
+ 
+ NO_START=1 # change to 0 to allow Jetty to start
+ 
+-TMP=/var/cache/jetty6
++TMP=/var/cache/hightide
+ JAVA_OPTIONS="-Xmx256m -Djava.awt.headless=true"
+ JETTY_USER=jetty
+Index: contrib/debian/src/main/debian/libjetty6-java.links
+===================================================================
+--- contrib/debian/src/main/debian/libjetty6-java.links	(revision 580)
++++ contrib/debian/src/main/debian/libjetty6-java.links	(working copy)
+@@ -1,3 +1,4 @@
+-usr/share/jetty6/lib/servlet-api-2.5-${PROJECT.VERSION}.jar usr/share/java/jetty6-servlet2.5.jar
+-usr/share/jetty6/lib/jetty-util-${PROJECT.VERSION}.jar usr/share/java/jetty6-util.jar
+-usr/share/jetty6/lib/jetty-${PROJECT.VERSION}.jar usr/share/java/jetty6.jar
++usr/share/hightide/lib/servlet-api-2.5-${PROJECT.VERSION}.jar usr/share/java/hightide-servlet2.5.jar
++usr/share/hightide/lib/hightide-util-${PROJECT.VERSION}.jar usr/share/java/hightide-util.jar
++usr/share/hightide/lib/hightide-${PROJECT.VERSION}.jar usr/share/java/hightide.jar
++usr/share/hightide/lib/hightide-util-${PROJECT.VERSION}.jar usr/share/java/hightide-util.jar
+Index: contrib/debian/src/main/debian/libjetty6-extra-java.dirs
+===================================================================
+--- contrib/debian/src/main/debian/libjetty6-extra-java.dirs	(revision 580)
++++ contrib/debian/src/main/debian/libjetty6-extra-java.dirs	(working copy)
+@@ -1,8 +1,8 @@
+-usr/share/jetty6
+-usr/share/jetty6/lib
+-usr/share/jetty6/lib/annotations
+-usr/share/jetty6/lib/ext
+-usr/share/jetty6/lib/management
+-usr/share/jetty6/lib/naming
+-usr/share/jetty6/lib/plus
+-etc/jetty6
+\ No newline at end of file
++usr/share/hightide
++usr/share/hightide/lib
++usr/share/hightide/lib/annotations
++usr/share/hightide/lib/ext
++usr/share/hightide/lib/management
++usr/share/hightide/lib/naming
++usr/share/hightide/lib/plus
++etc/hightide
+Index: contrib/debian/src/main/debian/README.Debian
+===================================================================
+--- contrib/debian/src/main/debian/README.Debian	(revision 580)
++++ contrib/debian/src/main/debian/README.Debian	(working copy)
+@@ -1,18 +1,18 @@
+-jetty6 for Debian
++Hightide for Debian
+ ----------------
+ 
+-This debian package installs Jetty 6 into /usr/share/jetty6
++This debian package installs Hightide into /usr/share/hightide
+ and other directories under /var and /etc, which are linked to
+-from the /usr/share/jetty6 directory.
++from the /usr/share/hightide directory.
+ 
+-The configuration of the server is in /etc/jetty6. The configuration
+-files listed in /etc/jetty6/jetty.conf are passed to the command
+-line of Jetty when it is started by /etc/init.d/jetty6
++The configuration of the server is in /etc/hightide. The configuration
++files listed in /etc/hightide/jetty.conf are passed to the command
++line of Hightide when it is started by /etc/init.d/hightide
+ 
+-Webapps can be deployed by placing them in /var/lib/jetty6/webapps
+-(linked from /usr/share/jetty6/webapps)
++Webapps can be deployed by placing them in /var/lib/hightide/webapps
++(linked from /usr/share/hightide/webapps)
+ Additional contexts can be configured and (hot) deployed via the 
+-/etc/jetty6/contexts directory (linked from /usr/share/jetty6/contexts).
++/etc/hightide/contexts directory (linked from /usr/share/hightide/contexts).
+ 
+ This packaging is heavily based on the work done by Philipp Meier <meier@meisterbohne.de>
+ and Michael Koch <konqueror@gmx.de>.
+Index: contrib/debian/src/main/etc/start.config
+===================================================================
+--- contrib/debian/src/main/etc/start.config	(revision 580)
++++ contrib/debian/src/main/etc/start.config	(working copy)
+@@ -39,23 +39,30 @@
+ $(jetty.lib)/**                                  exists $(jetty.lib)
+ 
+ 
+-jetty.home=/usr/share/jetty6                     always 
++jetty.home=/usr/share/hightide                     always 
++hightide.home=$(jetty.home)
+ 
+ # The main class to run
+ org.mortbay.xml.XmlConfiguration.class
+ $(start.class).class
+ 
+ # The default configuration files
+-$(jetty.home)/etc/jetty.xml                      nargs == 0
++$(jetty.home)/etc/hightide.xml                      nargs == 0
+ 
+-# Optional stuff for libjetty6-extra-java
++# Optional stuff for libhightide-extra-java
+ /usr/share/java/gnumail.jar
+ /usr/share/java/activation.jar
+ /usr/share/java/ant.jar
+  
+ # Set the jetty classpath
+-/usr/share/jetty6/lib/annotations/*              java >= 1.5
+-/usr/share/jetty6/lib/**
++/usr/share/hightide/lib/annotations/*              java >= 1.5
++/usr/share/hightide/lib/**
+ 
+ # Add a resources directory if it is there
+ $(jetty.home)/resources/
++
++#logging properties file
++java.util.logging.config.file=$(jetty.home)/resources/logging.properties
++#logging manager
++java.util.logging.manager=com.webtide.hightide.log.SystemPropertyLogManager
++
+Index: contrib/debian/src/main/etc/jetty.conf
+===================================================================
+--- contrib/debian/src/main/etc/jetty.conf	(revision 580)
++++ contrib/debian/src/main/etc/jetty.conf	(working copy)
+@@ -1,3 +1,2 @@
+ # list of jetty configuration and property files
+-/etc/jetty6/jetty-logging.xml
+-/etc/jetty6/jetty.xml
++/etc/hightide/hightide.xml
+Index: contrib/debian/src/main/etc/jetty-extra.conf
+===================================================================
+--- contrib/debian/src/main/etc/jetty-extra.conf	(revision 580)
++++ contrib/debian/src/main/etc/jetty-extra.conf	(working copy)
+@@ -1,10 +1,9 @@
+ # list of jetty configuration and property files
+ # Replace jetty.conf with this file to use the extra features
+-/etc/jetty6/jetty-logging.xml
+-/etc/jetty6/jetty-jmx.xml
+-/etc/jetty6/jetty.xml
+-/etc/jetty6/jetty-jaas.xml
+-/etc/jetty6/jetty-plus.xml
+-/etc/jetty6/jetty-ajp.xml
+-/etc/jetty6/jetty-ssl.xml
+-/etc/jetty6/jetty-sslengine.xml
++/etc/hightide/jetty-jmx.xml
++/etc/hightide/jetty.xml
++/etc/hightide/jetty-jaas.xml
++/etc/hightide/jetty-plus.xml
++/etc/hightide/jetty-ajp.xml
++/etc/hightide/jetty-ssl.xml
++/etc/hightide/jetty-sslengine.xml
+Index: contrib/debian/anttasks.xml
+===================================================================
+--- contrib/debian/anttasks.xml	(revision 580)
++++ contrib/debian/anttasks.xml	(working copy)
+@@ -1,7 +1,7 @@
+ <project name="Jetty Debian" default="build-deb" basedir=".">
+ 	<target name="build-deb">
+-		<copy todir="${project.build.directory}/jetty6-${project.version}">
+-			<fileset dir="../..">
++		<copy todir="${project.build.directory}/hightide-${project.version}">
++			<fileset dir="../../../../../../">
+ 				<include name="lib/**"/>
+ 		                <include name="etc/**"/>
+ 		                <include name="bin/**"/>
+@@ -17,54 +17,73 @@
+                                 <exclude name="LICENSES/ccla-*"/>
+ 			</fileset>
+ 	       </copy>
+-               <copy todir="${project.build.directory}/jetty6-${project.version}">
++               <copy todir="${project.build.directory}/hightide-${project.version}">
+                         <fileset dir="src/main">
+                                 <include name="etc/**"/>
+-                                <include name="debian/**"/>
++                                <exclude name="debian/**"/>
+                                 <exclude name="**/.svn"/>
+                         </fileset>
+ 	       </copy>
++               <copy todir="${project.build.directory}/hightide-${project.version}/debian">
++                    <fileset dir="src/main/debian">
++                         <include name="jetty6*"/>
++                    </fileset>
++                    <globmapper from="jetty6*" to="hightide*"/>
++               </copy>
++               <copy todir="${project.build.directory}/hightide-${project.version}/debian">
++                    <fileset dir="src/main/debian">
++                         <include name="libjetty6*"/>
++                    </fileset>
++                    <globmapper from="libjetty6*" to="libhightide*"/>
++               </copy>
++               <copy todir="${project.build.directory}/hightide-${project.version}/debian">
++                    <fileset dir="src/main/debian">
++                         <include name="**"/>
++                         <exclude name="**/*jetty6*"/>
++                    </fileset>
++               </copy>
++
+ 		
+-	       <copy file="../../bin/jetty.sh" tofile="${project.build.directory}/jetty6-${project.version}/debian/jetty6.init"/>
++	       <copy file="../../../../../../bin/hightide.sh" tofile="${project.build.directory}/hightide-${project.version}/debian/hightide.init"/>
+ 		
+-	       <replace dir="${project.build.directory}/jetty6-${project.version}" token="$${PROJECT.VERSION}" value="${project.version}">
++	       <replace dir="${project.build.directory}/hightide-${project.version}" token="$${PROJECT.VERSION}" value="${project.version}">
+ 		  <include name="debian/**"/>
+ 	       </replace>
+ 		
+-	       <chmod perm="755" file="${project.build.directory}/jetty6-${project.version}/debian/rules"/>
++	       <chmod perm="755" file="${project.build.directory}/hightide-${project.version}/debian/rules"/>
+ 	      
+-	       <exec dir="${project.build.directory}/jetty6-${project.version}" failifexecutionfails="true" executable="dpkg-buildpackage" >
++	       <exec dir="${project.build.directory}/hightide-${project.version}" failifexecutionfails="true" executable="dpkg-buildpackage" >
+ 	       	<arg value="-rfakeroot"/>
+ 	       </exec>
+ 	       	
+ 	       <exec dir="${project.build.directory}" failifexecutionfails="true" executable="dpkg-deb">
+ 	       	<arg value="-b"/>
+-	        <arg value="jetty6-${project.version}/debian/libjetty6-java"/>
+-	       	<arg value="libjetty6-java_${project.version}_all.deb"/>
++	        <arg value="hightide-${project.version}/debian/libhightide-java"/>
++	       	<arg value="libhightide-java_${project.version}_all.deb"/>
+ 	       </exec>
+                 
+                <exec dir="${project.build.directory}" failifexecutionfails="true" executable="dpkg-deb">
+                 <arg value="-b"/>
+-                <arg value="jetty6-${project.version}/debian/libjetty6-extra-java"/>
+-                <arg value="libjetty6-extra-java_${project.version}_all.deb"/>
++                <arg value="hightide-${project.version}/debian/libhightide-extra-java"/>
++                <arg value="libhightide-extra-java_${project.version}_all.deb"/>
+                </exec>
+                 
+                <exec dir="${project.build.directory}" failifexecutionfails="true" executable="dpkg-deb">
+                 <arg value="-b"/>
+-                <arg value="jetty6-${project.version}/debian/jetty6"/>
+-                <arg value="jetty6_${project.version}_all.deb"/>
++                <arg value="hightide-${project.version}/debian/hightide"/>
++                <arg value="hightide_${project.version}_all.deb"/>
+                </exec>
+                 
+                <exec dir="${project.build.directory}" failifexecutionfails="true" executable="dpkg-deb">
+                 <arg value="-b"/>
+-                <arg value="jetty6-${project.version}/debian/jetty6-examples"/>
+-                <arg value="jetty6-examples_${project.version}_all.deb"/>
++                <arg value="hightide-${project.version}/debian/hightide-examples"/>
++                <arg value="hightide-examples_${project.version}_all.deb"/>
+                </exec>
+                 
+                <exec dir="${project.build.directory}" failifexecutionfails="true" executable="dpkg-deb">
+                 <arg value="-b"/>
+-                <arg value="jetty6-${project.version}/debian/libjetty6-jsp-java"/>
+-                <arg value="libjetty6-jsp-java_${project.version}_all.deb"/>
++                <arg value="hightide-${project.version}/debian/libhightide-jsp-java"/>
++                <arg value="libhightide-jsp-java_${project.version}_all.deb"/>
+                </exec>
+ 	       
+ 	</target>     
+Index: contrib/debian/README.TXT
+===================================================================
+--- contrib/debian/README.TXT	(revision 580)
++++ contrib/debian/README.TXT	(working copy)
+@@ -1,4 +1,11 @@
++Preparation
++-----------
++Ensure you have the following packages installed:
++  + dpkg
++  + cdbs
++  + fakeroot
+ 
++
+ Running 
+   mvn install
+ 

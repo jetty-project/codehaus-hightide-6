@@ -1,0 +1,15 @@
+Index: pom.xml
+===================================================================
+--- pom.xml	(revision 3509)
++++ pom.xml	(working copy)
+@@ -148,8 +148,8 @@
+     <module>modules/jsp-2.0</module>
+     <module>modules/management</module>
+     <module>modules/start</module>
+-    <module>modules/maven-plugin</module>
+-    <module>modules/jspc-maven-plugin</module>
++    <!--<module>modules/maven-plugin</module>-->
++    <!--<module>modules/jspc-maven-plugin</module>-->
+     <module>modules/naming</module>
+     <module>modules/plus</module>
+     <module>modules/html</module>

@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?><project>
+  <parent>
+    <artifactId>hightide</artifactId>
+    <groupId>org.mortbay.hightide</groupId>
+    <version>6.1H-SNAPSHOT</version>
+    <relativePath>../../pom.xml</relativePath>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>jetty-resources</artifactId>
+  <packaging>pom</packaging>
+  <name>Jetty Resources</name>
+  <build>
+    <defaultGoal>install</defaultGoal>
+    <plugins>
+      <plugin>
+        <artifactId>maven-scm-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>checkout-sources</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>checkout</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <connectionUrl>scm:svn:http://svn.codehaus.org/jetty/jetty/branches/jetty-6.1</connectionUrl>
+          <checkoutDirectory>${project.build.directory}/jetty</checkoutDirectory>
+	  <!--<scmVersion>jetty-${jetty-version}</scmVersion>
+	  <scmVersionType>tag</scmVersionType>-->		  
+          <skipCheckoutIfExists>true</skipCheckoutIfExists>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>clean</id>
+            <phase>clean</phase>
+            <configuration>
+              <tasks>
+                <delete failonerror="false" includeemptydirs="true">
+                 <fileset dir="../../webapps/jetty-examples" includes="**/**"/>                 
+		 <fileset dir="../../webapps/cometd-demo" includes="**/**"/>
+                 <fileset dir="../../" includes="start.jar"/>
+                 <fileset dir="../../lib" includes="**/*"/>
+                 <fileset dir="../../bin" includes="**/**"/>
+                </delete>
+              </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>generate-sources</id>
+            <phase>process-sources</phase>  
+            <configuration>
+              <tasks>
+                <echo message="Removing .svn files ..."/>
+                <delete includeemptydirs="true">
+                  <fileset dir="${project.build.directory}/jetty" includes="**/.svn/**" defaultexcludes="no"/>
+                </delete>
+
+                <echo message="Protect from double patch ..."/>
+                <delete file="${project.build.directory}/jetty/modules/util/src/main/java/org/mortbay/util/ConcurrentMultiMap.java"/>
+
+                <echo message="Fixing the patch file for local conventions..." />
+                <fixcrlf srcdir="${project.build.directory}/jetty/patches/" includes="**/*.patch" />
+		<fixcrlf srcdir="src/main/patches/" includes="**/*.patch" />
+                <echo message="Starting to applying patches... " />
+                <patch  dir="${project.build.directory}/jetty/" patchfile="${project.build.directory}/jetty/patches/java5.patch" ignorewhitespace="true" strip="0" />
+                <patch  dir="${project.build.directory}/jetty/" patchfile="src/main/patches/jetty-parent-pom.patch" ignorewhitespace="true" strip="0" />                
+                <patch  dir="${project.build.directory}/jetty/" patchfile="src/main/patches/start-config.patch" ignorewhitespace="true" strip="0" />
+                <patch  dir="${project.build.directory}/jetty/" patchfile="src/main/patches/test-webapps.patch" ignorewhitespace="true" strip="0" />
+                <patch  dir="${project.build.directory}/jetty/" patchfile="src/main/patches/webdefault_xml.patch" ignorewhitespace="true" strip="0" />
+                <patch  dir="${project.build.directory}/jetty/contrib/" patchfile="src/main/patches/cometd-demo.patch" ignorewhitespace="true" strip="0" />
+
+                  <replace dir="${project.build.directory}/jetty" token="${jetty-version}" value="${project.version}">
+                    <include name="**/pom.xml"/>
+                  </replace>
+                  <replace file="${project.build.directory}/jetty/examples/test-webapp/src/main/webapp/WEB-INF/web.xml">					            <replacetoken><![CDATA[version="2.5">]]></replacetoken>
+                    <replacevalue><![CDATA[version="2.5" metadata-complete="true">]]></replacevalue>
+                  </replace>
+                  <replace file="${project.build.directory}/jetty/contrib/cometd/demo/src/main/webapp/WEB-INF/web.xml">					
+                    <replacetoken><![CDATA[version="2.5">]]></replacetoken>
+                    <replacevalue><![CDATA[version="2.5" metadata-complete="true">]]></replacevalue>
+                  </replace>
+                <patch  dir="${project.build.directory}/jetty/" patchfile="src/main/patches/default-plusConfig.patch" ignorewhitespace="true" strip="0" />				
+                <patch dir="${project.build.directory}/jetty/" patchfile="src/main/patches/jetty-sh.patch" ignorewhitespace="true" strip="0"/>
+                <patch dir="${project.build.directory}/jetty/" patchfile="src/main/patches/debian.patch" ignorewhitespace="true" strip="0"/>
+                <replace file="${project.build.directory}/jetty/contrib/debian/src/main/debian/changelog">
+                    <replacefilter
+                       token="${jetty-version}-1"
+                       value="${project.version}-1"/>
+                    <replacefilter
+                       token="jetty6"
+                       value="hightide"/>
+                    <replacefilter
+                       token="jetty 6"
+                       value="hightide"/>
+                    <replacefilter
+                       token="Greg Wilkins &lt;gregw@mortbay.com&gt;"
+                       value="Jan Bartel &lt;janb@mortbay.com&gt;"/>
+                </replace>
+                <echo message="Finished applying patches... " />
+              </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>install</id>
+            <phase>install</phase>
+            <configuration>
+              <tasks>
+                <mkdir dir="../../bin"/>
+                <copy file="${project.build.directory}/jetty/bin/jetty.sh" tofile="../../bin/hightide.sh"/>
+                <chmod dir="../../bin" perm="ugo+rx" includes="**/*.sh"/>
+                <copy file="${project.build.directory}/jetty/start.jar" tofile="../../start.jar" />
+                <copy todir="../../lib">
+                  <fileset dir="${project.build.directory}/jetty/lib">
+                    <exclude name="**/slf4j*.jar"/>
+                    <exclude name="**/jcl104-over-slf4j*.jar"/>
+                    <exclude name="jsp-2.0/**"/>
+                    <exclude name="grizzly/**"/>
+                    <exclude name="management/mx4j/**"/>
+                    <exclude name="cometd/**"/>
+                  </fileset>
+                </copy>
+                <copy  todir="../../lib/ext">
+                  <fileset dir="${project.build.directory}/jetty/lib">
+                    <include name="cometd/**"/>
+                  </fileset>
+                </copy>
+                <copy todir="../../etc">
+                  <fileset dir="${project.build.directory}/jetty/etc">
+                    <include name="**/webdefault.xml"/>
+                    <exclude name="**/*.xml"/>
+                  </fileset>
+                </copy>
+                <mkdir dir="../../webapps/jetty-examples"/>
+                <copy todir="../../webapps/jetty-examples">
+                  <fileset dir="${project.build.directory}/jetty/webapps/test">
+                    <include name="**/**"/>
+                  </fileset>
+                </copy>
+                <chmod dir="../../webapps/jetty-examples" perm="ugo+rx" includes="**/*.sh"/>
+		<!--<replace file="${project.build.directory}/jetty/contrib/cometd-demo/target/cometd-demo-${project.version}/index.html" value=" ">
+		<replacetoken><![CDATA[Try the <a href="examples/magnets/">the magnet demo</a>.</br>]]></replacetoken>
+		</replace>
+		<replace file="${project.build.directory}/jetty/contrib/cometd-demo/target/cometd-demo-${project.version}/index.html" value=" ">
+			<replacetoken><![CDATA[Try the <a href="examples/chatmagnets/">combined chat/magnet demo</a>.</br>]]></replacetoken>
+		</replace>-->
+                <mkdir dir="../../webapps/cometd-demo"/>
+                <copy todir="../../webapps/cometd-demo">
+                  <fileset dir="${project.build.directory}/jetty/contrib/cometd/demo/target/cometd-demo-${project.version}">
+                    <exclude name="WEB-INF/lib/"/>
+                  </fileset>
+                </copy>				
+				
+              </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.1</version> 
+        <executions>
+          <execution>
+            <id>exec-jetty-install</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <arguments>
+                <argument>-Dmaven.test.skip=true</argument>
+                 <argument>-Djetty.version=${jetty-version}</argument>
+                <argument>install</argument>
+              </arguments>
+            </configuration>
+          </execution>
+          <execution>
+            <id>exec-jetty-deploy</id>
+            <phase>deploy</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <arguments>
+                <argument>-Dmaven.test.skip=true</argument>
+                 <argument>-Djetty.version=${jetty-version}</argument>
+                <argument>deploy</argument>
+              </arguments>
+            </configuration>
+          </execution>
+        </executions>
+        <configuration>
+          <executable>mvn</executable>
+          <workingDirectory>target/jetty</workingDirectory>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <properties>
+    <topDirectoryLocation>../..</topDirectoryLocation>
+  </properties>
+</project>
