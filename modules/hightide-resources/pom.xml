@@ -165,7 +165,7 @@
                 <delete>
                   <fileset dir="../../lib/ext/activemq">
                     <include name="jetty*.jar"/>
-					<include name="activation*.jar"/>
+                    <include name="activation*.jar"/>
                   </fileset>
                 </delete>
               </tasks>
@@ -193,7 +193,7 @@
           <groupId>org.springframework</groupId>
         </exclusion>
       </exclusions>
-    </dependency>	
+    </dependency>
     <dependency>
       <groupId>org.apache.geronimo.specs</groupId>
       <artifactId>geronimo-j2ee-management_1.0_spec</artifactId>

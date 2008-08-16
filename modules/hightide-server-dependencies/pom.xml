@@ -14,12 +14,12 @@
     <dependency>
       <groupId>org.mortbay.jetty</groupId>
       <artifactId>jetty</artifactId>
-      <version>${project.version}</version>	  
+      <version>${project.version}</version>
     </dependency>  
     <dependency>
       <groupId>org.mortbay.jetty</groupId>
       <artifactId>jetty-util</artifactId>
-      <version>${project.version}</version>	  
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.mortbay.jetty</groupId>
@@ -45,16 +45,16 @@
       <groupId>org.mortbay.jetty</groupId>
       <artifactId>jetty-management</artifactId>
       <version>${project.version}</version>
-	  <exclusions>
-	    <exclusion>
-		  <groupId>mx4j</groupId>
-		  <artifactId>mx4j</artifactId>
-		</exclusion>
-	    <exclusion>
-		  <groupId>mx4j</groupId>
-		  <artifactId>mx4j-tools</artifactId>
-		</exclusion>		
-	  </exclusions>	  
+    <exclusions>
+        <exclusion>
+        <groupId>mx4j</groupId>
+        <artifactId>mx4j</artifactId>
+        </exclusion>
+        <exclusion>
+        <groupId>mx4j</groupId>
+        <artifactId>mx4j-tools</artifactId>
+        </exclusion>
+    </exclusions>
     </dependency>
     <dependency>
       <groupId>org.mortbay.jetty</groupId>
@@ -84,58 +84,53 @@
         <exclusion>
           <artifactId>spring-webmvc</artifactId>
           <groupId>org.springframework</groupId>
-        </exclusion>		
+        </exclusion>
         <exclusion>
           <artifactId>activeio-core</artifactId>
           <groupId>org.apache.activemq</groupId>
-        </exclusion>		
+        </exclusion>
       </exclusions>
-    </dependency>	
+    </dependency>
     <dependency>
       <groupId>com.atomikos</groupId>
       <artifactId>transactions</artifactId>
-	  <version>${atomikos-version}</version>	  
+    <version>${atomikos-version}</version>
     </dependency>
     <dependency>
       <groupId>com.atomikos</groupId>
       <artifactId>transactions-api</artifactId>
-	  <version>${atomikos-version}</version>
-    </dependency>	
+    <version>${atomikos-version}</version>
+    </dependency>
     <dependency>
       <groupId>com.atomikos</groupId>
       <artifactId>transactions-jta</artifactId>
-	  <version>${atomikos-version}</version>
+    <version>${atomikos-version}</version>
     </dependency>
     <dependency>
       <groupId>com.atomikos</groupId>
       <artifactId>atomikos-util</artifactId>
-	  <version>${atomikos-version}</version>
+    <version>${atomikos-version}</version>
     </dependency>
     <dependency>
       <groupId>com.atomikos</groupId>
       <artifactId>transactions-jdbc</artifactId>
-	  <version>${atomikos-version}</version>
+    <version>${atomikos-version}</version>
     </dependency>
     <dependency>
       <groupId>com.atomikos</groupId>
       <artifactId>transactions-jdbc-deprecated</artifactId>
-	  <version>${atomikos-version}</version>
+    <version>${atomikos-version}</version>
     </dependency>    
     <dependency>
       <groupId>org.apache.derby</groupId>
       <artifactId>derby</artifactId>
-	  <version>${derby-version}</version>
+    <version>${derby-version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.derby</groupId>
       <artifactId>derbytools</artifactId>
-	  <version>${derby-version}</version>
+    <version>${derby-version}</version>
     </dependency>
-    <!--<dependency>
-      <groupId>joda-time</groupId>
-      <artifactId>joda-time</artifactId>
-      <version>${joda-version}</version>
-    </dependency>-->	
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
@@ -145,10 +140,10 @@
       <groupId>org.slf4j</groupId>
       <artifactId>jcl104-over-slf4j</artifactId>
       <version>${slf4j-version}</version>
-    </dependency>		
+    </dependency>
   </dependencies>
   <properties>    
-	<topDirectoryLocation>../..</topDirectoryLocation>
-	<joda-version>1.2.1</joda-version>
+    <topDirectoryLocation>../..</topDirectoryLocation>
+    <joda-version>1.2.1</joda-version>
   </properties>   
 </project>
