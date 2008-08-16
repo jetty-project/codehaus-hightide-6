@@ -75,9 +75,9 @@
         <version>1.0-alpha-6</version>
       </extension>
       <extension>
-	<groupId>org.apache.maven.wagon</groupId>
-	<artifactId>wagon-webdav</artifactId>
-	<version>1.0-beta-1</version>
+    <groupId>org.apache.maven.wagon</groupId>
+    <artifactId>wagon-webdav</artifactId>
+    <version>1.0-beta-1</version>
       </extension>
     </extensions>
     <defaultGoal>install</defaultGoal>
@@ -97,12 +97,12 @@
     <module>modules/hightide-resources</module>
     <module>modules/hightide-util</module>
     <module>modules/hightide-portable-dependencies</module>
-	<module>modules/hightide-provided-apis</module>    
-	<module>modules/hightide-server-dependencies</module>    
-	<module>modules/maven-plugin</module>
-    <module>examples/auctiondemo</module>  
-    <module>examples/welcome</module>  
-    <module>examples/root</module>  
+    <module>modules/hightide-provided-apis</module>    
+    <module>modules/hightide-server-dependencies</module>    
+    <module>modules/maven-plugin</module>
+    <!--<module>examples/auctiondemo</module>
+    <module>examples/welcome</module>
+    <module>examples/root</module>-->
   </modules>
   <repositories>
    <repository>
@@ -168,7 +168,7 @@
         <groupId>org.apache.geronimo.specs</groupId>
         <artifactId>geronimo-annotation_1.0_spec</artifactId>
         <version>${geronimo-spec-version}</version>
-       </dependency>	   
+       </dependency>
       <dependency>
         <groupId>org.directwebremoting</groupId>
         <artifactId>dwr</artifactId>
@@ -204,7 +204,7 @@
     <jta-spec-version>1.0.1B-rc4</jta-spec-version>
     <geronimo-spec-version>1.1</geronimo-spec-version>
     <geronimo-spec-jta-version>1.0.1B-rc4</geronimo-spec-jta-version>	
-	<mail-version>1.4</mail-version>
-	<activation-version>1.1</activation-version>
+    <mail-version>1.4</mail-version>
+    <activation-version>1.1</activation-version>
   </properties>
 </project>
