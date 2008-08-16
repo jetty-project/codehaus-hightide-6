@@ -1,0 +1,127 @@
+Hightide Release Notes
+======================
+
+These notes are for Hightide 6.1H-SNAPSHOT release.
+
+
+Prerequisites
+============
++ JRE 5.0 
+
+
+Installation
+============
+After downloading from http://www.webtide.com/downloads.jsp, unzip the distribution to 
+the directory of your choice.
+
+Follow the instructions for Running Hightide to verify your installation has succeeded.
+
+
+
+Running
+=======
+
+    Standalone
+    ----------
+
+    To run Hightide, simply change to the top level of the unzipped distribution and type:
+
+    java -jar start.jar
+
+    Surf to http://localhost:8080. If you have been successful, you will see a welcome
+    page containing information about this product.
+
+
+
+    Using the maven-hightide-plugin
+    -------------------------------
+    mvn hightide:run
+    mvn hightide:run-war
+    mvn hightide:run-exploded
+
+    Hightide provides a Maven plugin for quickly and easily testing your
+    web applications. This plugin works similarly to the Jetty maven plugin
+    (see http://docs.codehaus.org/display/JETTY/Maven+Jetty+Plugin for more
+    information).
+
+    The Hightide plugin provides full, out-of-the-box support for all
+    features of the standalone server, such as JTA, JMS, JNDI, JDBC. 
+    As with Hightide standalone, the ActiveMQ, Atomikos and Derby 
+    jars are automatically on the classpath when the plugin is run.
+    
+    If you want to use a different JTA implementation, then you can 
+    configure it by using the <transaction> element in the plugin's 
+    <configuration> in your pom.xml.
+
+    For an example of configuring the plugin, look at 
+    $hightide.home/examples/auctiondemo/pom.xml.
+
+
+Maven Support
+=============
+
+    Hightide API Dependencies
+    -------------------------
+    location: $hightide.home/modules/hightide-provided-apis
+    
+    If you have a webapp built by maven2, you can declare this module as a 
+    dependency of your webapp, to 	include all the J2EE APIs when building 
+    your project.
+    
+    <dependency>
+      <groupId>org.mortbay.hightide</groupId>
+      <artifactId>hightide-provided-apis</artifactId>
+      <version>6.1H-SNAPSHOT</version>
+      <type>pom</type>
+      <scope>provided</scope>
+    </dependency>
+
+    Hightide Dependencies
+    ---------------------
+    location: $hightide.home/modules/hightide-server-dependencies
+    
+    These module lists all the dependencies run by Hightide including 
+    ActiveMQ, Atomikos, Derby, SLF4J, Joda-time, etc...
+    
+    <dependency>
+      <groupId>org.mortbay.hightide</groupId>
+      <artifactId>hightide-server-dependencies</artifactId>
+      <version>6.1H-SNAPSHOT</version>
+      <type>pom</type>
+      <scope>provided</scope>
+    </dependency>
+    
+    When the maven-hightide-plugin is run, all dependencies listed on 
+    hightide-provided-apis and 	hightide-server-dependencies will be 
+    available/loaded on your webapp's classpath.
+
+Reminders
+=========
+
+If you do not want to use annotations, add this attribute 
+(metadata-complete="true") to the "<web-app>" element on your web.xml.
+e.g.
+<web-app 
+   xmlns="http://java.sun.com/xml/ns/javaee" 
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" 
+   version="2.5" metadata-complete="true"> 
+
+
+Versions
+========
+This distribution of Hightide contains the following software:
+
++ ActiveMQ:  5.1.0
++ Atomikos: 3.3.2
++ Derby: 10.4.1.3
++ DWR: 2.0.5
++ Jetty: 6.1-SNAPSHOT
++ SLF4J: 1.3.1
+
+
+Support
+=======
+Commercial support is available for this product from Webtide by
+visiting the support page at http://www.webtide.com/support.jsp
+or sending an email to info@webtide.com.

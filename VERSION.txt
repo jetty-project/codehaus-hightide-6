@@ -1,0 +1,58 @@
+hightide-6.1H-SNAPSHOT
++ dwr to 2.0.5
++ atomikos version updated to 3.3.2
++ updated hightide.xml to have same id names as jetty.xml (e.g "contexts" to "Contexts")
+
+hightide-6.1H.11
+ + dwr to 2.0.4
+ + added additional TLD exclusions on webdefault.xml
+ + atomikos version updated to 3.3.1
+
+hightide-6.1H.10
+ + activeMQ to 5.1.0
+ + derby to 10.4.1.3
+ + jetty to jetty-6.1.10
+
+hightide-6.1H.8 
+ + activeMQ to 5.0.0
+ + atomikos version updated to 3.2.3
+ + dwr to 2.0.3
+ + derby to 10.3.2.1
+ + jetty to jetty-6.1.8
+ 
+hightide-6.1H.7
+ + update to jetty-6.1.7
+
+hightide-6.1H.6
+ + atomikos version updated to 3.2.1
+ + dwr updated to 2.0.2
+
+hightide-6.1H.6rc0
+ + derby version updated to 10.3.1.4
+ + atomikos version updated to 3.2.0
+ + dependency on joda-time removed 
+
+hightide-6.1H.5-beta - 24 Jul 2007
+ + rpm server log outputs to /var/log/highitde6/server-*.log
+ + rpm packaging
+ + fixed dojox.cometd multiple callback bug
+ + cometd dependency changed to cometd-bayeux
+ + atomikos version updated to 3.1.7
+
+hightide-6.1H.4-beta - 15 Jun 2007
+ + added additional J2EE apis to hightide-provided-apis module
+ + created hightide-server-dependencies module
+ + out-of-the-box support on J2EE features such as JNDI, JMS , Transactions and Annotations without plus config
+ + live log viewer now using cometd/bayeux
+ + released maven-hightide-plugin
+ + JNDI, Annotations, JMS(Amq) and Transaction(Atomikos) available when plugin is run.
+ + configurable <transaction>(optional parameter) on maven-hightide-plugin
+ + added SslSelectChannelConnector config on etc/hightide.xml with a keystore on etc/keystore
+ + improved performance overall
+
+hightide-6.1H.4rc1 - 10 Jun 2007
+ + live log viewer using activemq
+ + used ConcurrentHashMap over HashMap
+ + improved SessionManagement performance
+ + hightide-provided-apis
+ + using joda-time for DateFormatter
