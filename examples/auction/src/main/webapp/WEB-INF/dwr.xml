@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dwr PUBLIC "-//GetAhead Limited//DTD Direct Web Remoting 2.0//EN" "http://getahead.org/dwr/dwr20.dtd">
+<dwr>
+  <allow>
+    <create creator="new" scope="application" javascript="AuctionManager">
+      <param name="class" value="org.mortbay.hightide.example.auction.AuctionManager"/>
+      <include method="registerBidder"/>
+      <include method="addBid"/>
+      <include method="getAllBids"/>
+      <include method="getHighestBid"/>
+    </create>
+    <create creator="new" scope="application" javascript="Catalog">
+      <param name="class" value="org.mortbay.hightide.example.auction.Catalog"/>
+      <include method="getCategories"/>
+      <include method="getItemsInCategory"/>
+      <include method="findItems"/>
+    </create>
+    <create creator="new" javascript="Bid">
+      <param name="class" value="org.mortbay.hightide.example.auction.Bid"/>
+      <include method="getItemId"/>
+      <include method="getFormattedAmount"/>
+      <include method="getAmount"/>
+      <include method="getBidder"/>
+    </create>
+    <create creator="new" scope="application" javascript="Chat">
+      <param name="class" value="org.mortbay.hightide.example.auction.Chat"/>
+      <include method="getMembers"/>
+      <include method="sendMessage"/>
+      <include method="join"/>
+      <include method="leave"/>
+    </create>
+    <convert converter="bean" match="org.mortbay.hightide.example.auction.AuctionItem">
+      <param name="include" value="id,itemName,description,formattedAmount"/>
+    </convert>
+    <convert converter="bean" match="org.mortbay.hightide.example.auction.Category">
+      <param name="include" value="id,categoryName,description" />
+    </convert>
+    <convert converter="bean" match="org.mortbay.hightide.example.auction.Bid">
+      <param name="include" value="itemId,formattedAmount,amount,bidder"/>
+    </convert>
+    <convert converter="bean" match="org.mortbay.hightide.example.auction.Bidder">
+      <param name="include" value="id,username"/>
+    </convert>
+  </allow>
+</dwr>

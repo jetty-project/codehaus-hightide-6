@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN" "http://jetty.mortbay.org/configure.dtd">
+
+<Configure class="org.mortbay.jetty.webapp.WebAppContext">
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- XA DataSource for the demo                                  -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <New id="auctionds" class="org.mortbay.jetty.plus.naming.Resource">
+      <Arg>jdbc/auctionds</Arg>
+      <Arg>
+       <New class="com.atomikos.jdbc.AtomikosDataSourceBean">
+        <Set name="minPoolSize">2</Set>
+        <Set name="maxPoolSize">50</Set>
+        <Set name="xaDataSourceClassName">org.apache.derby.jdbc.EmbeddedXADataSource</Set>
+        <Set name="UniqueResourceName">auctionds</Set>
+        <Get name="xaProperties">
+          <Call name="setProperty">
+            <Arg>databaseName</Arg>
+            <Arg>auctionDB</Arg>
+          </Call>
+          <Call name="setProperty">
+            <Arg>createDatabase</Arg>
+            <Arg>create</Arg>
+          </Call>
+        </Get>
+       </New>
+      </Arg>
+    </New>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- XA DataSource for the clustered demo. Requires an external DB -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!--
+    <New id="auctionds" class="org.mortbay.jetty.plus.naming.Resource">
+      <Arg>jdbc/auctionds</Arg>
+      <Arg>
+       <New class="com.atomikos.jdbc.nonxa.NonXADataSourceBean">
+        <Set name="driverClassName">org.postgresql.Driver</Set>
+        <Set name="url">jdbc:postgresql://localhost/auctiondb</Set>
+        <Set name="user">auction</Set>
+        <Set name="password">auction</Set>
+       </New>
+      </Arg>
+    </New>
+-->
+
+    <!-- =========================================================== -->
+    <!-- NonXA TopicConnectionFactory                                -->
+    <!-- =========================================================== -->
+    <New id="connectionFactory" class="org.mortbay.jetty.plus.naming.Resource">
+      <Arg>jms/connectionFactory</Arg>
+      <Arg>
+        <New class="org.apache.activemq.ActiveMQConnectionFactory">
+          <Arg>vm://localhost?broker.persistent=false</Arg>
+        </New>
+      </Arg>
+    </New>
+
+    <!-- ========================================================================================== -->
+    <!-- NonXA TopicConnectionFactory for the clustered demo. Required an ActiveMQ external broker. -->
+    <!-- ========================================================================================== -->
+<!--
+    <New id="connectionFactory" class="org.mortbay.jetty.plus.naming.Resource">
+      <Arg>jms/connectionFactory</Arg>
+      <Arg>
+        <New class="org.apache.activemq.ActiveMQConnectionFactory">
+            <Arg>tcp://localhost:61616?trace=true</Arg>
+        </New>
+      </Arg>
+    </New>
+-->
+
+</Configure>
