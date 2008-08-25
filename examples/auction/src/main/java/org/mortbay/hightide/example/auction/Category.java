@@ -12,7 +12,7 @@
 // limitations under the License.
 // ========================================================================
 
-package org.mortbay.demo.auction;
+package org.mortbay.hightide.example.auction;
 
 
 /**
