@@ -1,0 +1,60 @@
+<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\">
+  <head>
+    <META http-equiv="Pragma" content="no-cache">
+    <META http-equiv="Cache-Control" content="no-cache,no-store">
+    <META HTTP-EQUIV="Content-Script-Type" CONTENT="text/javascript">
+    <title>HighTide Debug Log</title>
+    <script type="text/javascript" src="/welcome/effect.js"></script>
+    <script type="text/javascript" src='/welcome/prototype.js'></script>
+    <script type="text/javascript" src='/welcome/builder.js'></script>
+    <script type="text/javascript" src='/welcome/effects.js'></script>
+    <script type="text/javascript" src='/welcome/scriptaculous.js'></script>
+    <script type="text/javascript" src="/welcome/behaviour.js"></script>
+    <script type="text/javascript" src="dojo/dojo/dojo.js.uncompressed.js"></script>
+    <script type="text/javascript" src="dojo/dojox/cometd.js.uncompressed.js"></script>
+    <script type="text/javascript" src="/welcome/hightide.js"></script>
+    <script type="text/javascript">dojox.cometd.init("/welcome/cometd");</script>
+
+    <style type="text/css" title="hightide">
+      @import url(css/log.css);
+    </style>
+  </head>
+  <body>
+  <center>
+  <div id="header"></div>
+    <div id="central">
+      <h1>live log viewer</h1>
+      <p>
+       <center>
+      ( 100 most recent debug log entries; page will refresh automatically )
+       </center>
+      </p>
+      <table id="key">
+        <thead><tr><th colspan="8" align="center">Key</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="SEVERE">SEVERE</td>
+            <td class="WARNING">WARNING</td>
+            <td class="INFO">INFO</td>
+            <td class="CONFIG">CONFIG</td>
+            <td class="FINE">FINE</td>
+            <td class="FINER">FINER</td>
+            <td class="FINEST">FINEST</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </center>
+  <div id="content">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th><th>Time</th><th>Thread</th><th>Logger</th><th>Message/Exception</th>
+          </tr>
+        </thead>
+        <tbody id="log">
+        </tbody>
+      </table>
+  </div>
+  </body>
+</html>
