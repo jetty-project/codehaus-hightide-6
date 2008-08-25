@@ -100,9 +100,9 @@
     <module>modules/hightide-provided-apis</module>    
     <module>modules/hightide-server-dependencies</module>    
     <module>modules/maven-plugin</module>
-    <!--<module>examples/auctiondemo</module>
+    <module>examples/auction</module>
     <module>examples/welcome</module>
-    <module>examples/root</module>-->
+    <module>examples/root</module>
   </modules>
   <repositories>
    <repository>
