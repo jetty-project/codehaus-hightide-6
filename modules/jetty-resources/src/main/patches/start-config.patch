@@ -31,4 +31,4 @@ Index: modules/start/src/main/resources/org/mortbay/start/start.config
 +#logging properties file
 +java.util.logging.config.file=$(jetty.home)/resources/logging.properties
 +#logging manager
-+java.util.logging.manager=com.webtide.hightide.log.SystemPropertyLogManager
++java.util.logging.manager=org.mortbay.hightide.log.SystemPropertyLogManager
