@@ -9,7 +9,7 @@
 
   <listener>
     <listener-class>
-        org.morbtay.hightide.example.log.BayeuxListener
+        org.mortbay.hightide.example.log.BayeuxListener
     </listener-class>
   </listener>
 
