@@ -1,6 +1,6 @@
 Index: bin/jetty.sh
 ===================================================================
---- bin/jetty.sh	(revision 2218)
+--- bin/jetty.sh	(revision 3565)
 +++ bin/jetty.sh	(working copy)
 @@ -64,14 +64,14 @@
  #    <Set name="Port">8080</Set>
@@ -59,7 +59,7 @@ Index: bin/jetty.sh
          "
          
    JETTY_HOME=
-@@ -325,7 +317,7 @@
+@@ -328,7 +320,7 @@
  #####################################################
  if [ -z "$CONFIGS" ] 
  then
@@ -68,7 +68,7 @@ Index: bin/jetty.sh
  fi
  
  
-@@ -342,7 +334,7 @@
+@@ -345,7 +337,7 @@
  #####################################################
  if [  -z "$JETTY_PID" ] 
  then
@@ -77,7 +77,7 @@ Index: bin/jetty.sh
  fi
  
  
-@@ -440,7 +432,7 @@
+@@ -450,7 +442,7 @@
  #####################################################
  # Add jetty properties to Java VM options.
  #####################################################
@@ -86,7 +86,7 @@ Index: bin/jetty.sh
  
  [ -f $JETTY_HOME/etc/start.config ] && JAVA_OPTIONS="-DSTART=$JETTY_HOME/etc/start.config $JAVA_OPTIONS"
  
-@@ -473,10 +465,10 @@
+@@ -483,10 +475,10 @@
  ##################################################
  case "$ACTION" in
    start)
@@ -99,10 +99,10 @@ Index: bin/jetty.sh
            exit 0;
  	fi
  
-@@ -513,13 +505,13 @@
- 	  PID=$!
- 	  disown $PID
-           echo $PID > $JETTY_PID
+@@ -530,13 +522,13 @@
+               echo $PID > $JETTY_PID
+           fi
+ 
 -          echo "STARTED Jetty `date`" 
 +          echo "STARTED Hightide `date`" 
          fi
@@ -112,10 +112,10 @@ Index: bin/jetty.sh
    stop)
 -        echo -n "Stopping Jetty: "
 +        echo -n "Stopping Hightide: "
- 	if which start-stop-daemon > /dev/null ; then
+ 	if which start-stop-daemon > /dev/null 2>&1; then
  	  start-stop-daemon -K -p $JETTY_PID -d $JETTY_HOME -a $JAVA -s HUP 
  	  sleep 1
-@@ -563,7 +555,7 @@
+@@ -595,7 +587,7 @@
           ;;
  
    run|demo)
@@ -124,7 +124,7 @@ Index: bin/jetty.sh
  
          if [ -f $JETTY_PID ]
          then
-@@ -575,7 +567,7 @@
+@@ -607,7 +599,7 @@
          ;;
  
    check)
@@ -133,7 +133,7 @@ Index: bin/jetty.sh
          echo "JETTY_HOME     =  $JETTY_HOME"
          echo "JETTY_CONF     =  $JETTY_CONF"
          echo "JETTY_RUN      =  $JETTY_RUN"
-@@ -588,9 +580,9 @@
+@@ -621,9 +613,9 @@
          echo "RUN_CMD        =  $RUN_CMD"
          echo
          
@@ -145,3 +145,8 @@ Index: bin/jetty.sh
              exit 0
          fi
          exit 1
+@@ -637,3 +629,4 @@
+ exit 0
+ 
+ 
++
