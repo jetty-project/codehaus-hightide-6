@@ -1,6 +1,6 @@
 Index: bin/jetty.sh
 ===================================================================
---- bin/jetty.sh	(revision 3565)
+--- bin/jetty.sh	(revision 3573)
 +++ bin/jetty.sh	(working copy)
 @@ -64,14 +64,14 @@
  #    <Set name="Port">8080</Set>
@@ -112,7 +112,7 @@ Index: bin/jetty.sh
    stop)
 -        echo -n "Stopping Jetty: "
 +        echo -n "Stopping Hightide: "
- 	if which start-stop-daemon > /dev/null 2>&1; then
+ 	if type start-stop-daemon > /dev/null 2>&1; then
  	  start-stop-daemon -K -p $JETTY_PID -d $JETTY_HOME -a $JAVA -s HUP 
  	  sleep 1
 @@ -595,7 +587,7 @@
@@ -145,8 +145,3 @@ Index: bin/jetty.sh
              exit 0
          fi
          exit 1
-@@ -637,3 +629,4 @@
- exit 0
- 
- 
-+
