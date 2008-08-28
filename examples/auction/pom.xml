@@ -107,7 +107,7 @@
                 <artifactId>maven-hightide-plugin</artifactId>
                 <version>${project.version}</version>
                 <configuration>
-                    <contextPath>/auctiondemo</contextPath>
+                    <contextPath>/auction</contextPath>
                     <connectors>
                         <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
                             <port>8080</port>
