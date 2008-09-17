@@ -175,10 +175,23 @@
       </plugin>
     </plugins>
   </build>
+   
   <dependencies>
     <dependency>
       <groupId>org.apache.activemq</groupId>
+      <artifactId>activemq-core</artifactId>
+      <version>${activemq-version}</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>commons-logging</artifactId>
+          <groupId>commons-logging</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.activemq</groupId>
       <artifactId>activemq-web</artifactId>
+      <version>${activemq-version}</version>
       <exclusions>
         <exclusion>
           <artifactId>commons-logging</artifactId>
@@ -203,7 +216,7 @@
           <artifactId>mx4j</artifactId>
         </exclusion>
       </exclusions>
-    </dependency>
+    </dependency>      
   </dependencies>
   <properties>
     <topDirectoryLocation>../..</topDirectoryLocation>
