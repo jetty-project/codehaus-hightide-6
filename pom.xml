@@ -93,7 +93,7 @@
     </plugins>
   </build>
   <modules>
-    <module>modules/jetty-resources</module>
+    <!--<module>modules/jetty-resources</module>-->
     <module>modules/hightide-resources</module>
     <module>modules/hightide-util</module>
     <module>modules/hightide-portable-dependencies</module>
@@ -124,7 +124,12 @@
       <releases><enabled>true</enabled></releases>
       <snapshots><enabled>true</enabled></snapshots>
     </repository>
-  </repositories>
+    <repository>
+      <id>iona</id>
+      <name>Iona Repository</name>    
+      <url>http://repo.open.iona.com/maven2</url>
+    </repository>    
+  </repositories> 
 
   <dependencyManagement>
     <dependencies>
@@ -196,7 +201,7 @@
 
   <properties>
     <jetty-version>6.1-SNAPSHOT</jetty-version>
-    <activemq-version>5.1.0</activemq-version>
+    <activemq-version>5.1.0.0-fuse</activemq-version>
     <derby-version>10.4.1.3</derby-version>
     <atomikos-version>3.3.2</atomikos-version>    
     <dwr-version>2.0.5</dwr-version>   
