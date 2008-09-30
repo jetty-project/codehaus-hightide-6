@@ -93,7 +93,7 @@
     </plugins>
   </build>
   <modules>
-    <!--<module>modules/jetty-resources</module>-->
+    <module>modules/jetty-resources</module>
     <module>modules/hightide-resources</module>
     <module>modules/hightide-util</module>
     <module>modules/hightide-portable-dependencies</module>
