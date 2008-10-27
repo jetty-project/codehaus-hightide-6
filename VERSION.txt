@@ -1,7 +1,7 @@
 hightide-6.1H-SNAPSHOT
 + activeMQ to 5.1.0.1-fuse
 + dwr to 2.0.5
-+ atomikos version updated to 3.3.4
++ atomikos version updated to 3.4.1
 + updated hightide.xml to have same id names as jetty.xml (e.g "contexts" to "Contexts")
 
 hightide-6.1H.11
