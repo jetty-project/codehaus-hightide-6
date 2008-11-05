@@ -419,10 +419,15 @@ public abstract class AbstractHightideMojo extends AbstractMojo
         // get the system properties set up
         for (int i = 0; (getSystemProperties() != null) && i < getSystemProperties().length; i++)
         {
-            boolean result = getSystemProperties()[i].setIfNotSetAlready();
-            getLog().info("Property " + getSystemProperties()[i].getName() + "="
-                    + getSystemProperties()[i].getValue() + " was "
-                    + (result ? "set" : "skipped"));
+            boolean set = false;
+            SystemProperty sp = getSystemProperties()[i];
+            if(System.getProperty(sp.getName())==null)
+            {
+                System.setProperty(sp.getName(), sp.getValue());
+                set = true;
+            }
+            getLog().info("Property " + sp.getName() + "=" + sp.getValue() + " was "
+                    + (set ? "set" : "skipped"));
         }
     }
     
