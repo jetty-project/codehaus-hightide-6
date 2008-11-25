@@ -2,7 +2,7 @@
   <parent>
     <artifactId>hightide</artifactId>
     <groupId>org.mortbay.hightide</groupId>
-    <version>6.1H.14</version>
+    <version>6.1H-SNAPSHOT</version>
     <relativePath>../../pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
