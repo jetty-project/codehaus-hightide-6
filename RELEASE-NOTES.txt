@@ -1,7 +1,7 @@
 Hightide Release Notes
 ======================
 
-These notes are for Hightide 6.1H-SNAPSHOT release.
+These notes are for Hightide 6.1H.14 release.
 
 
 Prerequisites
@@ -71,7 +71,7 @@ Maven Support
     <dependency>
       <groupId>org.mortbay.hightide</groupId>
       <artifactId>hightide-provided-apis</artifactId>
-      <version>6.1H-SNAPSHOT</version>
+      <version>6.1H.14</version>
       <type>pom</type>
       <scope>provided</scope>
     </dependency>
@@ -86,7 +86,7 @@ Maven Support
     <dependency>
       <groupId>org.mortbay.hightide</groupId>
       <artifactId>hightide-server-dependencies</artifactId>
-      <version>6.1H-SNAPSHOT</version>
+      <version>6.1H.14</version>
       <type>pom</type>
       <scope>provided</scope>
     </dependency>
@@ -116,7 +116,7 @@ This distribution of Hightide contains the following software:
 + Atomikos: 3.4.3
 + Derby: 10.4.1.3
 + DWR: 2.0.5
-+ Jetty: 6.1-SNAPSHOT
++ Jetty: 6.1.14
 + SLF4J: 1.3.1
 
 
