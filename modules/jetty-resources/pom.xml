@@ -46,6 +46,7 @@
                  <fileset dir="../../lib" includes="**/*"/>
                  <fileset dir="../../bin" includes="**/**"/>
                 </delete>
+                <delete failonerror="false" file="../../contexts/test.xml"/>
               </tasks>
             </configuration>
             <goals>
