@@ -37,7 +37,7 @@ Index: examples/test-webapp/pom.xml
          <configuration>
            <stopPort>8087</stopPort>
            <stopKey>foo</stopKey>
-Index: src/main/webapp/index.html
+Index: examples/test-webapp/src/main/webapp/index.html
 ===================================================================
 --- examples/test-webapp/src/main/webapp/index.html	(revision 4062)
 +++ examples/test-webapp/src/main/webapp/index.html	(working copy)
@@ -61,7 +61,7 @@ Index: src/main/webapp/index.html
  
  </BODY>
  </HTML>
- Index: test.xml
+ Index: examples/test-webapp/src/main/configuration/test.xml
 ===================================================================
 --- examples/test-webapp/src/main/configuration/test.xml	(revision 4062)
 +++ examples/test-webapp/src/main/configuration/test.xml	(working copy)
