@@ -47,6 +47,7 @@
                  <fileset dir="../../bin" includes="**/**"/>
                 </delete>
                 <delete failonerror="false" file="../../contexts/test.xml"/>
+                <delete failonerror="false" file="../../etc/webdefault.xml"/>
               </tasks>
             </configuration>
             <goals>
@@ -138,8 +139,7 @@
                 </copy>
                 <copy todir="../../etc">
                   <fileset dir="${project.build.directory}/jetty/etc">
-                    <include name="**/webdefault.xml"/>
-                    <exclude name="**/*.xml"/>
+                    <include name="webdefault.xml"/>                    
                   </fileset>
                 </copy>
                 <mkdir dir="../../webapps/jetty-examples"/>
