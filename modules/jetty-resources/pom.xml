@@ -147,6 +147,7 @@
                     <include name="**/**"/>
                   </fileset>
                 </copy>
+                <copy file="${project.build.directory}/jetty/contexts/test.xml" tofile="../../contexts/test.xml" />
                 <chmod dir="../../webapps/jetty-examples" perm="ugo+rx" includes="**/*.sh"/>
                 <mkdir dir="../../webapps/cometd-demo"/>
                 <copy todir="../../webapps/cometd-demo">
