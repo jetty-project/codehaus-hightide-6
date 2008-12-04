@@ -11,7 +11,7 @@ Prerequisites
 
 Installation
 ============
-After downloading from http://www.webtide.com/downloads.jsp, unzip the distribution to 
+After downloading from http://www.webtide.com/resources/downloads.jsp, unzip the distribution to 
 the directory of your choice.
 
 Follow the instructions for Running Hightide to verify your installation has succeeded.
@@ -123,5 +123,5 @@ This distribution of Hightide contains the following software:
 Support
 =======
 Commercial support is available for this product from Webtide by
-visiting the support page at http://www.webtide.com/support.jsp
+visiting the support page at http://www.webtide.com/support/
 or sending an email to info@webtide.com.
