@@ -91,7 +91,13 @@ var bidHandler = {
     	    displayUtil.hide($('toptext'),true);
 	        bidHandler._username = bidder.username;
 	        bidDisplay.showRegisteredUser();
-            Catalog.getCategories(catalogDisplay.displayCategories); 
+            Catalog.getCategories(catalogDisplay.displayCategories);
+            
+            var path = new String(document.location).replace(/http:\/\/[^\/]*/, "");
+            var idx = path.lastIndexOf("/");
+            if(path.length>1 && path.length-1!=idx)
+                path = path.substring(0, idx+1);
+            dojox.cometd.init(path+"cometd");
 	    }
 	}
 };
