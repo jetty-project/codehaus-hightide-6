@@ -14,62 +14,94 @@
 
 package org.mortbay.hightide.example.auction;
 
+import java.util.Map;
+
+import org.mortbay.util.ajax.JSON.Output;
 
 /**
  * @author Nigel Canonizado
- *
+ * 
  * Apr 26, 2006
  */
-public class Category extends BaseObject {
-    
-    private Integer id;
-    private String categoryName;
-    private String description;
-    
-    public Category() {};
-    
-    public Category(Integer id, String categoryName, String description) {
-        
-        this.id = id;
-        this.categoryName = categoryName;
-        this.description = description;
-    }
-    
-    public String getCategoryName() {
-        return categoryName;
-    }
-    
-    public void setCategoryName(String aCategoryName) {
-        categoryName = aCategoryName;
-    }
-    
-    public String getDescription() {
-        return description;
-    }
-    
-    public void setDescription(String aDescription) {
-        description = aDescription;
-    }
-    
-    public Integer getId() {
-        return id;
-    }
-    
-    public void setId(Integer aId) {
-        id = aId;
+public class Category extends BaseObject
+{
+
+    private Integer _id;
+    private String _categoryName;
+    private String _description;
+
+    public Category()
+    {
     }
 
-    public int hashCode() {
-        return id.hashCode();
+    public Category(Integer id, String categoryName, String description)
+    {
+
+        _id = id;
+        _categoryName = categoryName;
+        _description = description;
     }
-    
-    public boolean equals(Object obj) {
-        
-        if (obj == this) return true;
-        if (obj == null) return false;
-        if (!(obj instanceof Category)) return false;
-        return ((Category) obj).getId().equals(id);
+
+    public String getCategoryName()
+    {
+        return _categoryName;
     }
-    
+
+    public void setCategoryName(String aCategoryName)
+    {
+        _categoryName = aCategoryName;
+    }
+
+    public String getDescription()
+    {
+        return _description;
+    }
+
+    public void setDescription(String aDescription)
+    {
+        _description = aDescription;
+    }
+
+    public Integer getId()
+    {
+        return _id;
+    }
+
+    public void setId(Integer aId)
+    {
+        _id = aId;
+    }
+
+    public int hashCode()
+    {
+        return _id.hashCode();
+    }
+
+    public boolean equals(Object obj)
+    {
+
+        if (obj == this)
+            return true;
+        if (obj == null)
+            return false;
+        if (!(obj instanceof Category))
+            return false;
+        return ((Category) obj).getId().equals(_id);
+    }
+
+    public void fromJSON(Map object)
+    {
+        _id = new Integer(((Number)object.get("id")).intValue());
+        _categoryName = (String)object.get("categoryName");
+        _description = (String)object.get("description");
+    }
+
+    public void toJSON(Output out)
+    {
+        out.addClass(getClass());
+        out.add("id", getId());
+        out.add("categoryName", getCategoryName());
+        out.add("description", getDescription());        
+    }
 
 }

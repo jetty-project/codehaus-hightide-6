@@ -14,57 +14,85 @@
 
 package org.mortbay.hightide.example.auction;
 
-import java.util.Date;
+import java.util.Map;
 
+import org.mortbay.util.ajax.JSON.Output;
 
 /**
  * @author Nigel Canonizado
- *
+ * 
  * Apr 19, 2006
  */
-public class Seller extends AbstractParticipant {
-    
-    private Integer id;
-    private String status;
-    
-    public Seller() {};
-    
-    public Seller(Integer id, String name, String username, String password, String address, String status) {
-        
+public class Seller extends AbstractParticipant
+{
+
+    private Integer _id;
+    private String _status;
+
+    public Seller()
+    {
+    }
+
+    public Seller(Integer id, String name, String username, String password,
+            String address, String status)
+    {
+
         setId(id);
         setName(name);
         setUsername(username);
         setPassword(password);
         setAddress(address);
         setStatus(status);
-    } 
-    
-    public Integer getId() {
-        return id;
-    }
-    
-    public void setId(Integer aId) {
-        id = aId;
     }
 
-    public String getStatus() {
-        return status;
-    }
-    
-    public void setStatus(String aStatus) {
-        status = aStatus;
+    public Integer getId()
+    {
+        return _id;
     }
 
-    public boolean equals(Object obj) {
-        if (obj == this ) return true;
-        if (obj == null) return false;
-        if (!(obj instanceof Seller)) return false;
-        return ((Seller) obj).getId().equals(id);
+    public void setId(Integer aId)
+    {
+        _id = aId;
     }
 
-    public int hashCode() {
-        return id.hashCode();
+    public String getStatus()
+    {
+        return _status;
+    }
+
+    public void setStatus(String aStatus)
+    {
+        _status = aStatus;
+    }
+
+    public boolean equals(Object obj)
+    {
+        if (obj == this)
+            return true;
+        if (obj == null)
+            return false;
+        if (!(obj instanceof Seller))
+            return false;
+        return ((Seller) obj).getId().equals(_id);
+    }
+
+    public int hashCode()
+    {
+        return _id.hashCode();
     }
     
+    public void fromJSON(Map object)
+    {
+        super.fromJSON(object);
+        _id = (Integer)object.get("id");
+        _status = (String)object.get("status");
+    }
     
+    public void toJSON(Output out)
+    {
+        super.toJSON(out);
+        out.add("id", getId());
+        out.add("status", getStatus());
+    }
+
 }

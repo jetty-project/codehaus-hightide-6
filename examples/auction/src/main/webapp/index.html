@@ -6,23 +6,18 @@
   <META http-equiv="Pragma" content="no-cache">
   <META http-equiv="Cache-Control" content="no-cache,no-store">
   <META HTTP-EQUIV="Content-Script-Type" CONTENT="text/javascript">
-  <title>Hightide - Ajax with DWR and ActiveMQ</title>
+  <title>Hightide - Cometd and JMS</title>
   <link rel="stylesheet" type="text/css" href="css/styles.css" />
-  <script type="text/javascript" src="dojo/dojo.js"></script>
-  <script type='text/javascript' src='dwr/interface/Chat.js'></script>
-  <script type='text/javascript' src='dwr/interface/Catalog.js'></script>
-  <script type='text/javascript' src='dwr/interface/AuctionManager.js'></script>
-  <script type='text/javascript' src='dwr/interface/Bid.js'></script>
-  <script type='text/javascript' src='dwr/engine.js'></script>
-  <script type='text/javascript' src='dwr/util.js'></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.2.0/dojo/dojo.xd.js"></script>
+  <script type='text/javascript' src='js/util.js'></script>
   <script type='text/javascript' src='js/prototype.js'></script>
   <script type="text/javascript" src='js/scriptaculous.js'></script>
-  <script type="text/javascript" src='js/behaviour.js'></script>
   <script type="text/javascript" src='js/builder.js'></script>
   <script type="text/javascript" src='js/effects.js'></script>
   <script type="text/javascript" src='js/controls.js'></script>
   <script type="text/javascript" src='js/dragdrop.js'></script>
   <script type='text/javascript' src='js/editinplace.js'></script>
+  <script type='text/javascript' src='js/services.js'></script>
   <script type='text/javascript' src='js/demo.js'></script>
 </head>
 
@@ -41,11 +36,10 @@
     <td colspan="2">
       <p align="justify">This auction application is a demonstration of an
       some of the features of <a href="http://www.webtide.com/resources/downloads.jsp">Jetty Hightide</a>.<br/>
-      This demo has been implemented using a combination of <a href="http://directwebremoting.org/">DWR</a> and cometd:
+      This demo has been implemented using a combination of <a href="http://cometdproject.dojotoolkit.org/">Cometd</a> and JMS:
       <ul>
          <li>Logon using any username</li>
-         <li>The item catalog is a normal Ajax update mechanism, retrieving data from
-         a database via DWR calls.</li>
+         <li>The item catalog is a normal Ajax update mechanism, retrieving data from a database via cometd(service) calls.</li>
          <li>When bids are made against items, these are published on
              a JMS topic.  The JMS messages are transported with comet style
              Ajax push, so they update in realtime on other browsers.

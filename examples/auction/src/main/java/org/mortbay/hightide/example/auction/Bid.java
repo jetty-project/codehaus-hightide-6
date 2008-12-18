@@ -14,47 +14,77 @@
 
 package org.mortbay.hightide.example.auction;
 
-import org.mortbay.hightide.example.auction.util.Utils;
+import java.io.Serializable;
+import java.util.Map;
 
+import org.mortbay.hightide.example.auction.util.Utils;
+import org.mortbay.util.ajax.JSON;
+import org.mortbay.util.ajax.JSON.Output;
 
 /**
  * @author Nigel Canonizado
- *
+ * 
  * May 1, 2006
  */
-public class Bid {
-    
-    private Integer itemId;
-    private Double amount;
-    private String bidder;
-    
-    public Double getAmount() {
-        return amount;
+public class Bid implements Serializable, JSON.Convertible
+{
+
+    private Integer _itemId;
+    private Double _amount;
+    private String _bidder;
+
+    public Double getAmount()
+    {
+        return _amount;
     }
-    
-    public String getFormattedAmount () {
-        if (amount == null)
+
+    public String getFormattedAmount()
+    {
+        if (_amount == null)
             return "";
-        
+
         return Utils.formatCurrency(getAmount().doubleValue());
     }
-    public void setAmount(Double aAmount) {
-        amount = aAmount;
+
+    public void setAmount(Double aAmount)
+    {
+        _amount = aAmount;
     }
-    
-    public Integer getItemId () {
-        return this.itemId;
+
+    public Integer getItemId()
+    {
+        return _itemId;
     }
-    public void setItemId(Integer itemId) {
-    	this.itemId = itemId;
+
+    public void setItemId(Integer itemId)
+    {
+        _itemId = itemId;
     }
-    public String getBidder() {
-        return bidder;
+
+    public String getBidder()
+    {
+        return _bidder;
     }
-    
-    public void setBidder(String aBidder) {
-        bidder = aBidder;
+
+    public void setBidder(String aBidder)
+    {
+        _bidder = aBidder;
     }
-    
+
+    public void fromJSON(Map object)
+    {        
+        _itemId = (Integer)object.get("itemId");
+        _amount = (Double)object.get("amount");
+        _bidder = (String)object.get("bidder");        
+    }
+
+    public void toJSON(Output out)
+    {
+        out.addClass(getClass());
+        out.add("amount", getAmount());
+        out.add("formattedAmount", getFormattedAmount());
+        out.add("itemId", getItemId());
+        out.add("bidder", getBidder());        
+    }
 
 }

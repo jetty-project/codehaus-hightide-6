@@ -15,59 +15,92 @@
 package org.mortbay.hightide.example.auction;
 
 import java.util.Date;
+import java.util.Map;
+
+import org.mortbay.util.ajax.JSON;
+import org.mortbay.util.ajax.JSON.Output;
 
 /**
  * @author Nigel Canonizado
- *
+ * 
  * Apr 19, 2006
  */
-public abstract class AbstractParticipant extends BaseObject {
-    
-    private String name;
-    private String username;
-    private String password;
-    private String address;
-    private Date memberSince;
-    
-    public String getName() {
-        return name;
-    }
-    public void setName(String aName) {
-        name = aName;
+public abstract class AbstractParticipant extends BaseObject implements JSON.Convertible
+{
+
+    private String _name;
+    private String _username;
+    private String _password;
+    private String _address;
+    private Date _memberSince;
+
+    public String getName()
+    {
+        return _name;
     }
 
-    public String getAddress() {
-        return address;
-    }
-    
-    public void setAddress(String aAddress) {
-        address = aAddress;
-    }
-    
-    public Date getMemberSince() {
-        return memberSince;
-    }
-    
-    public void setMemberSince(Date aMemberSince) {
-        memberSince = aMemberSince;
-    }
-    
-    public String getPassword() {
-        return password;
-    }
-    
-    public void setPassword(String aPassword) {
-        password = aPassword;
-    }
-    
-    public String getUsername() {
-        return username;
-    }
-    
-    public void setUsername(String aUsername) {
-        username = aUsername;
+    public void setName(String aName)
+    {
+        _name = aName;
     }
 
+    public String getAddress()
+    {
+        return _address;
+    }
+
+    public void setAddress(String aAddress)
+    {
+        _address = aAddress;
+    }
+
+    public Date getMemberSince()
+    {
+        return _memberSince;
+    }
+
+    public void setMemberSince(Date aMemberSince)
+    {
+        _memberSince = aMemberSince;
+    }
+
+    public String getPassword()
+    {
+        return _password;
+    }
+
+    public void setPassword(String aPassword)
+    {
+        _password = aPassword;
+    }
+
+    public String getUsername()
+    {
+        return _username;
+    }
+
+    public void setUsername(String aUsername)
+    {
+        _username = aUsername;
+    }
     
+    public void fromJSON(Map object)
+    {
+        _name = (String)object.get("name");
+        _username = (String)object.get("username");
+        //_password = (String)object.get("password");
+        _address = (String)object.get("address");
+        //_memberSince = (Date)object.get("memberSince");
+    }
+    
+    public void toJSON(Output out)
+    {
+        out.addClass(getClass());
+        out.add("name", getName());
+        out.add("username", getUsername());
+        //out.add("password", getPassword());
+        out.add("address", getAddress());
+        //out.add("memberSince", getMemberSince());        
+    }
 
 }

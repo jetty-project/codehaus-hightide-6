@@ -48,23 +48,26 @@ import org.cometd.Client;
 public class AuctionManager implements MessageListener
 {
     public static final String BID_TOPIC_ROOT = "/auction/";
-    public static volatile Bayeux bayeux;
-    public static volatile Client client;
     private final Object lock = new Object();
     private final Map<Integer, TopicConnection> connections = new HashMap<Integer, TopicConnection>();
     private final Map<Integer, TopicSession> sessions = new HashMap<Integer, TopicSession>();
     private final Map<Integer, TopicPublisher> publishers = new HashMap<Integer, TopicPublisher>();
-
-    public static void setBayeux(Bayeux bayeux)
+    
+    private Bayeux _bayeux;
+    private Client _client;
+    
+    public AuctionManager(Bayeux bayeux)
     {
-        AuctionManager.bayeux = bayeux;
-        client = bayeux.newClient("auctionMgr");
+        _bayeux = bayeux;
+        _client = _bayeux.newClient("auction-manager");
     }
 
     public Bidder registerBidder(String username) throws Exception
     {
         BidderDao bidderDao = new BidderDao();
         bidderDao.addBidder(username);
+        //if(bidderDao.addBidder(username))
+        //    throw new Exception("Existing user, please choose another username");
         return bidderDao.getBidder(username);
     }
 
@@ -178,7 +181,7 @@ public class AuctionManager implements MessageListener
 
     private void bayeuxPublish(Integer itemId, Map<String, Object> message)
     {
-        bayeux.getChannel(BID_TOPIC_ROOT + itemId, true).publish(client, message, null);
+        _bayeux.getChannel(BID_TOPIC_ROOT + itemId, true).publish(_client, message, null);
     }
 
     private void jmsPublish(Integer itemId, Map<String, Object> message)

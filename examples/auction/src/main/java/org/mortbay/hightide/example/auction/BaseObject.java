@@ -16,15 +16,19 @@ package org.mortbay.hightide.example.auction;
 
 import java.io.Serializable;
 
+import org.mortbay.util.ajax.JSON;
+
 /**
  * @author Nigel Canonizado
  *
  * Apr 19, 2006
  */
 
-public abstract class BaseObject implements Serializable {
-    
+public abstract class BaseObject implements Serializable, JSON.Convertible
+{
+
     public abstract boolean equals(Object obj);
+
     public abstract int hashCode();
 
 }

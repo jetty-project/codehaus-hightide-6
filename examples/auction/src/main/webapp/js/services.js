@@ -1,9 +1,21 @@
+dojo.require("dojox.cometd");
 var Services = {
     _initialized: false,
     isInitialized: function() {
         return Services._initialized;
     },
+    _errorHandlers: [],
+    addErrorHandler: function(errorHandler) {
+        Services._errorHandlers.push(errorHandler);
+    },
+    _handleErrorMsg: function(msg) {
+        var handlers = Services._errorHandlers;
+        for(var i=0; i<handlers.length; i++)
+            handlers[i](msg);
+    },
     init: function() {
+        if(Services._initialized)
+            return;
         var path = new String(document.location).replace(/http:\/\/[^\/]*/, "");
         var idx = path.lastIndexOf("/");
         if(path.length>1 && path.length-1!=idx)
@@ -35,28 +47,32 @@ var AuctionManager = {
     destroy: function() {
     
     },
-    handlers: {},    
-    registerHandler: function(handler) {
-        var id = "auction_manager_" + new Date().getTime();
-        AuctionManager.handlers[id] = handler;
+    handlers: {
+        onRegisterBidder: {},
+        onAddBid: {},
+        onGetHighestBid: {}
+    },    
+    registerHandler: function(name, handler) {
+        var id = name + new Date().getTime();        
+        AuctionManager.handlers[name][id] = handler;
         return id;
     },
-    removeHandler: function(id) {
-        var handler = AuctionManager.handlers[id];
-        AuctionManager.handlers[id] = null;
+    removeHandler: function(name, id) {        
+        var handler = AuctionManager.handlers[name][id];
+        AuctionManager.handlers[name][id] = null;
         return handler;
     },
     
     registerBidder: function(username, handler) {
-        alert("MM");
         dojox.cometd.publish("/service/auction/bidders/new", {
             username: username,
-        }, AuctionManager.registerHandler(handler));
+            handlerId: AuctionManager.registerHandler("onRegisterBidder", handler)
+        });
     },
     onRegisterBidder: function(message) {
-        var handler = AuctionManager.removeHandler(message.data.lastId);
-        if(data.errorMsg)
-            displayUtil.displayError(data.errorMsg);
+        var handler = AuctionManager.removeHandler("onRegisterBidder", message.data.handlerId);
+        if(message.data.errorMsg)
+            Services._handleErrorMsg(message.data.errorMsg);
         else if(handler)
             handler(message.data.bidder);
     },
@@ -65,28 +81,30 @@ var AuctionManager = {
         dojox.cometd.publish("/service/auction/items/id/bids/new", {
             itemId: itemId,
             bidAmount: bidAmount,
-            username: username
-        }, AuctionManager.registerHandler(handler));
+            username: username,
+            handlerId: AuctionManager.registerHandler("onAddBid", handler)
+        });
     },
-    onAddBid: function(message) {
-        var handler = AuctionManager.removeHandler(message.data.lastId);
-        if(data.errorMsg)
-            displayUtil.displayError(data.errorMsg);
+    onAddBid: function(message) {        
+        var handler = AuctionManager.removeHandler("onAddBid", message.data.handlerId);
+        if(message.data.errorMsg)
+            Services._handleErrorMsg(message.data.errorMsg);
         else if(handler)
-            handler(mmessage.data.bid);
+            handler(message.data.bid);
     },
     
     getHighestBid: function(itemId, handler) {
         dojox.cometd.publish("/service/auction/items/id/bids/highest", {
             itemId: itemId,
-        }, AuctionManager.registerHandler(handler));
+            handlerId: AuctionManager.registerHandler("onGetHighestBid", handler)
+        });
     },
     onGetHighestBid: function(message) {
-        var handler = AuctionManager.removeHandler(message.data.lastId);
-        if(data.errorMsg)
-            displayUtil.displayError(data.errorMsg);
+        var handler = AuctionManager.removeHandler("onGetHighestBid", message.data.handlerId);
+        if(message.data.errorMsg)
+            Services._handleErrorMsg(message.data.errorMsg);
         else if(handler)
-            handler(mmessage.data.bid);
+            handler(message.data.bid);
     }    
 };
 
@@ -119,13 +137,13 @@ var Catalog = {
     
     getCategories: function(handler) {
         dojox.cometd.publish("/service/auction/categories", {
-            
-        }, Catalog.registerHandler("onGetCategories", handler));
+            handlerId: Catalog.registerHandler("onGetCategories", handler)
+        });
     },
     onGetCategories: function(message) {
-        var handler = Catalog.removeHandler("onGetCategories", message.data.lastId);
-        if(data.errorMsg)
-            displayUtil.displayError(data.errorMsg);
+        var handler = Catalog.removeHandler("onGetCategories", message.data.handlerId);
+        if(message.data.errorMsg)
+            Services._handleErrorMsg(message.data.errorMsg);
         else if(handler)
             handler(message.data.categories);
     },
@@ -133,25 +151,27 @@ var Catalog = {
     findItems: function(expression, handler) {
         dojox.cometd.publish("/service/auction/categories/find", {
             expression: expression,
-        }, Catalog.registerHandler("onFindItems", handler));
+            handlerId: Catalog.registerHandler("onFindItems", handler)
+        });
     },
     onFindItems: function(message) {
-        var handler = Catalog.removeHandler("onFindItems", message.data.lastId);
-        if(data.errorMsg)
-            displayUtil.displayError(data.errorMsg);
+        var handler = Catalog.removeHandler("onFindItems", message.data.handlerId);
+        if(message.data.errorMsg)
+            Services._handleErrorMsg(message.data.errorMsg);
         else if(handler)
             handler(message.data.auctionItems);
     },
     
-    getItemsInCategory: function(username, handler) {
+    getItemsInCategory: function(categoryId, handler) {
         dojox.cometd.publish("/service/auction/categories/id/items", {
-            username: username,
-        }, Catalog.registerHandler("onGetItemsInCategory", handler));
+            categoryId: categoryId,
+            handlerId: Catalog.registerHandler("onGetItemsInCategory", handler)
+        });
     },
     onGetItemsInCategory: function(message) {
-        var handler = Catalog.removeHandler("onGetItemsInCategory", message.data.lastId);
-        if(data.errorMsg)
-            displayUtil.displayError(data.errorMsg);
+        var handler = Catalog.removeHandler("onGetItemsInCategory", message.data.handlerId);
+        if(message.data.errorMsg)
+            Services._handleErrorMsg(message.data.errorMsg);
         else if(handler)
             handler(message.data.auctionItems);
     }    
@@ -189,13 +209,14 @@ var Chat = {
     join: function(roomId, username, handler) {
         dojox.cometd.publish("/service/auction/chat/join", {
             roomId: roomId,
-            username: username
-        }, Chat.registerHandler("onJoin", handler));
+            username: username,
+            handlerId: Chat.registerHandler("onJoin", handler)
+        });
     },
     onJoin: function(message) {
-        var handler = Chat.removeHandler("onJoin", message.data.lastId);
-        if(data.errorMsg)
-            displayUtil.displayError(data.errorMsg);
+        var handler = Chat.removeHandler("onJoin", message.data.handlerId);
+        if(message.data.errorMsg)
+            Services._handleErrorMsg(message.data.errorMsg);
         else if(handler)
             ;//handler(message.data.successful && true);
     },
@@ -204,12 +225,13 @@ var Chat = {
         dojox.cometd.publish("/service/auction/chat/leave", {
             roomId: roomId,
             username: username,
-        }, Chat.registerHandler("onLeave", handler));
+            handlerId: Chat.registerHandler("onLeave", handler)
+        });
     },
     onLeave: function(message) {
-        var handler = Chat.removeHandler("onLeave", message.data.lastId);
-        if(data.errorMsg)
-            displayUtil.displayError(data.errorMsg);
+        var handler = Chat.removeHandler("onLeave", message.data.handlerId);
+        if(message.data.errorMsg)
+            Services._handleErrorMsg(message.data.errorMsg);
         else if(handler)
             ;//handler(message.data.successful && true);
     },
@@ -219,12 +241,13 @@ var Chat = {
             roomId: roomId,
             message: message,
             username: username,
-        }, Chat.registerHandler("onSendMessage", handler));
+            handlerId: Chat.registerHandler("onSendMessage", handler)
+        });        
     },
-    onSendMessage: function(message) {
-        var handler = Chat.removeHandler("onSendMessage", message.data.lastId);
-        if(data.errorMsg)
-            displayUtil.displayError(data.errorMsg);
+    onSendMessage: function(message) {        
+        var handler = Chat.removeHandler("onSendMessage", message.data.handlerId);
+        if(message.data.errorMsg)
+            Services._handleErrorMsg(message.data.errorMsg);
         else if(handler)
             ;//handler(message.data.successful && true);
     },
@@ -232,12 +255,13 @@ var Chat = {
     getMembers: function(roomId, handler) {
         dojox.cometd.publish("/service/auction/chat/members", {
             roomId: roomId,
-        }, Chat.registerHandler("onGetMembers", handler));
+            handlerId: Chat.registerHandler("onGetMembers", handler)
+        });
     },
     onGetMembers: function(message) {
-        var handler = Chat.removeHandler("onGetMembers", message.data.lastId);
-        if(data.errorMsg)
-            displayUtil.displayError(data.errorMsg);
+        var handler = Chat.removeHandler("onGetMembers", message.data.handlerId);
+        if(message.data.errorMsg)
+            Services._handleErrorMsg(message.data.errorMsg);
         else if(handler)
             handler(message.data.members);
     }

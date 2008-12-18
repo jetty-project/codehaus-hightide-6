@@ -56,18 +56,20 @@ import org.cometd.Client;
 public class Chat implements MessageListener
 {
     private static final String CHAT_TOPIC_ROOT = "/chat/";
-    private static volatile Bayeux bayeux;
-    private static volatile Client client;
+
     private final Object lock = new Object();
     private final Map<String, List<String>> roomMembers = new HashMap<String, List<String>>();
     private final Map<String, TopicConnection> connections = new HashMap<String, TopicConnection>();
     private final Map<String, TopicSession> sessions = new HashMap<String, TopicSession>();
     private final Map<String, Topic> topics = new HashMap<String, Topic>();
 
-    public static void setBayeux(Bayeux bayeux)
+    private Bayeux _bayeux;
+    private Client _client;
+    
+    public Chat(Bayeux bayeux, Client client)
     {
-        Chat.bayeux = bayeux;
-        client = bayeux.newClient("chat");
+        _bayeux = bayeux;
+        _client = client;
     }
 
     public void join(String roomId, String username)
@@ -257,6 +259,6 @@ public class Chat implements MessageListener
 
     private void bayeuxPublish(String roomId, Map<String, Object> message)
     {
-        bayeux.getChannel(CHAT_TOPIC_ROOT + roomId, true).publish(client, message, null);
+        _bayeux.getChannel(CHAT_TOPIC_ROOT + roomId, true).publish(_client, message, null);
     }
 }

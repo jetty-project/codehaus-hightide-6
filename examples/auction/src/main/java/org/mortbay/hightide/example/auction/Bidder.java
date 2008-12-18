@@ -14,58 +14,86 @@
 
 package org.mortbay.hightide.example.auction;
 
+import java.util.Map;
+
+import org.mortbay.util.ajax.JSON.Output;
 
 /**
  * @author Nigel Canonizado
- *
+ * 
  * Apr 19, 2006
  */
-public class Bidder extends AbstractParticipant {
-    
-    private Integer id;
-    private String cardNumber;
-    
+public class Bidder extends AbstractParticipant
+{
+
+    private Integer _id;
+    private String _cardNumber;
+
     public Bidder()
-    {      
+    {
     }
-    
-    public Bidder(Integer id, String name, String username, String password, String address, String cardNumber) {
-        
+
+    public Bidder(Integer id, String name, String username, String password,
+            String address, String cardNumber)
+    {
+
         setId(id);
         setName(name);
         setUsername(username);
         setPassword(password);
         setAddress(address);
         setCardNumber(cardNumber);
-    } 
-    
-    public Integer getId() {
-        return id;
-    }
-    
-    public void setId(Integer aId) {
-        id = aId;
     }
 
-    public String getCardNumber() {
-        return cardNumber;
-    }
-    
-    public void setCardNumber(String aCardNumber) {
-        cardNumber = aCardNumber;
+    public Integer getId()
+    {
+        return _id;
     }
 
-     public boolean equals(Object obj) {
-        if (obj == this) return true;
-        if (obj == null) return false;
-        if (!(obj instanceof Bidder)) return false;
+    public void setId(Integer aId)
+    {
+        _id = aId;
+    }
+
+    public String getCardNumber()
+    {
+        return _cardNumber;
+    }
+
+    public void setCardNumber(String aCardNumber)
+    {
+        _cardNumber = aCardNumber;
+    }
+
+    public boolean equals(Object obj)
+    {
+        if (obj == this)
+            return true;
+        if (obj == null)
+            return false;
+        if (!(obj instanceof Bidder))
+            return false;
         return ((Bidder) obj).getName().equals(getUsername());
     }
+
+    public int hashCode()
+    {
+        if (getUsername() == null)
+            return 0;
+        return getUsername().hashCode();
+    }
+
+    public void fromJSON(Map object)
+    {
+        super.fromJSON(object);
+        _id = (Integer)object.get("id");
+        _cardNumber = (String)object.get("cardNumber");
+    }
     
-     public int hashCode ()
-     {
-         if (getUsername() == null)
-             return 0;
-         return getUsername().hashCode();
-     }
+    public void toJSON(Output out)
+    {
+        super.toJSON(out);
+        out.add("id", getId());
+        out.add("cardNumber", getCardNumber());
+    }
 }

@@ -101,7 +101,7 @@ public class CategoryDao {
                 "%' or LOWER(description) like '%" + expr + "%'");
     }
     
-    public AuctionItem getItem(int itemId)
+    public AuctionItem getItem(Integer itemId)
     throws Exception
     {
         String sql = "select * from auctionitem where id = " + itemId;

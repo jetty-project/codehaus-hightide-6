@@ -1,6 +1,5 @@
 
 dojo.require("dojox.cometd");
-var cometd = dojox.cometd;
 
 var room = {
     _topicRoot: "/chat/",
@@ -9,7 +8,7 @@ var room = {
     _userId:null,
 
      join: function (roomid, username) {
-        cometd.subscribe(room._topicRoot+roomid, chatDisplay, "displayMessage");
+        dojox.cometd.subscribe(room._topicRoot+roomid, chatDisplay, "displayMessage");
         this._waitingToJoin = true;
         this._roomId = roomid;
         this._userId = username;
@@ -25,7 +24,7 @@ var room = {
      },
 
     leave: function (roomid, username) {
-        cometd.unsubscribe(room._topicRoot+roomid, chatDisplay, "displayMessage");
+        dojox.cometd.unsubscribe(room._topicRoot+roomid, chatDisplay, "displayMessage");
         //take the current registered bidder out of the room
         Chat.leave(roomid, username, chatDisplay.ignore);
         this._roomId=null;
@@ -48,6 +47,7 @@ var bidHandler = {
     _subscriptions: new Array(),
     
 	registerBidder : function(name) {
+        Services.init();
 	    if (name == null || name.length == 0) {
 	    	return false;
 	    } else {
@@ -61,7 +61,7 @@ var bidHandler = {
 	    if (validAmount!=null) {
 	        if (bidHandler._subscriptions[itemid]==null) {
 	            bidHandler._subscriptions[itemid] = "true";
-                    cometd.subscribe(bidHandler._topicRoot+itemid, bidDisplay, "displayBidByMessage");
+                    dojox.cometd.subscribe(bidHandler._topicRoot+itemid, bidDisplay, "displayBidByMessage");
 	        } 
 	        amount = amount.replace(/\,/g,"");
   	        AuctionManager.addBid(itemid, amount, bidHandler._username, displayUtil.ignore);
@@ -72,18 +72,18 @@ var bidHandler = {
 	watch: function (itemid) {
 	    if (bidHandler._subscriptions[itemid]==null) {
 	        bidHandler._subscriptions[itemid] = "true";
-                cometd.subscribe(bidHandler._topicRoot+itemid, bidDisplay, "displayBidByMessage");
+                dojox.cometd.subscribe(bidHandler._topicRoot+itemid, bidDisplay, "displayBidByMessage");
 	    } 
 	},
 	
 	unwatch: function (itemid) {
 	    if (bidHandler._subscriptions[itemid]!=null) {
-                cometd.unsubscribe(bidHandler._topicRoot+itemid, bidDisplay, "displayBidByMessage");
+                dojox.cometd.unsubscribe(bidHandler._topicRoot+itemid, bidDisplay, "displayBidByMessage");
 	        bidHandler._subscriptions[itemid]=null;
 	    }
 	},
 	
-	handleRegistration: function (bidder) {
+	handleRegistration: function (bidder) {        
 	    if (bidder == null) {
 	        bidDisplay.showRegistration("User name invalid, please try again");
 	    }
@@ -92,12 +92,6 @@ var bidHandler = {
 	        bidHandler._username = bidder.username;
 	        bidDisplay.showRegisteredUser();
             Catalog.getCategories(catalogDisplay.displayCategories);
-            
-            var path = new String(document.location).replace(/http:\/\/[^\/]*/, "");
-            var idx = path.lastIndexOf("/");
-            if(path.length>1 && path.length-1!=idx)
-                path = path.substring(0, idx+1);
-            dojox.cometd.init(path+"cometd");
 	    }
 	}
 };
@@ -106,6 +100,7 @@ var displayUtil = {
 
     init: function () {
         $('username').focus();
+
        //hack hack hack. This allows us to know when our amq subscriptions
        //have been fully processed. This is necessary because we need to
        //be able to subscribe to a chat room, and then once we're subscribed
@@ -589,9 +584,12 @@ var EvUtil =
         else
             keyc=ev.keyCode;
         return keyc;
+    },
+    setValue: function(id, value) 
+    {
+        document.getElementById(id).innerHTML = value;
     }
 };
-
 
 var auctionBehaviour = {
 
@@ -600,10 +598,9 @@ var auctionBehaviour = {
       element.onkeyup = function(ev) {
           var keyc=EvUtil.getKeyCode(ev);
           if (keyc==13 || keyc==10) {
-            	var name = $('username').value;
+              var name = $('username').value;
               if (!bidHandler.registerBidder(name))
                 bidDisplay.showRegistration("Please enter a user name");
-              Behaviour.apply();
           }
           return true;
       }      
@@ -622,11 +619,10 @@ var auctionBehaviour = {
   },
 
   '#joinbtn' : function(element) {
-      element.onclick = function(event) {
-        	var name = $('username').value;
+      element.onclick = function(event) {        
+          var name = $('username').value;
           if (!bidHandler.registerBidder(name))
             bidDisplay.showRegistration("Please enter a user name");
-          Behaviour.apply();
           return true;
       }
   },
@@ -654,8 +650,15 @@ var auctionBehaviour = {
 
 };
 
-DWREngine.setErrorHandler(displayUtil.displayError);
-Behaviour.register(auctionBehaviour);
-Behaviour.addLoadEvent(displayUtil.init);
+dojo.addOnLoad(function(){
+    displayUtil.init();
+    dojo.query("#username").forEach(auctionBehaviour["#username"]);
+    dojo.query("#phrase").forEach(auctionBehaviour["#phrase"]);
+    dojo.query("#joinbtn").forEach(auctionBehaviour["#joinbtn"]);
+    dojo.query("#chatclose").forEach(auctionBehaviour["#chatclose"]);
+    dojo.query("#searchbtn").forEach(auctionBehaviour["#searchbtn"]);
+    dojo.query("#sendChat").forEach(auctionBehaviour["#sendChat"]);    
+    Services.addErrorHandler(displayUtil.displayError);
+});
 
 
