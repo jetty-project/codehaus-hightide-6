@@ -99,6 +99,18 @@
                   <outputDirectory>${project-home}/lib/ext/atomikos</outputDirectory>
                 </artifactItem>
                 <artifactItem>
+                  <groupId>com.atomikos</groupId>
+                  <artifactId>transactions-hibernate2</artifactId>
+                  <version>${atomikos-version}</version>
+                  <outputDirectory>${project-home}/lib/ext/atomikos</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>com.atomikos</groupId>
+                  <artifactId>transactions-hibernate3</artifactId>
+                  <version>${atomikos-version}</version>
+                  <outputDirectory>${project-home}/lib/ext/atomikos</outputDirectory>
+                </artifactItem>
+                <artifactItem>
                   <groupId>geronimo-spec</groupId>
                   <artifactId>geronimo-spec-jta</artifactId>
                   <version>${jta-spec-version}</version>

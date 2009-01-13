@@ -1,5 +1,5 @@
 hightide-6.1H-SNAPSHOT
-+
++ add transactions-hibernate2 and transactions-hibernate3 jars to lib/ext/atomikos
 
 hightide-6.1H.14 25 November 2008
 + activeMQ to 5.1.0.2-fuse
