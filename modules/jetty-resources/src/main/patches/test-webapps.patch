@@ -37,3 +37,60 @@ Index: examples/test-webapp/pom.xml
          <configuration>
            <stopPort>8087</stopPort>
            <stopKey>foo</stopKey>
+Index: examples/test-webapp/src/main/webapp/index.html
+===================================================================
+--- examples/test-webapp/src/main/webapp/index.html	(revision 4062)
++++ examples/test-webapp/src/main/webapp/index.html	(working copy)
+@@ -34,19 +34,7 @@
+ </ul>
+ </p>
+ 
+-<p>
+-Other demonstration contexts, some of which may need manual deployment
+-(check the README.txt file for details):
+-<ul>
+-<li>a <a href="/cometd/">AJAX Cometd Chat with Bayeux</a></li>
+-<li> the <a href="/javadoc/">javadoc</a> </li>
+-<li> a demo of the <a href="/test-jndi">JNDI features</a></li>
+-<li> a demo of the <a href="/test-annotations">Annotation features</a></li>
+-<li> a demo of the <a href="/test-jaas">JAAS features</a></li>
+-</ul>
+-</p>
+ 
+-This webapp is deployed in $JETTY_HOME/webapp/test and configured by $JETTY_HOME/contexts/test.xml
+ 
+ </BODY>
+ </HTML>
+ Index: examples/test-webapp/src/main/configuration/test.xml
+===================================================================
+--- examples/test-webapp/src/main/configuration/test.xml	(revision 4062)
++++ examples/test-webapp/src/main/configuration/test.xml	(working copy)
+@@ -19,16 +19,15 @@
+   <!--  + contextPath                                                  -->
+   <!--  + war OR resourceBase                                          -->
+   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+-  <Set name="contextPath">/</Set>
+-  <Set name="war"><SystemProperty name="jetty.home" default="."/>/webapps/test</Set>
++  <Set name="contextPath">/jetty-examples</Set>
++  <Set name="war"><SystemProperty name="hightide.home" default="."/>/webapps/jetty-examples</Set>
+ 
+   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+   <!-- Optional context configuration                                  -->
+   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+   <Set name="extractWAR">false</Set>
+   <Set name="copyWebDir">false</Set>
+-  <Set name="defaultsDescriptor"><SystemProperty name="jetty.home" default="."/>/etc/webdefault.xml</Set>
+-  <Set name="overrideDescriptor"><SystemProperty name="jetty.home" default="."/>/contexts/test.d/override-web.xml</Set>
++  <Set name="defaultsDescriptor"><SystemProperty name="hightide.home" default="."/>/etc/webdefault.xml</Set>
+ 
+   <!-- virtual hosts
+   <Set name="virtualHosts">
+@@ -52,7 +51,7 @@
+     <Set name="userRealm">
+       <New class="org.mortbay.jetty.security.HashUserRealm">
+ 	    <Set name="name">Test Realm</Set>
+-	    <Set name="config"><SystemProperty name="jetty.home" default="."/>/etc/realm.properties</Set>
++	    <Set name="config"><SystemProperty name="hightide.home" default="."/>/etc/example-realm.properties</Set>
+             <!-- To enable reload of realm when properties change, uncomment the following lines -->
+             <!-- changing refreshInterval (in seconds) as desired                                -->
+             <!-- 

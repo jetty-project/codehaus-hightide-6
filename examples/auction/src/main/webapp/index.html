@@ -8,6 +8,7 @@
   <META HTTP-EQUIV="Content-Script-Type" CONTENT="text/javascript">
   <title>Hightide - Ajax with DWR and ActiveMQ</title>
   <link rel="stylesheet" type="text/css" href="css/styles.css" />
+  <script type="text/javascript" src="dojo/dojo.js"></script>
   <script type='text/javascript' src='dwr/interface/Chat.js'></script>
   <script type='text/javascript' src='dwr/interface/Catalog.js'></script>
   <script type='text/javascript' src='dwr/interface/AuctionManager.js'></script>
@@ -22,12 +23,7 @@
   <script type="text/javascript" src='js/controls.js'></script>
   <script type="text/javascript" src='js/dragdrop.js'></script>
   <script type='text/javascript' src='js/editinplace.js'></script>
-  <script type="text/javascript" src="dojo/dojo.js.uncompressed.js"></script>
-  <script type="text/javascript" src="dojox/cometd.js.uncompressed.js"></script>
   <script type='text/javascript' src='js/demo.js'></script>
-  <script type="text/javascript">
-    dojox.cometd.init(new String(document.location).replace(/http:\/\/[^\/]*/,'')+"cometd");    
-  </script>
 </head>
 
 <body>
@@ -44,9 +40,8 @@
   <tr>
     <td colspan="2">
       <p align="justify">This auction application is a demonstration of an
-      some of the features of <a href="http://www.webtide.com/products/">Jetty Hightide</a>.
-      The demo has been implemented using a combination of <a
-        href="http://getahead.co.uk/dwr">DWR</a> and from <a href="http://www.activemq.org/site/ajax.html">ActiveMQ Ajax JMS</a>:
+      some of the features of <a href="http://www.webtide.com/resources/downloads.jsp">Jetty Hightide</a>.<br/>
+      This demo has been implemented using a combination of <a href="http://directwebremoting.org/">DWR</a> and cometd:
       <ul>
          <li>Logon using any username</li>
          <li>The item catalog is a normal Ajax update mechanism, retrieving data from
@@ -166,4 +161,6 @@
 </body>
 
 </html>
+
+
 
