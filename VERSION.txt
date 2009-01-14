@@ -1,4 +1,5 @@
 hightide-6.1H-SNAPSHOT
++ atomikos version updated to 3.5.0
 + add transactions-hibernate2 and transactions-hibernate3 jars to lib/ext/atomikos
 
 hightide-6.1H.14 25 November 2008
