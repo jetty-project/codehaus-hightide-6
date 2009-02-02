@@ -112,7 +112,7 @@ Versions
 ========
 This distribution of Hightide contains the following software:
 
-+ ActiveMQ:  5.1.0.2-fuse
++ ActiveMQ:  5.2.0.1-fuse
 + Atomikos: 3.5.1
 + Derby: 10.4.1.3
 + DWR: 2.0.5
