@@ -1,6 +1,6 @@
 hightide-6.1H-SNAPSHOT
 + activeMQ to 5.2.0.1-fuse
-+ atomikos version updated to 3.5.1
++ atomikos version updated to 3.5.2
 + add transactions-hibernate2 and transactions-hibernate3 jars to lib/ext/atomikos
 
 hightide-6.1H.14.1 14 January 2009

@@ -63,5 +63,4 @@
       <scope>provided</scope>
     </dependency>
   </dependencies>
-  <properties><topDirectoryLocation>../..</topDirectoryLocation></properties>
 </project>

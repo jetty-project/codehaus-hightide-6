@@ -231,7 +231,6 @@
     </dependency>      
   </dependencies>
   <properties>
-    <topDirectoryLocation>../..</topDirectoryLocation>
     <project-home>../../</project-home>
   </properties>
 </project>

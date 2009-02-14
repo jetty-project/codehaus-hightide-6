@@ -186,7 +186,4 @@
         </profile>
     </profiles>
 
-    <properties>
-        <topDirectoryLocation>../..</topDirectoryLocation>
-    </properties>
 </project>

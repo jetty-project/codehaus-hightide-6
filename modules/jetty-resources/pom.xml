@@ -81,6 +81,10 @@
                 <replace dir="${project.build.directory}/jetty" token="${jetty-version}" value="${project.version}">
                   <include name="**/pom.xml"/>
                 </replace>
+                <replace file="${project.build.directory}/jetty/pom.xml">
+                  <replacetoken><![CDATA[<module>contrib/terracotta</module>]]></replacetoken>
+                  <replacevalue><![CDATA[<!--<module>contrib/terracotta</module>-->]]></replacevalue>
+                </replace>
                 <replace file="${project.build.directory}/jetty/examples/test-webapp/src/main/webapp/WEB-INF/web.xml">
                   <replacetoken><![CDATA[version="2.5">]]></replacetoken>
                   <replacevalue><![CDATA[version="2.5" metadata-complete="true">]]></replacevalue>
@@ -187,7 +191,4 @@
       </plugin>
     </plugins>
   </build>
-  <properties>
-    <topDirectoryLocation>../..</topDirectoryLocation>
-  </properties>
 </project>

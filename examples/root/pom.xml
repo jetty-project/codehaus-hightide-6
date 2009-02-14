@@ -47,7 +47,4 @@
       </plugin>    
     </plugins>
   </build>
-  <dependencies>
-  </dependencies>
-  <properties><topDirectoryLocation>../..</topDirectoryLocation></properties>
 </project>

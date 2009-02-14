@@ -93,11 +93,11 @@
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-log4j12</artifactId>
         <version>${slf4j-version}</version>
-        </dependency>
-        <dependency>
+      </dependency>
+      <dependency>
         <groupId>commons-logging</groupId>
         <artifactId>commons-logging</artifactId>
-        <version>1.1</version>
+        <version>${commons-logging-version}</version>
       </dependency>
     </dependencies>
     </profile>
@@ -122,6 +122,6 @@
 
   <properties>
     <commons-el-version>1.0</commons-el-version>
-    <topDirectoryLocation>../..</topDirectoryLocation>
+    <commons-logging-version>1.1</commons-logging-version>
   </properties>
 </project>

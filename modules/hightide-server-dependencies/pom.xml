@@ -148,7 +148,6 @@
     </dependency>
   </dependencies>
   <properties>    
-    <topDirectoryLocation>../..</topDirectoryLocation>
     <joda-version>1.2.1</joda-version>
   </properties>   
 </project>
