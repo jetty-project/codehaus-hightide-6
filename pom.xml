@@ -122,18 +122,11 @@
     <module>examples/root</module>
   </modules>
   <repositories>
-   <repository>
-    <id>repository-codehaus</id>
-    <name>Codehaus Repository</name>    
-    <url>http://repository.codehaus.org</url>    
-   </repository>  
-   <repository>
-    <id>codehaus.org</id>
-    <name>Jetty snapshots</name>
-    <layout>default</layout>
-    <url>http://snapshots.repository.codehaus.org</url>
-    <snapshots><enabled>true</enabled></snapshots>
-   </repository>
+    <repository>
+      <id>repository-codehaus</id>
+      <name>Codehaus Repository</name>    
+      <url>http://repository.codehaus.org</url>    
+    </repository>
     <repository>
       <id>iona</id>
       <name>Iona Repository</name>    
