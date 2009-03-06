@@ -82,6 +82,10 @@
                   <include name="**/pom.xml"/>
                 </replace>
                 <replace file="${project.build.directory}/jetty/pom.xml">
+                  <replacetoken><![CDATA[<module>extras/win32service</module>]]></replacetoken>
+                  <replacevalue><![CDATA[<!--<module>extras/win32service</module>-->]]></replacevalue>
+                </replace>
+                <replace file="${project.build.directory}/jetty/pom.xml">
                   <replacetoken><![CDATA[<module>contrib/terracotta</module>]]></replacetoken>
                   <replacevalue><![CDATA[<!--<module>contrib/terracotta</module>-->]]></replacevalue>
                 </replace>
