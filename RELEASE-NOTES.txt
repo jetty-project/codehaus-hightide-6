@@ -1,7 +1,7 @@
 Hightide Release Notes
 ======================
 
-These notes are for Hightide 6.1H-SNAPSHOT release.
+These notes are for Hightide 6.1H.15 release.
 
 
 Prerequisites
@@ -71,7 +71,7 @@ Maven Support
     <dependency>
       <groupId>org.mortbay.hightide</groupId>
       <artifactId>hightide-provided-apis</artifactId>
-      <version>6.1H-SNAPSHOT</version>
+      <version>6.1H.15</version>
       <type>pom</type>
       <scope>provided</scope>
     </dependency>
@@ -86,7 +86,7 @@ Maven Support
     <dependency>
       <groupId>org.mortbay.hightide</groupId>
       <artifactId>hightide-server-dependencies</artifactId>
-      <version>6.1H-SNAPSHOT</version>
+      <version>6.1H.15</version>
       <type>pom</type>
       <scope>provided</scope>
     </dependency>
