@@ -1,8 +1,8 @@
 Index: modules/jetty/src/main/java/org/mortbay/jetty/webapp/WebAppContext.java
 ===================================================================
---- modules/jetty/src/main/java/org/mortbay/jetty/webapp/WebAppContext.java	(revision 1987)
+--- modules/jetty/src/main/java/org/mortbay/jetty/webapp/WebAppContext.java	(revision 4733)
 +++ modules/jetty/src/main/java/org/mortbay/jetty/webapp/WebAppContext.java	(working copy)
-@@ -76,8 +76,9 @@
+@@ -77,8 +77,9 @@
      
      private static String[] __dftConfigurationClasses =  
      { 

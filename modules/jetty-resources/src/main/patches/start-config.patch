@@ -1,6 +1,6 @@
 Index: modules/start/src/main/resources/org/mortbay/start/start.config
 ===================================================================
---- modules/start/src/main/resources/org/mortbay/start/start.config	(revision 2036)
+--- modules/start/src/main/resources/org/mortbay/start/start.config	(revision 4733)
 +++ modules/start/src/main/resources/org/mortbay/start/start.config	(working copy)
 @@ -42,16 +42,17 @@
  # Try different settings of jetty.home until the jetty.jar is found.
@@ -8,8 +8,8 @@ Index: modules/start/src/main/resources/org/mortbay/start/start.config
  jetty.home=..                                    ! exists $(jetty.home)/start.jar
 -jetty.home=/home/jetty                           ! exists $(jetty.home)/start.jar
 -jetty.home=/C:/jetty                             ! exists $(jetty.home)/start.jar
-+jetty.home=/home/hightide                           ! exists $(jetty.home)/start.jar
-+jetty.home=/C:/hightide                             ! exists $(jetty.home)/start.jar
++jetty.home=/home/hightide                        ! exists $(jetty.home)/start.jar
++jetty.home=/C:/hightide                          ! exists $(jetty.home)/start.jar
  jetty.home=.                                     ! exists $(jetty.home)/start.jar 
 +hightide.home=$(jetty.home)
  
@@ -23,11 +23,10 @@ Index: modules/start/src/main/resources/org/mortbay/start/start.config
  
  # Set the jetty classpath
  $(jetty.home)/lib/*                              always
-@@ -76,3 +77,8 @@
+@@ -78,3 +79,7 @@
  
  # Add a resources directory if it is there
  $(jetty.home)/resources/
-+
 +#logging properties file
 +java.util.logging.config.file=$(jetty.home)/resources/logging.properties
 +#logging manager

@@ -1,6 +1,6 @@
 Index: examples/test-annotations/pom.xml
 ===================================================================
---- examples/test-annotations/pom.xml	(revision 2135)
+--- examples/test-annotations/pom.xml	(revision 4733)
 +++ examples/test-annotations/pom.xml	(working copy)
 @@ -76,7 +76,7 @@
        <plugin>
@@ -13,9 +13,9 @@ Index: examples/test-annotations/pom.xml
            <useTestClasspath>true</useTestClasspath>
 Index: examples/test-jaas-webapp/pom.xml
 ===================================================================
---- examples/test-jaas-webapp/pom.xml	(revision 2135)
+--- examples/test-jaas-webapp/pom.xml	(revision 4733)
 +++ examples/test-jaas-webapp/pom.xml	(working copy)
-@@ -60,7 +60,7 @@
+@@ -58,7 +58,7 @@
        <plugin>
          <groupId>org.mortbay.jetty</groupId>
          <artifactId>maven-jetty-plugin</artifactId>
@@ -26,9 +26,9 @@ Index: examples/test-jaas-webapp/pom.xml
            <systemProperties>
 Index: examples/test-webapp/pom.xml
 ===================================================================
---- examples/test-webapp/pom.xml	(revision 3509)
+--- examples/test-webapp/pom.xml	(revision 4733)
 +++ examples/test-webapp/pom.xml	(working copy)
-@@ -74,7 +74,7 @@
+@@ -72,7 +72,7 @@
        <plugin>
          <groupId>org.mortbay.jetty</groupId>
          <artifactId>maven-jetty-plugin</artifactId>
@@ -37,33 +37,9 @@ Index: examples/test-webapp/pom.xml
          <configuration>
            <stopPort>8087</stopPort>
            <stopKey>foo</stopKey>
-Index: examples/test-webapp/src/main/webapp/index.html
+Index: examples/test-webapp/src/main/configuration/test.xml
 ===================================================================
---- examples/test-webapp/src/main/webapp/index.html	(revision 4062)
-+++ examples/test-webapp/src/main/webapp/index.html	(working copy)
-@@ -34,19 +34,7 @@
- </ul>
- </p>
- 
--<p>
--Other demonstration contexts, some of which may need manual deployment
--(check the README.txt file for details):
--<ul>
--<li>a <a href="/cometd/">AJAX Cometd Chat with Bayeux</a></li>
--<li> the <a href="/javadoc/">javadoc</a> </li>
--<li> a demo of the <a href="/test-jndi">JNDI features</a></li>
--<li> a demo of the <a href="/test-annotations">Annotation features</a></li>
--<li> a demo of the <a href="/test-jaas">JAAS features</a></li>
--</ul>
--</p>
- 
--This webapp is deployed in $JETTY_HOME/webapp/test and configured by $JETTY_HOME/contexts/test.xml
- 
- </BODY>
- </HTML>
- Index: examples/test-webapp/src/main/configuration/test.xml
-===================================================================
---- examples/test-webapp/src/main/configuration/test.xml	(revision 4062)
+--- examples/test-webapp/src/main/configuration/test.xml	(revision 4733)
 +++ examples/test-webapp/src/main/configuration/test.xml	(working copy)
 @@ -19,16 +19,15 @@
    <!--  + contextPath                                                  -->
@@ -94,3 +70,27 @@ Index: examples/test-webapp/src/main/webapp/index.html
              <!-- To enable reload of realm when properties change, uncomment the following lines -->
              <!-- changing refreshInterval (in seconds) as desired                                -->
              <!-- 
+Index: examples/test-webapp/src/main/webapp/index.html
+===================================================================
+--- examples/test-webapp/src/main/webapp/index.html	(revision 4733)
++++ examples/test-webapp/src/main/webapp/index.html	(working copy)
+@@ -34,19 +34,7 @@
+ </ul>
+ </p>
+ 
+-<p>
+-Other demonstration contexts, some of which may need manual deployment
+-(check the README.txt file for details):
+-<ul>
+-<li>a <a href="/cometd/">AJAX Cometd Chat with Bayeux</a></li>
+-<li> the <a href="/javadoc/">javadoc</a> </li>
+-<li> a demo of the <a href="/test-jndi">JNDI features</a></li>
+-<li> a demo of the <a href="/test-annotations">Annotation features</a></li>
+-<li> a demo of the <a href="/test-jaas">JAAS features</a></li>
+-</ul>
+-</p>
+ 
+-This webapp is deployed in $JETTY_HOME/webapp/test and configured by $JETTY_HOME/contexts/test.xml
+ 
+ </BODY>
+ </HTML>
