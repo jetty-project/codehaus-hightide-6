@@ -83,6 +83,10 @@
                 <replace dir="${project.build.directory}/jetty" token="${jetty-version}" value="${project.version}">
                   <include name="**/pom.xml"/>
                 </replace>
+                <replace file="${project.build.directory}/jetty/pom.xml">
+                  <replacetoken><![CDATA[<module>extras/setuid</module>]]></replacetoken>
+                  <replacevalue><![CDATA[<!--<module>extras/setuid</module>-->]]></replacevalue>
+                </replace>
                 <replace file="${project.build.directory}/jetty/examples/test-webapp/src/main/webapp/WEB-INF/web.xml">
                   <replacetoken><![CDATA[version="2.5">]]></replacetoken>
                   <replacevalue><![CDATA[version="2.5" metadata-complete="true">]]></replacevalue>
