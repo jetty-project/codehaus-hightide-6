@@ -70,24 +70,20 @@
                 <echo message="Fixing the patch file for local conventions..." />
                 <fixcrlf srcdir="${project.build.directory}/jetty/patches/" includes="**/*.patch" />
                 <fixcrlf srcdir="src/main/patches/" includes="**/*.patch" />
+                
                 <echo message="Starting to applying patches... " />
-                <patch  dir="${project.build.directory}/jetty/" patchfile="${project.build.directory}/jetty/patches/java5.patch" ignorewhitespace="true" strip="0" />
-                <patch  dir="${project.build.directory}/jetty/" patchfile="src/main/patches/jetty-parent-pom.patch" ignorewhitespace="true" strip="0" />                
-                <patch  dir="${project.build.directory}/jetty/" patchfile="src/main/patches/start-config.patch" ignorewhitespace="true" strip="0" />
-                <patch  dir="${project.build.directory}/jetty/" patchfile="src/main/patches/test-webapps.patch" ignorewhitespace="true" strip="0" />
-                <patch  dir="${project.build.directory}/jetty/" patchfile="src/main/patches/webdefault_xml.patch" ignorewhitespace="true" strip="0" />
-                <patch  dir="${project.build.directory}/jetty/contrib/" patchfile="src/main/patches/cometd-demo.patch" ignorewhitespace="true" strip="0" />
-
+                <patch dir="${project.build.directory}/jetty/" patchfile="${project.build.directory}/jetty/patches/java5.patch" ignorewhitespace="true" strip="0"/>
+                <patch dir="${project.build.directory}/jetty/" patchfile="src/main/patches/jetty-parent-pom.patch" ignorewhitespace="true" strip="0"/>
+                <patch dir="${project.build.directory}/jetty/" patchfile="src/main/patches/start-config.patch" ignorewhitespace="true" strip="0"/>
+                <patch dir="${project.build.directory}/jetty/" patchfile="src/main/patches/test-webapps.patch" ignorewhitespace="true" strip="0"/>
+                <patch dir="${project.build.directory}/jetty/" patchfile="src/main/patches/webdefault_xml.patch" ignorewhitespace="true" strip="0"/>
+                <patch dir="${project.build.directory}/jetty/" patchfile="src/main/patches/default-plusConfig.patch" ignorewhitespace="true" strip="0"/>
+                <patch dir="${project.build.directory}/jetty/" patchfile="src/main/patches/jetty-sh.patch" ignorewhitespace="true" strip="0"/>
+                <patch dir="${project.build.directory}/jetty/contrib/" patchfile="src/main/patches/cometd-demo.patch" ignorewhitespace="true" strip="0"/>
+                <patch dir="${project.build.directory}/jetty/contrib/" patchfile="src/main/patches/debian.patch" ignorewhitespace="true" strip="0"/>
+                
                 <replace dir="${project.build.directory}/jetty" token="${jetty-version}" value="${project.version}">
                   <include name="**/pom.xml"/>
-                </replace>
-                <replace file="${project.build.directory}/jetty/pom.xml">
-                  <replacetoken><![CDATA[<module>extras/win32service</module>]]></replacetoken>
-                  <replacevalue><![CDATA[<!--<module>extras/win32service</module>-->]]></replacevalue>
-                </replace>
-                <replace file="${project.build.directory}/jetty/pom.xml">
-                  <replacetoken><![CDATA[<module>contrib/terracotta</module>]]></replacetoken>
-                  <replacevalue><![CDATA[<!--<module>contrib/terracotta</module>-->]]></replacevalue>
                 </replace>
                 <replace file="${project.build.directory}/jetty/examples/test-webapp/src/main/webapp/WEB-INF/web.xml">
                   <replacetoken><![CDATA[version="2.5">]]></replacetoken>
@@ -97,22 +93,11 @@
                   <replacetoken><![CDATA[version="2.5">]]></replacetoken>
                   <replacevalue><![CDATA[version="2.5" metadata-complete="true">]]></replacevalue>
                 </replace>
-                <patch  dir="${project.build.directory}/jetty/" patchfile="src/main/patches/default-plusConfig.patch" ignorewhitespace="true" strip="0" />
-                <patch dir="${project.build.directory}/jetty/" patchfile="src/main/patches/jetty-sh.patch" ignorewhitespace="true" strip="0"/>
-                <patch dir="${project.build.directory}/jetty/" patchfile="src/main/patches/debian.patch" ignorewhitespace="true" strip="0"/>
                 <replace file="${project.build.directory}/jetty/contrib/debian/src/main/debian/changelog">
-                    <replacefilter
-                       token="${jetty-version}-1"
-                       value="${project.version}-1"/>
-                    <replacefilter
-                       token="jetty6"
-                       value="hightide"/>
-                    <replacefilter
-                       token="jetty 6"
-                       value="hightide"/>
-                    <replacefilter
-                       token="Greg Wilkins &lt;gregw@mortbay.com&gt;"
-                       value="Jan Bartel &lt;janb@mortbay.com&gt;"/>
+                  <replacefilter token="${jetty-version}-1" value="${project.version}-1"/>
+                  <replacefilter token="jetty6" value="hightide"/>
+                  <replacefilter token="jetty 6" value="hightide"/>
+                  <replacefilter token="Greg Wilkins &lt;gregw@mortbay.com&gt;" value="Jan Bartel &lt;janb@mortbay.com&gt;"/>
                 </replace>
                 <echo message="Finished applying patches... " />
               </tasks>
