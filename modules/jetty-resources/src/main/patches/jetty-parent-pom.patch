@@ -1,6 +1,6 @@
 Index: pom.xml
 ===================================================================
---- pom.xml	(revision 3990)
+--- pom.xml	(revision 4736)
 +++ pom.xml	(working copy)
 @@ -57,8 +57,8 @@
        <plugin>
@@ -13,12 +13,33 @@ Index: pom.xml
          </configuration>
        </plugin>
        <plugin>
-@@ -117,8 +117,6 @@
+@@ -115,8 +115,8 @@
      <module>modules/jsp-2.0</module>
      <module>modules/management</module>
      <module>modules/start</module>
 -    <module>modules/maven-plugin</module>
 -    <module>modules/jspc-maven-plugin</module>
++
++
      <module>modules/naming</module>
      <module>modules/plus</module>
      <module>modules/html</module>
+@@ -127,7 +127,7 @@
+     <module>extras/spring</module>
+     <module>extras/sslengine</module>
+     <module>extras/ajp</module>
+-    <module>extras/win32service</module>
++
+     <!--module>extras/gwt</module-->
+     <module>extras/threadpool</module>
+     <module>extras/client</module>
+@@ -145,8 +145,8 @@
+     <module>contrib/jetty-rewrite-handler</module>
+     <!--module>contrib/grizzly</module-->
+     <!--module>contrib/wadi</module-->
+-    <module>contrib/terracotta</module>
+ 
++
+     <module>extras/setuid</module>
+   </modules>
+   <dependencyManagement>

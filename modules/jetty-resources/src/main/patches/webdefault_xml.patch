@@ -1,6 +1,6 @@
 Index: modules/jetty/src/main/resources/org/mortbay/jetty/webapp/webdefault.xml
 ===================================================================
---- modules/jetty/src/main/resources/org/mortbay/jetty/webapp/webdefault.xml	(revision 3020)
+--- modules/jetty/src/main/resources/org/mortbay/jetty/webapp/webdefault.xml	(revision 4733)
 +++ modules/jetty/src/main/resources/org/mortbay/jetty/webapp/webdefault.xml	(working copy)
 @@ -52,7 +52,7 @@
  
