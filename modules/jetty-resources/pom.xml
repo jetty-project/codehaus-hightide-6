@@ -68,11 +68,10 @@
                 <delete file="${project.build.directory}/jetty/modules/util/src/main/java/org/mortbay/util/ConcurrentMultiMap.java"/>
 
                 <echo message="Fixing the patch file for local conventions..." />
-                <fixcrlf srcdir="${project.build.directory}/jetty/patches/" includes="**/*.patch" />
                 <fixcrlf srcdir="src/main/patches/" includes="**/*.patch" />
                 
                 <echo message="Starting to applying patches... " />
-                <patch dir="${project.build.directory}/jetty/" patchfile="${project.build.directory}/jetty/patches/java5.patch" ignorewhitespace="true" strip="0"/>
+                <patch dir="${project.build.directory}/jetty/" patchfile="src/main/patches/java5.patch" ignorewhitespace="true" strip="0"/>
                 <patch dir="${project.build.directory}/jetty/" patchfile="src/main/patches/jetty-parent-pom.patch" ignorewhitespace="true" strip="0"/>
                 <patch dir="${project.build.directory}/jetty/" patchfile="src/main/patches/start-config.patch" ignorewhitespace="true" strip="0"/>
                 <patch dir="${project.build.directory}/jetty/" patchfile="src/main/patches/test-webapps.patch" ignorewhitespace="true" strip="0"/>
