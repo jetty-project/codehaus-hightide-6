@@ -1,5 +1,5 @@
 hightide-6.1H-SNAPSHOT
-+
++ atomikos version updated to 3.5.4
 
 hightide-6.1H.15 6 March 2009
 + revert to slf4j-jdk14 logging as default. (can be changed to log4j by putting the slf4j-logj12.jar and log4j.jar in lib)
