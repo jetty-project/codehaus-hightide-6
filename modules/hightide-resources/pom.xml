@@ -165,6 +165,7 @@
                    <include name="ext/derby/**"/>
                    <include name="ext/dwr/**"/>
                    <include name="ext/atomikos/**"/>
+                   <include name="ext/cometd/**"/>
                  </fileset>
                 </delete>
               </tasks>
