@@ -1,3 +1,6 @@
+hightide-6.1H-SNAPSHOT
++
+
 hightide-6.1H.16 17 April 2009
 + atomikos version updated to 3.5.4
 
