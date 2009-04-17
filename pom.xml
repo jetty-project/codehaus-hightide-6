@@ -157,6 +157,11 @@
         <scope>provided</scope>
       </dependency>
       <dependency>
+        <groupId>org.cometd.java</groupId>
+        <artifactId>cometd-api</artifactId>
+        <version>${cometd-version}</version>
+      </dependency>
+      <dependency>
         <groupId>org.apache.activemq</groupId>
         <artifactId>activemq-core</artifactId>
         <version>${activemq-version}</version>
@@ -400,5 +405,6 @@
     <mail-version>1.4</mail-version>
     <activation-version>1.1</activation-version>
     <dojo-version>1.2.0</dojo-version>
+    <cometd-version>1.0.beta7</cometd-version>
   </properties>
 </project>

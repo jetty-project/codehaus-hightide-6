@@ -123,6 +123,13 @@
                   <version>${dwr-version}</version>
                   <outputDirectory>${project-home}/lib/ext/dwr</outputDirectory>  
                 </artifactItem>
+                <!-- cometd -->    
+                <artifactItem>
+                  <groupId>org.cometd.java</groupId>
+                  <artifactId>cometd-api</artifactId>    
+                  <version>${cometd-version}</version>
+                  <outputDirectory>${project-home}/lib/ext/cometd</outputDirectory>  
+                </artifactItem>
               </artifactItems>
               <outputDirectory>${project-home}/lib</outputDirectory>  
             </configuration>
