@@ -126,8 +126,8 @@
                   </fileset>
                 </copy>
                 <copy  todir="../../lib/ext/cometd">
-                  <fileset dir="${project.build.directory}/jetty/contrib/cometd/">
-                    <include name="server/target/cometd-server-${project.version}.jar"/>
+                  <fileset dir="${project.build.directory}/jetty/contrib/cometd/server/target/">
+                    <include name="cometd-server-${project.version}.jar"/>
                   </fileset>
                 </copy>
                 <copy todir="../../etc">
