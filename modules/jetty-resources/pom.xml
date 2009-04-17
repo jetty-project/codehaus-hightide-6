@@ -2,7 +2,7 @@
   <parent>
     <artifactId>hightide</artifactId>
     <groupId>org.mortbay.hightide</groupId>
-    <version>6.1H-SNAPSHOT</version>
+    <version>6.1H.16</version>
     <relativePath>../../pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
@@ -26,8 +26,8 @@
         <configuration>
           <connectionUrl>scm:svn:http://svn.codehaus.org/jetty/jetty/branches/jetty-6.1</connectionUrl>
           <checkoutDirectory>${project.build.directory}/jetty</checkoutDirectory>
-          <!--<scmVersion>jetty-${jetty-version}</scmVersion>
-          <scmVersionType>tag</scmVersionType>-->
+          <scmVersion>jetty-${jetty-version}</scmVersion>
+          <scmVersionType>tag</scmVersionType>
           <skipCheckoutIfExists>true</skipCheckoutIfExists>
         </configuration>
       </plugin>
