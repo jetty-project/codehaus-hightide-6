@@ -12,7 +12,7 @@ public class BayeuxListener implements ServletContextAttributeListener
     public void attributeAdded(ServletContextAttributeEvent event)
     {
 
-        if (event.getName().equals(Bayeux.DOJOX_COMETD_BAYEUX) && __publisher==null)
+        if (event.getName().equals(Bayeux.ATTRIBUTE) && __publisher==null)
         {      
             Bayeux bayeux=(Bayeux)event.getValue();
             String logChannelName = event.getServletContext().getInitParameter("logChannel");
