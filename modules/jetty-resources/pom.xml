@@ -25,8 +25,8 @@
         </executions>
         <configuration>
           <connectionUrl>scm:svn:http://svn.codehaus.org/jetty/jetty/branches/jetty-6.1</connectionUrl>
-          <!--<checkoutDirectory>${project.build.directory}/jetty</checkoutDirectory>
-          <scmVersion>jetty-${jetty-version}</scmVersion>-->
+          <checkoutDirectory>${project.build.directory}/jetty</checkoutDirectory>
+          <!--<scmVersion>jetty-${jetty-version}</scmVersion>-->
           <scmVersionType>tag</scmVersionType>
           <skipCheckoutIfExists>true</skipCheckoutIfExists>
         </configuration>
