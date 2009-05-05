@@ -1,5 +1,5 @@
 hightide-6.1H-SNAPSHOT
-+
++ activeMQ to 5.3.0.1-fuse
 
 hightide-6.1H.16 17 April 2009
 + atomikos version updated to 3.5.4
