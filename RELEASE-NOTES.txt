@@ -4,6 +4,11 @@ Hightide Release Notes
 These notes are for Hightide 6.1H-SNAPSHOT release.
 
 
+Documentation
+============
+http://docs.codehaus.org/display/JETTY/Hightide+Documentation
+
+
 Prerequisites
 ============
 + JRE 5.0 
