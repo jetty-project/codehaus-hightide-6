@@ -1,4 +1,4 @@
-hightide-6.1H-SNAPSHOT
+hightide-6.1H.18 22 May 2009
 + jetty to 6.1.18 (security fixes)
 + added logback-access-0.9.15 for request access logs (java -jar start.jar etc/hightide.xml etc/hightide-logback-access.xml)
 
