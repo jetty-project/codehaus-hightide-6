@@ -1,4 +1,6 @@
 hightide-6.1H-SNAPSHOT
++ jetty to 6.1.18 (security fixes)
++ added logback-access-0.9.15 for request access logs (java -jar start.jar etc/hightide.xml etc/hightide-logback-access.xml)
 
 hightide-6.1H.17 5 May 2009
 + activeMQ to 5.3.0.1-fuse
