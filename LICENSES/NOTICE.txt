@@ -31,6 +31,9 @@ which can be substituted for other similar software:
 + SLF4J (http://www.slf4j.org) under a license identical to
   the X11 license and compatible with the Apache 2.0 license.
 
++ Logback (http://logback.qos.ch), licensed under GNU Lesser General 
+  Public License Version 2.1 (LGPL)
+
 
 This product is distributed with the following software for
 demonstration purposes:
