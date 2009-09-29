@@ -2,7 +2,7 @@
   <parent>
     <artifactId>hightide</artifactId>
     <groupId>org.mortbay.hightide</groupId>
-    <version>6.1H-SNAPSHOT</version>
+    <version>6.1H.21</version>
     <relativePath>../../pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
@@ -58,6 +58,13 @@
     <dependency>
       <groupId>org.mortbay.hightide</groupId>
       <artifactId>hightide-portable-dependencies</artifactId>
+      <version>${project.version}</version>
+      <type>pom</type>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mortbay.hightide</groupId>
+      <artifactId>hightide-server-dependencies</artifactId>
       <version>${project.version}</version>
       <type>pom</type>
       <scope>provided</scope>
