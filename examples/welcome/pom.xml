@@ -62,12 +62,5 @@
       <type>pom</type>
       <scope>provided</scope>
     </dependency>
-    <dependency>
-      <groupId>org.mortbay.hightide</groupId>
-      <artifactId>hightide-server-dependencies</artifactId>
-      <version>${project.version}</version>
-      <type>pom</type>
-      <scope>provided</scope>
-    </dependency>
   </dependencies>
 </project>

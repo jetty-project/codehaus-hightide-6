@@ -61,5 +61,9 @@
       <version>${slf4j-version}</version>
       <!--<scope>provided</scope>-->
     </dependency>
+    <dependency>
+      <groupId>org.cometd.java</groupId>
+      <artifactId>cometd-api</artifactId>
+    </dependency>
   </dependencies>  
 </project>
