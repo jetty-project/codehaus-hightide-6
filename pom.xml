@@ -141,6 +141,10 @@
       <name>Iona Repository</name>    
       <url>http://repo.open.iona.com/maven2</url>
     </repository>    
+    <repository>
+      <id>atomikos</id>
+      <url>http://repo.atomikos.com/</url>
+    </repository>    
   </repositories> 
 
   <dependencyManagement>
