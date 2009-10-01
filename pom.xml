@@ -387,14 +387,19 @@
 
    <distributionManagement>
     <repository>
-      <id>oss.sonatype.org</id>
-      <name>Jetty Staging Repository</name>
-      <url>http://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+      <id>codehaus.org</id>
+      <name>Jetty Repository</name>
+      <url>dav:https://dav.codehaus.org/repository/jetty/</url>
     </repository>
     <snapshotRepository>
-      <id>oss.sonatype.org</id>
+      <id>codehaus.org</id>
       <name>Jetty Snapshot Repository</name>
-      <url>http://oss.sonatype.org/content/repositories/jetty-snapshots/</url>
+      <url>dav:https://dav.codehaus.org/snapshots.repository/jetty/</url>
+    </snapshotRepository>
+    <site>
+      <id>codehaus.org</id>
+      <url>dav:https://dav.codehaus.org/jetty/</url>
+    </site>
     </snapshotRepository>
   </distributionManagement>
 
