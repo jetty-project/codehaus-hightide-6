@@ -1,0 +1,24 @@
+
+<configuration>
+  <!--<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <layout class="ch.qos.logback.access.PatternLayout">
+      <Pattern>combined</Pattern>
+    </layout>
+  </appender>
+
+  <appender-ref ref="STDOUT" />-->
+  
+  <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <File>logs/request.log</File>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <FileNamePattern>%d{yyyy-MM-dd}.request.log</FileNamePattern>
+    </rollingPolicy>
+
+    <layout class="ch.qos.logback.access.PatternLayout">
+      <Pattern>combined</Pattern>
+    </layout>
+  </appender>
+ 
+  <appender-ref ref="FILE" />
+
+</configuration>

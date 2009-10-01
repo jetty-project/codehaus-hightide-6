@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN" "http://jetty.mortbay.org/configure.dtd">
+
+<!-- =============================================================== -->
+<!-- Configure the Jetty Server                                      -->
+<!-- =============================================================== -->
+<Configure id="Server" class="org.mortbay.jetty.Server">
+
+    <!-- =========================================================== -->
+    <!-- Request Log                                                 -->
+    <!-- =========================================================== -->
+    <Ref id="RequestLog">
+      <Set name="RequestLog">
+        <New id="RequestLogImpl" class="ch.qos.logback.access.jetty.RequestLogImpl">
+          <Set name="fileName"><SystemProperty name="jetty.home" default="."/>/etc/logback-access.xml</Set>
+          <Set name="name">LogbackRequestLog</Set>
+        </New>
+      </Set>
+    </Ref>
+
+
+</Configure>
