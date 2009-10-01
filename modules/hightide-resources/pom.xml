@@ -37,8 +37,18 @@
                 </artifactItem>
                 <artifactItem>
                   <groupId>org.slf4j</groupId>
-                  <artifactId>jcl104-over-slf4j</artifactId>
+                  <artifactId>jcl-over-slf4j</artifactId>
                   <version>${slf4j-version}</version>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>ch.qos.logback</groupId>
+                  <artifactId>logback-core</artifactId>
+                  <version>${logback-version}</version>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>ch.qos.logback</groupId>
+                  <artifactId>logback-access</artifactId>
+                  <version>${logback-version}</version>
                 </artifactItem>
                 <!-- Active MQ -->  
                 <!-- done by copy-dependencies -->
@@ -123,6 +133,13 @@
                   <version>${dwr-version}</version>
                   <outputDirectory>${project-home}/lib/ext/dwr</outputDirectory>  
                 </artifactItem>
+                <!-- cometd -->
+                <artifactItem>
+                  <groupId>org.cometd.java</groupId>
+                  <artifactId>cometd-api</artifactId>
+                  <version>${cometd-version}</version>
+                  <outputDirectory>${project-home}/lib/ext/cometd</outputDirectory> 
+                </artifactItem>
               </artifactItems>
               <outputDirectory>${project-home}/lib</outputDirectory>  
             </configuration>
@@ -153,7 +170,7 @@
                 <delete failonerror="false" includeemptydirs="true">
                  <fileset dir="${project-home}/lib">
                    <include name="slf4j-jdk14*.jar"/>
-                   <include name="jcl104-over-slf4j*.jar"/>
+                   <include name="jcl-over-slf4j*.jar"/>
                    <include name="ext/activemq/**"/>
                    <include name="ext/derby/**"/>
                    <include name="ext/dwr/**"/>

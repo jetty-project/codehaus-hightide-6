@@ -15,7 +15,7 @@ public class BayeuxListener implements ServletContextAttributeListener
 {
     public void attributeAdded(ServletContextAttributeEvent event)
     {
-        if (event.getName().equals(Bayeux.DOJOX_COMETD_BAYEUX))
+        if (event.getName().equals(Bayeux.ATTRIBUTE))
             init((Bayeux)event.getValue());
     }
     

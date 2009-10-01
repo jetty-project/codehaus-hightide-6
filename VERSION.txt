@@ -1,5 +1,24 @@
 hightide-6.1H-SNAPSHOT
-+
+
+hightide-6.1H.21 1 October 2009
++ jetty to 6.1.21
++ cometd to 1.0.0rc0
++ dojo to 1.3.2 
++ slf4j to 1.5.6
++ atomikos to 3.5.8
+
+hightide-6.1H.18 22 May 2009
++ jetty to 6.1.18 (security fixes)
++ added logback-access-0.9.15 for request access logs (java -jar start.jar etc/hightide.xml etc/hightide-logback-access.xml)
+
+hightide-6.1H.17 5 May 2009
++ activeMQ to 5.3.0.1-fuse
++ cometd to 1.0.beta8
++ dojo to 1.3.0
+
+hightide-6.1H.16 17 April 2009
++ atomikos version updated to 3.5.4
+
 
 hightide-6.1H.15 6 March 2009
 + revert to slf4j-jdk14 logging as default. (can be changed to log4j by putting the slf4j-logj12.jar and log4j.jar in lib)

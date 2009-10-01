@@ -18,7 +18,7 @@
     </dependency>
     <dependency>
       <groupId>org.mortbay.jetty</groupId>
-      <artifactId>cometd-jetty</artifactId>
+      <artifactId>cometd-server</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
