@@ -400,7 +400,6 @@
       <id>codehaus.org</id>
       <url>dav:https://dav.codehaus.org/jetty/</url>
     </site>
-    </snapshotRepository>
   </distributionManagement>
 
   <properties>
