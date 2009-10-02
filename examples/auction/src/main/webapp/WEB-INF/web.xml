@@ -14,6 +14,12 @@
     </listener-class>
   </listener>
 
+  <context-param>
+    <param-name>org.mortbay.jetty.servlet.ManagedAttributes</param-name>
+    <param-value>org.cometd.bayeux,dojox.cometd.bayeux</param-value>
+  </context-param>
+
+
     <!-- servlet mappings -->
 
   <servlet>
@@ -28,20 +34,12 @@
       <param-value>15000</param-value>
     </init-param>
     <init-param>
-      <param-name>multi-timeout</param-name>
-      <param-value>1500</param-value>
-    </init-param>
-    <init-param>
       <param-name>multiFrameInterval</param-name>
       <param-value>1500</param-value>
     </init-param>
     <init-param>
-      <param-name>verbose</param-name>
-      <param-value>true</param-value>
-    </init-param>
-    <init-param>
       <param-name>logLevel</param-name>
-      <param-value>1</param-value>
+      <param-value>0</param-value>
     </init-param>
     <init-param>
       <param-name>JSONCommented</param-name>
