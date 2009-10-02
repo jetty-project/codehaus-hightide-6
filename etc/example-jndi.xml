@@ -45,23 +45,25 @@
     <!-- XA DataSource                                               -->
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
     <New id="exampe-xads" class="org.mortbay.jetty.plus.naming.Resource">
+      <Arg><Ref id="Server"/></Arg>
       <Arg>jdbc/exampleXADS</Arg>
       <Arg>
        <New class="com.atomikos.jdbc.AtomikosDataSourceBean">
         <Set name="minPoolSize">2</Set>
         <Set name="maxPoolSize">50</Set>       
         <Set name="xaDataSourceClassName">org.apache.derby.jdbc.EmbeddedXADataSource</Set>
-        <Get name="xaProperties">
-          <Call name="setProperty">
-            <Arg>databaseName</Arg>
-            <Arg>example</Arg>
-          </Call>
-          <Call name="setProperty">
-            <Arg>createDatabase</Arg>
-            <Arg>create</Arg>
-          </Call>
-        </Get>
-        <!-- Set name="xaDataSourceProperties">databaseName=example;createDatabase=create</Set -->
+        <Set name="xaProperties">
+          <New class="java.util.Properties">
+            <Call name="setProperty">
+              <Arg>databaseName</Arg>
+              <Arg>example</Arg>
+            </Call>
+            <Call name="setProperty">
+              <Arg>createDatabase</Arg>
+              <Arg>create</Arg>
+            </Call>
+          </New>
+        </Set>
         <Set name="UniqueResourceName">exampleXADS</Set>
        </New>
       </Arg>
@@ -76,6 +78,7 @@
        <New class="com.atomikos.jdbc.nonxa.AtomikosNonXADataSourceBean">
          <Set name="minPoolSize">2</Set>
          <Set name="maxPoolSize">50</Set>       
+         <Set name="UniqueResourceName">exampleNonXADS</Set>
          <Set name="Url">jdbc:derby::example;create=true</Set>
          <Set name="driverClassName">org.apache.derby.jdbc.EmbeddedDriver</Set>
        </New>
