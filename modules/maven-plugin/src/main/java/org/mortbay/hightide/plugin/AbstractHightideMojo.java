@@ -2,10 +2,15 @@ package org.mortbay.hightide.plugin;
 
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 
+import javax.naming.NamingException;
 import javax.transaction.UserTransaction;
 
 
@@ -18,7 +23,7 @@ import org.mortbay.jetty.plugin.util.JettyPluginServer;
 import org.mortbay.jetty.plugin.util.PluginLog;
 import org.mortbay.util.Scanner;
 import org.mortbay.jetty.plugin.util.SystemProperty;
-
+import org.mortbay.jetty.plugin.util.SystemProperties;
 
 
 /**
@@ -32,7 +37,7 @@ public abstract class AbstractHightideMojo extends AbstractMojo
     /**
      * The proxy for the Server object
      */
-    private JettyPluginServer server;
+    protected JettyPluginServer server;
     
     /**
      * The "virtual" webapp created by the plugin
@@ -47,7 +52,7 @@ public abstract class AbstractHightideMojo extends AbstractMojo
      * @required
      * @readonly
      */
-    private MavenProject project;
+    protected MavenProject project;
     
 
     
@@ -58,7 +63,7 @@ public abstract class AbstractHightideMojo extends AbstractMojo
      * @parameter expression="/${project.artifactId}"
      * @required
      */
-    private String contextPath;
+    protected String contextPath;
     
     
     /**
@@ -68,7 +73,7 @@ public abstract class AbstractHightideMojo extends AbstractMojo
      * @parameter expression="${project.build.directory}/work"
      * @required
      */
-    private File tmpDirectory;
+    protected File tmpDirectory;
     
     
     
@@ -78,7 +83,7 @@ public abstract class AbstractHightideMojo extends AbstractMojo
      * 
      * @parameter 
      */
-    private File webDefaultXml;
+    protected File webDefaultXml;
     
     
     /**
@@ -88,7 +93,7 @@ public abstract class AbstractHightideMojo extends AbstractMojo
      * test, production etc. Optional.
      * @parameter
      */
-    private File overrideWebXml;
+    protected File overrideWebXml;
     
     /**
      * The interval in seconds to scan the webapp for changes 
@@ -97,7 +102,17 @@ public abstract class AbstractHightideMojo extends AbstractMojo
      * @parameter expression="0"
      * @required
      */
-    private int scanIntervalSeconds;
+    protected int scanIntervalSeconds;
+    
+    /**
+     * reload can be set to either 'automatic' or 'manual'
+     *
+     * if 'manual' then the context can be reloaded by a linefeed in the console
+     * if 'automatic' then traditional reloading on changed files is enabled.
+     * 
+     * @parameter expression="${jetty.reload}" default-value="automatic"
+     */
+    protected String reload;
     
     
     /**
@@ -106,34 +121,76 @@ public abstract class AbstractHightideMojo extends AbstractMojo
      * that have been set on the command line or by the JVM. Optional.
      * @parameter 
      */
-    private SystemProperty[] systemProperties;
+    protected SystemProperties systemProperties;
     
-    
+    /**
+     * File containing system properties to be set before execution
+     * 
+     * Note that these properties will NOT override System properties
+     * that have been set on the command line, by the JVM, or directly 
+     * in the POM via systemProperties. Optional.
+     * 
+     * @parameter expression="${jetty.systemPropertiesFile}"
+     */
+    protected File systemPropertiesFile;
     
     /**
      * Location of a jetty xml configuration file whose contents 
      * will be applied before any plugin configuration. Optional.
      * @parameter
      */
-    private File jettyConfig;
-  
+    protected File jettyConfig;
+    
+    /**
+     * <p>
+     * Determines whether or not the server blocks when started. The default
+     * behavior (daemon = false) will cause the server to pause other processes
+     * while it continues to handle web requests. This is useful when starting the
+     * server with the intent to work with it interactively.
+     * </p><p>
+     * Often, it is desirable to let the server start and continue running subsequent
+     * processes in an automated build environment. This can be facilitated by setting
+     * daemon to true.
+     * </p>
+     * @parameter expression="${jetty.daemon}" default-value="false"
+     */
+    
+    protected boolean daemon;
+    /**
+     * Port to listen to stop jetty on executing -DSTOP.PORT=&lt;stopPort&gt; 
+     * -DSTOP.KEY=&lt;stopKey&gt; -jar start.jar --stop
+     * @parameter
+     */
+    protected int stopPort;
+    
+    /**
+     * Key to provide when stopping jetty on executing java -DSTOP.KEY=&lt;stopKey&gt; 
+     * -DSTOP.PORT=&lt;stopPort&gt; -jar start.jar --stop
+     * @parameter
+     */
+    protected String stopKey;
     
     /**
      * A scanner to check for changes to the webapp
      */
-    private Scanner scanner;
+    protected Scanner scanner;
     
     /**
      *  List of files and directories to scan
      */
-    private ArrayList scanList;
+    protected ArrayList scanList;
     
     /**
      * List of Listeners for the scanner
      */
-    private ArrayList scannerListeners;
+    protected ArrayList scannerListeners;
     
+    /**
+     * A scanner to check ENTER hits on the console
+     */
+    protected Thread consoleScanner;
     
+  
     public String PORT_SYSPROPERTY = "jetty.port";
     
     protected static String DERBY_SYSTEM_HOME = "target/database";
@@ -160,14 +217,11 @@ public abstract class AbstractHightideMojo extends AbstractMojo
 
     public abstract void checkPomConfiguration() throws MojoExecutionException;
     
-    
-    
     public abstract void configureScanner () throws MojoExecutionException;
-    
-    
+     
     public abstract void applyJettyXml () throws Exception;
     
-    
+    public abstract void restartWebApp(boolean reconfigureScanner) throws Exception;
     /**
      * create a proxy that wraps a particular jetty version Server object
      * @return
@@ -216,11 +270,57 @@ public abstract class AbstractHightideMojo extends AbstractMojo
     }
     
 
-    public SystemProperty[] getSystemProperties()
+    public SystemProperties getSystemProperties()
     {
         return this.systemProperties;
     }
-
+    
+    public void setSystemProperties(SystemProperties systemProperties)
+    {
+        if (this.systemProperties == null)
+            this.systemProperties = systemProperties;
+        else
+        {
+            Iterator itor = systemProperties.getSystemProperties().iterator();
+            while (itor.hasNext())
+            {
+                SystemProperty prop = (SystemProperty)itor.next();
+                this.systemProperties.setSystemProperty(prop);
+            }   
+        }
+    }
+    /**
+     * @return returns the path to the systemPropertiesFile
+     */
+    public File getSystemPropertiesFile()
+    {
+        return this.systemPropertiesFile;
+    }
+    
+    public void setSystemPropertiesFile(File file) throws Exception
+    {
+        this.systemPropertiesFile = file;
+        FileInputStream propFile = new FileInputStream(systemPropertiesFile);
+        Properties properties = new Properties();
+        properties.load(propFile);
+        
+        if (this.systemProperties == null )
+            this.systemProperties = new SystemProperties();
+        
+        for (Enumeration keys = properties.keys(); keys.hasMoreElements();  )
+        {
+            String key = (String)keys.nextElement();
+            if ( ! systemProperties.containsSystemProperty(key) )
+            {
+                SystemProperty prop = new SystemProperty();
+                prop.setKey(key);
+                prop.setValue(properties.getProperty(key));
+                
+                this.systemProperties.setSystemProperty(prop);
+            }
+        }   
+    }
+    
     public File getJettyXmlFile ()
     {
         return this.jettyConfig;
@@ -278,7 +378,7 @@ public abstract class AbstractHightideMojo extends AbstractMojo
         {
             getLog().debug("Starting Jetty Hightide Server ...");
             
-            configureSystemProperties();
+            printSystemProperties();
             setServer(createServer());
         
             //apply any config from a jetty.xml file first which is able to 
@@ -287,19 +387,8 @@ public abstract class AbstractHightideMojo extends AbstractMojo
 
             JettyPluginServer plugin=getServer();
             
-            // setup transaction resource if any
-            if (getConfiguredTransaction() != null)
-            	new org.mortbay.jetty.plus.naming.Transaction((UserTransaction)getConfiguredTransaction());
-            else
-            	new org.mortbay.jetty.plus.naming.Transaction(new com.atomikos.icatch.jta.UserTransactionImp());
+            configureNamingResources();
             
-            org.apache.activemq.broker.BrokerFactory.createBroker(new java.net.URI(AMQ_XBEAN_CONFIG_LOCATION));
-            // setup TopicConnectionFactory for the debug log
-            new org.mortbay.jetty.plus.naming.Resource(DEFAULT_JMS_JNDI_NAME, new org.apache.activemq.ActiveMQConnectionFactory(DEFAULT_AMQ_BROKER_URL));
-            if(System.getProperty("derby.system.home")==null)
-            	System.setProperty("derby.system.home", DERBY_SYSTEM_HOME);
-            else
-            	getLog().info("Derby embedded location: " + System.getProperty("derby.system.home"));
             // if the user hasn't configured their project's pom to use a
             // different set of connectors,
             // use the default
@@ -346,8 +435,14 @@ public abstract class AbstractHightideMojo extends AbstractMojo
             configureScanner ();            
             startScanner();
             
-            // keep the thread going
-            server.join();
+            // start the new line scanner thread if necessary
+            startConsoleScanner();
+            
+            // keep the thread going   // keep the thread going if not in daemon mode
+            if (!daemon)
+            {           
+                server.join();
+            }
         }
         catch (Exception e)
         {
@@ -355,12 +450,13 @@ public abstract class AbstractHightideMojo extends AbstractMojo
         }
         finally
         {
-            getLog().info("Jetty Hightide server exiting.");
+            if (!daemon)
+                getLog().info("Jetty Hightide server exiting.");
         }
-        
     }
     
     
+   
 
     /**
      * Subclasses should invoke this to setup basic info
@@ -383,8 +479,12 @@ public abstract class AbstractHightideMojo extends AbstractMojo
             if (getOverrideWebXml() != null)
                 webAppConfig.setOverrideDescriptor(getOverrideWebXml().getCanonicalPath());
         }
-
-          
+        
+        if (webAppConfig.getContextPath() == null)
+        {
+            webAppConfig.setContextPath((getContextPath().startsWith("/") ? getContextPath() : "/"+ getContextPath()));
+        }
+         
         getLog().info("Context path = " + webAppConfig.getContextPath());
         getLog().info("Tmp directory = "+ " determined at runtime");
         getLog().info("Web defaults = "+(webAppConfig.getDefaultsDescriptor()==null?" jetty default":webAppConfig.getDefaultsDescriptor()));
@@ -401,7 +501,15 @@ public abstract class AbstractHightideMojo extends AbstractMojo
     {
         // check if scanning is enabled
         if (getScanIntervalSeconds() <= 0) return;
-
+        
+        // check if reload is manual. It disables file scanning
+        if ( "manual".equalsIgnoreCase( reload ) )
+        {
+            // issue a warning if both scanIntervalSeconds and reload
+            // are enabled
+            getLog().warn("scanIntervalSeconds is set to " + scanIntervalSeconds + " but will be IGNORED due to manual reloading");
+            return;
+        }
         scanner = new Scanner();
         scanner.setReportExistingFilesOnStartup(false);
         scanner.setScanInterval(getScanIntervalSeconds());
@@ -414,23 +522,53 @@ public abstract class AbstractHightideMojo extends AbstractMojo
         scanner.start();
     }
     
-    private void configureSystemProperties ()
+    /**
+     * Run a thread that monitors the console input to detect ENTER hits.
+     */
+    protected void startConsoleScanner() 
     {
-        // get the system properties set up
-        for (int i = 0; (getSystemProperties() != null) && i < getSystemProperties().length; i++)
+        if ( "manual".equalsIgnoreCase( reload ) )
         {
-            boolean set = false;
-            SystemProperty sp = getSystemProperties()[i];
-            if(System.getProperty(sp.getName())==null)
+            getLog().info("Console reloading is ENABLED. Hit ENTER on the console to restart the context.");
+            consoleScanner = new ConsoleScanner(this);
+            consoleScanner.start();
+        }
+        
+    }
+
+    private void printSystemProperties ()
+    {
+        // print out which system properties were set up
+        if (getLog().isDebugEnabled())
+        {
+            if (systemProperties != null)
             {
-                System.setProperty(sp.getName(), sp.getValue());
-                set = true;
+                Iterator itor = systemProperties.getSystemProperties().iterator();
+                while (itor.hasNext())
+                {
+                    SystemProperty prop = (SystemProperty)itor.next();
+                    getLog().debug("Property "+prop.getName()+"="+prop.getValue()+" was "+ (prop.isSet() ? "set" : "skipped"));
+                }
             }
-            getLog().info("Property " + sp.getName() + "=" + sp.getValue() + " was "
-                    + (set ? "set" : "skipped"));
         }
     }
-    
+   
+    protected void configureNamingResources () throws URISyntaxException, Exception
+    {
+        // setup transaction resource if any
+        if (getConfiguredTransaction() != null)
+            new org.mortbay.jetty.plus.naming.Transaction((UserTransaction)getConfiguredTransaction());
+        else
+            new org.mortbay.jetty.plus.naming.Transaction(new com.atomikos.icatch.jta.UserTransactionImp());
+        
+        org.apache.activemq.broker.BrokerFactory.createBroker(new java.net.URI(AMQ_XBEAN_CONFIG_LOCATION));
+        // setup TopicConnectionFactory for the debug log
+        new org.mortbay.jetty.plus.naming.Resource(DEFAULT_JMS_JNDI_NAME, new org.apache.activemq.ActiveMQConnectionFactory(DEFAULT_AMQ_BROKER_URL));
+        if(System.getProperty("derby.system.home")==null)
+            System.setProperty("derby.system.home", DERBY_SYSTEM_HOME);
+        else
+            getLog().info("Derby embedded location: " + System.getProperty("derby.system.home"));
+    }
     /**
      * Try and find a jetty-web.xml file, using some
      * historical naming conventions if necessary.

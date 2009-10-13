@@ -106,29 +106,8 @@ public class HightideRunWarMojo extends AbstractHightideRunWarMojo
             {
                 try
                 {
-                    getLog().info("Restarting webapp ...");
-                    getLog().debug("Stopping webapp ...");
-                    webAppConfig.stop();
-                    getLog().debug("Reconfiguring webapp ...");
-
-                    checkPomConfiguration();
-                    
-                    // check if we need to reconfigure the scanner,
-                    // which is if the pom changes
-                    if (changes.contains(getProject().getFile().getCanonicalPath()))
-                    {
-                        getLog().info("Reconfiguring scanner after change to pom.xml ...");
-                        ArrayList scanList = getScanList();
-                        scanList.clear();
-                        scanList.add(getProject().getFile());
-                        scanList.add(webApp);
-                        setScanList(scanList);
-                        getScanner().setScanDirs(scanList);
-                    }
-
-                    getLog().debug("Restarting webapp ...");
-                    webAppConfig.start();
-                    getLog().info("Restart completed.");
+                    boolean reconfigure = changes.contains(getProject().getFile().getCanonicalPath());
+                    restartWebApp(reconfigure);
                 }
                 catch (Exception e)
                 {
@@ -136,11 +115,38 @@ public class HightideRunWarMojo extends AbstractHightideRunWarMojo
                 }
             }
         });
-        setScannerListeners(listeners);
-        
+        setScannerListeners(listeners);          
     }
 
 
+    
+
+    public void restartWebApp(boolean reconfigureScanner) throws Exception 
+    {
+        getLog().info("Restarting webapp ...");
+        getLog().debug("Stopping webapp ...");
+        webAppConfig.stop();
+        getLog().debug("Reconfiguring webapp ...");
+
+        checkPomConfiguration();
+
+        // check if we need to reconfigure the scanner,
+        // which is if the pom changes
+        if (reconfigureScanner)
+        {
+            getLog().info("Reconfiguring scanner after change to pom.xml ...");
+            ArrayList scanList = getScanList();
+            scanList.clear();
+            scanList.add(getProject().getFile());
+            scanList.add(webApp);
+            setScanList(scanList);
+            getScanner().setScanDirs(scanList);
+        }
+
+        getLog().debug("Restarting webapp ...");
+        webAppConfig.start();
+        getLog().info("Restart completed.");
+    }
 
 
 
@@ -151,8 +157,5 @@ public class HightideRunWarMojo extends AbstractHightideRunWarMojo
     {
         return;
     }
-    
-   
-
-    
+       
 }
