@@ -1,0 +1,22 @@
+--- /usr4/jetty/jetty-6.1.21/extras/xbean/pom.xml	2009-10-10 15:11:20.000000000 +1100
++++ pom.xml	2009-10-13 09:29:24.000000000 +1100
+@@ -119,6 +119,19 @@
+       <groupId>org.mortbay.jetty</groupId>
+       <artifactId>jetty-plus</artifactId>
+       <version>${project.version}</version>
++      <scope>test</scope>
++    </dependency>
++    <dependency>
++      <groupId>org.mortbay.jetty</groupId>
++      <artifactId>jetty-annotations</artifactId>
++      <version>${project.version}</version>
++      <scope>test</scope>
++    </dependency>
++    <dependency>
++      <groupId>org.mortbay.jetty</groupId>
++      <artifactId>jetty-naming</artifactId>
++      <version>${project.version}</version>
++      <scope>test</scope>
+     </dependency>
+     <dependency>
+       <groupId>org.springframework</groupId>
