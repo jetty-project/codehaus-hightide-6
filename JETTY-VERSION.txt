@@ -1,3 +1,21 @@
+jetty-6.1.22 16 November 2009
+ + Fixed XSS issue in demo CometDump servlet
+ + JETTY-937 More JVM bug work arounds. Insert pause if all else fails
+ + JETTY-983 Send content-length with multipart ranges
+ + JETTY-1120 Requests with no body are treated as complete even if there's a LF left to read
+ + JETTY-1121 Merge Multipart query parameters
+ + JETTY-1122 Handle multi-byte utf that causes buffer overflow
+ + JETTY-1129 Filter control characters out of StdErrLog
+ + JETTY-1135 Handle connection closed before accepted during JVM bug work around
+ + JETTY-1144 Fixed multi-byte character overflow
+ + JETTY-1148 Reset partially read request reader.
+ + COMETD-28 Improved concurrency usage in Bayeux and channel handling
+ + 289221 HttpExchange does not timeout when using blocking connector
+ + 290761 HttpExchange.waitForDone() 
+ + 291340 state==HEADER (Race condition in onException() notifications)
+ + 292546 Proactively enforce HttpClient idle timeout
+ + CVE-2009-3555 Prevent SSL renegotiate for SSL vulnerability
+
 jetty-6.1.21 22 September 2009
  + JETTY-719 Document state machine of jetty http client
  + JETTY-933 State == HEADER in client
@@ -101,6 +119,11 @@ jetty-6.1.18 16 May 2009
  + JETTY-1018 Denial of Service Filter
  + JETTY-1020 ZipException in org.mortbay.jetty.webapp.TagLibConfiguration prevents all contexts from being loaded
  + JETTY-1022 Removed several 1.5isms
+
+Jetty-5.1.15 - 18 May 2009
+ + JETTY-418 synchronized load class
+ + JETTY-1004 CERT VU402580 Canonical path handling includes ? in path segment
+ + Fixes for CERT438616-CERT237888-CERT21284
 
 jetty-6.1.17 30 April 2009
  + JETTY-936 Make optional dispatching to welcome files as servlets
