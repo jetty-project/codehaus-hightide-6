@@ -26,8 +26,8 @@
         <configuration>
           <connectionUrl>scm:svn:http://svn.codehaus.org/jetty/jetty/branches/jetty-6.1</connectionUrl>
           <checkoutDirectory>${project.build.directory}/jetty</checkoutDirectory>
-          <!--<scmVersion>jetty-${jetty-version}</scmVersion>
-          <scmVersionType>tag</scmVersionType>-->
+          <scmVersion>jetty-${jetty-version}</scmVersion>
+          <scmVersionType>tag</scmVersionType>
           <skipCheckoutIfExists>true</skipCheckoutIfExists>
         </configuration>
       </plugin>
@@ -72,7 +72,7 @@
                 <fixcrlf srcdir="src/main/patches/" includes="**/*.patch" />
                 
                 <echo message="Starting to applying patches... " />
-                <patch dir="${project.build.directory}/jetty/" patchfile="${project.build.directory}/jetty/patches/java5.patch" ignorewhitespace="true" strip="0"/>
+                <patch dir="${project.build.directory}/jetty/" patchfile="src/main/patches/java5.patch" ignorewhitespace="true" strip="0"/>
                 <patch dir="${project.build.directory}/jetty/" patchfile="src/main/patches/jetty-parent-pom.patch" ignorewhitespace="true" strip="0"/>
                 <patch dir="${project.build.directory}/jetty/" patchfile="src/main/patches/start-config.patch" ignorewhitespace="true" strip="0"/>
                 <patch dir="${project.build.directory}/jetty/" patchfile="src/main/patches/test-webapps.patch" ignorewhitespace="true" strip="0"/>
