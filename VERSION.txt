@@ -1,5 +1,10 @@
 hightide-6.1H-SNAPSHOT
 
+hightide-6.1H.24 26 April 2010
++ jetty to 6.1.24
++ cometd to 1.1.1
++ dojo to 1.4.2 
+
 hightide-6.1H.21 1 October 2009
 + jetty to 6.1.21
 + cometd to 1.0.0rc0

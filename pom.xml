@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
   <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.mortbay.jetty</groupId>
+    <artifactId>jetty-parent</artifactId>
+    <version>9</version>
+  </parent>
   <groupId>org.mortbay.hightide</groupId>
   <artifactId>hightide</artifactId>
   <packaging>pom</packaging>
@@ -9,64 +14,11 @@
   <url>http://www.webtide.com</url>
   <issueManagement/>
   <mailingLists/>
-  <developers>
-    <developer>
-      <id>gregw</id>
-      <name>Greg Wilkins</name>
-      <email>gregw@apache.org</email>
-      <url>http://www.mortbay.com/mortbay/people/gregw</url>
-      <organization>Mort Bay Consulting</organization>
-      <organizationUrl>http://www.mortbay.com</organizationUrl>
-    </developer>
-    <developer>
-      <id>janb</id>
-      <name>Jan Bartel</name>
-      <email>janb@apache.org</email>
-      <url>http://www.mortbay.com/people/janb</url>
-      <organization>Mort Bay Consulting</organization>
-      <organizationUrl>http://www.mortbay.com</organizationUrl>
-    </developer>
-    <developer>
-      <id>sbordet</id>
-      <name>Simone Bordet</name>
-      <email>simone.bordet@gmail.com</email>
-    </developer>
-    <developer>
-      <id>ngonzalez</id>
-      <name>Nik Gonzalez</name>
-      <email>ngonzalez@exist.com</email>
-      <organization />
-    </developer>
-    <developer>
-      <id>jesse</id>
-      <name>Jesse McConnell</name>
-      <email>jesse@webtide.org</email>
-      <organization>Webtide, LLC</organization>
-      <organizationUrl>http://www.webtide.com</organizationUrl>
-      <timezone>-6</timezone>
-    </developer>
-    <developer>
-      <id>dyu</id>
-      <name>David Yu</name>
-      <email>david.yu.ftw@gmail.com</email>
-      <organization>Webtide</organization>
-      <organizationUrl>http://www.webtide.com</organizationUrl>
-    </developer>
-  </developers>
-  <licenses>
-    <license>
-      <name>Apache License Version 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0</url>
-    </license>
-  </licenses>
   <scm>
-    <connection>scm:svn:https://svn.webtide.com/repos/webtide/hightide/trunk</connection>
-    <developerConnection>scm:svn:https://svn.webtide.com/repos/webtide/hightide/trunk</developerConnection>
+    <connection>scm:svn:http://svn.codehaus.org/jetty/hightide-6/trunk</connection>
+    <developerConnection>scm:svn:https://svn.codehaus.org/jetty/hightide-6/trunk</developerConnection>
+    <url>http://svn.codehaus.org/jetty/hightide-6/</url>
   </scm>
-  <organization>
-    <name>Webtide</name>
-    <url>http://www.webtide.com</url>
-  </organization>
   <build>
     <extensions>
       <extension>
@@ -130,22 +82,6 @@
     <module>examples/welcome</module>
     <module>examples/root</module>
   </modules>
-  <repositories>
-    <repository>
-      <id>repository-codehaus</id>
-      <name>Codehaus Repository</name>    
-      <url>http://repository.codehaus.org</url>    
-    </repository>
-    <repository>
-      <id>iona</id>
-      <name>Iona Repository</name>    
-      <url>http://repo.open.iona.com/maven2</url>
-    </repository>    
-    <repository>
-      <id>atomikos</id>
-      <url>http://repo.atomikos.com/</url>
-    </repository>
-  </repositories> 
 
   <dependencyManagement>
     <dependencies>
